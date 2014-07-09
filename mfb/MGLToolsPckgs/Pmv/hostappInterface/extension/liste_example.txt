@@ -1,0 +1,2 @@
+modeller:/Library/modeller-9v8/modlib/
+pyrosetta:/Library/MGLTools/1.5.6/MGLToolsPckgs/PyRosetta

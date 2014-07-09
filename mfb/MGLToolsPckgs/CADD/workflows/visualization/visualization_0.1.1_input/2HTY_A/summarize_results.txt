@@ -1,0 +1,7 @@
+lowestEnergy_dlgfn     #runs #cl #LEC    LE      rmsd_LE     largestCl_dlgfn    #runs #cl #LC    LE_LC     rmsd_LC #ats #tors
+diversity0004/diversity0004,  10,  9,  1, -8.0900, 118.2313, diversity0004/diversity0004, 10,  9,  2, -6.3500, 118.9656,  31, 7
+diversity0005/diversity0005,  10, 10,  1, -5.6900, 116.7735, diversity0005/diversity0005, 10, 10,  1, -5.6900, 116.7735,  30, 6
+diversity0003/diversity0003,  10, 10,  1, -5.5800, 119.0725, diversity0003/diversity0003, 10, 10,  1, -5.5800, 119.0725,  31, 7
+diversity0001/diversity0001,  10, 10,  1, -5.2400, 117.9484, diversity0001/diversity0001, 10, 10,  1, -5.2400, 117.9484,  22, 3
+diversity0002/diversity0002,  10, 10,  1, -3.5900, 115.0801, diversity0002/diversity0002, 10, 10,  1, -3.5900, 115.0801,  14, 7
+diversity0006/diversity0006,  10, 10,  1, -3.3300, 114.9285, diversity0006/diversity0006, 10, 10,  1, -3.3300, 114.9285,  13, 7

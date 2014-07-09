@@ -1,0 +1,2 @@
+lowestEnergy_dlgfn     #runs #cl #LEC    LE      rmsd_LE     largestCl_dlgfn    #runs #cl #LC    LE_LC     rmsd_LC #ats #tors
+diversity0001/diversity0001,  10,  9,  1, -2.2100, 118.9269, diversity0001/diversity0001, 10,  9,  2, -2.1800, 118.3560,  22, 3

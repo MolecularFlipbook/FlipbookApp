@@ -1,0 +1,456 @@
+ViewerFramework RELEASE NOTES
+=============================
+
+-----------------------------
+Release 1.5.4 (November 2008)
+-----------------------------  
+VF.py
+  -added RemoveCommand
+  -modified to run without GUI
+  -added save perspective feature	
+  -added more help for savePerspective
+  -renamed transformationLogging to Transformation Logging
+  -replaced Sharp Color Boundaries for MSMS
+  -moved grid3d menu to the right
+  -moved preferences into a pickled file. See the new mgltutil.preferences for details.
+  - moved AddAtomsEvent, DeleteAtomsEvent and EditAtomsEvent from ViewerFramework.VF to Pmv.moleculerViewer
+  - fixed imports for these classes in all files
+  - added AddObjectEvent and DeleteObjectEvent to ViewerFramework.VF
+  -sessions are now not dependant on any other session anymore
+  -moved grid3Commands from Pmv to ViewerFramework
+
+VFCommand.py
+  - replaced NumberOfUndo with Number of Undo
+  - correct bug when saving twice the current session
+
+VFGUI.py
+  - finalized contour settings gui
+  - corrected bug on exit of pmv
+  - added log string for undocking the camera
+
+
+basicCommand.py
+  -added RemoveCommand
+  - made it work with --noGUI
+  - replaced NumberOfUndo with Number of Undo
+  - correct bug when saving twice the current session
+  - moved saving the font to the doit function of ChangeFont
+  - shows confirmation message after command is loaded.
+
+customizationCommands.py
+  - moved if item[0] == 'warningMsgFormat' before trapException
+  - moved preferences into a pickled file. See the new mgltutil.preferences for details.
+  - modified guiCallback for SetUserPreference to expand its width and increased hull_height to 800. TODO: could not figure out how to make the height expand on resizing  as well.
+  - when adding user preference last used value is used instead of setting the preference over the previously set preference
+
+customizeVFGUICommands.py
+  -moved saving fonts to preferences
+  -modified default fonts
+
+dejaVuCommands.py
+  - replaced centerScene with Center Scene
+  -corrected assert for color background
+  - fixed bug #999
+
+grid3DCommands.py
+  - added ensureFontCase beecause on windows, font starts with lowercase
+  - added isocontour.setVerboseLevel(0)
+  - fixed bug #1002
+  - fixed bug #989 - addGrid problem
+  - fixed path problem for orthoslice
+  - added a link to tutorial
+  - added  addGridCommand
+  - moved grid3Commands from Pmv to ViewerFramework
+
+
+-----------------------------
+Releases 1.4.6 -  1.5.2 (July 2008)
+-----------------------------  
+ --  moved from Numeric to numpy
+
+LICENSE
+  -added LICENSE file
+
+VF.py
+  -trying to fix a problem when .mgltools directory (resource folder) can not be created
+  - added ScenarioCommand class to start scenario application from Viewer Framework.
+  - arranged "Browse Commands"
+  -added code that creates scenario director (in 'try: except:').
+
+VFCommand.py
+  - now vision instance is Pmv.vision
+
+VFGUI.py
+  -added an argument : cnf = {addScenarioButton: False} to pass to the constructor of the Viewer class, so that the Scenario button is not added to the Viewer's GUI when the Viewer is created by VF (this button will be added th the main button bar of the Molecular Viewer bu scenarioCommand)
+  -added a check for self.VIEWER.autoRedraw before calls to update() (self.ROOT.update())
+  - now the active scope is the main scope
+  - replaced self.ROOT.winfo_width() with self.ROOT.winfo_reqwidth() in naturalSize to fix the problem on win32
+
+basicCommand.py
+  - added ScenarioCommand class to start scenario application from Viewer Framework.
+  - renamed findAllPackages into findAllPackageNames
+  - arranged "Browse Commands"
+
+customizationCommands.py
+  - created read source or molecule command
+
+dejaVuCommands.py
+  - correct bug with cartoon rendering
+
+helpCommands.py
+  - renamed findAllPackageNames into findAllPackages and repaired full search
+
+Icons/64x64/dashboard.png
+  - make sure png are binaries
+
+
+
+-----------------------------
+Release 1.4.5 (May 2007)
+-----------------------------  
+New features and bug fixes:
+
+VF.py
+ - fixed a bug in Startup Directory preference.
+ - fixed changed userpref.set("Startup Directory"...
+ - added self.GUI.VIEWER.ReallyRedraw() before self.GUI.dockCamera()
+   bug #775
+
+VFGUI.py
+ - when docking, we set only the parameters that are changed
+ - introduced spinOptionMenu
+ -added a check for 'drop_target_register' attribute of self.ROOT (if hasDnD2 is True)
+ - correct handling of the trackball when rebuild/dock/float camera
+
+basicCommand.py
+ - added self.vf.recentFiles.add(filename, 'source') to SaveSessionCommand
+
+dejaVuCommands.py
+ - corrected background color
+ -  added **kw to signature of setbackgroundcolor.dismiss_cb so that it can
+    be called from a setupUndoBefore method
+ - removed  self.vf.loadCommand('interactiveCommands', 'setICOM', 'Pmv',)
+
+
+Release 1.4.4 (December 2006)
+-----------------------------  
+New features and bug fixes:
+
+VF.py
+ - added vi.stopAutoRedraw() and vi.startAutoRedraw() calls to dispatchEvent method.
+
+VFCommand.py
+ - replaced == types.StringType with in types.StringTypes to support unicode
+ - fixed the links in the info button to point to appropriate section in
+   http://mgltools.scripps.edu/downloads/tars/releases/doc/
+ - added posx=None, posy=None arguments to showForm() to allow placing a form on
+   the screen
+ - fixed bug #734 incomplete log string
+ - moved self.addCameraCallback('<KeyPress>', self.updateInfoBar) from
+   Pmv interactiveCommands to VFGUI
+ - fixed dockaCamera and floatCamera to restore these bindings
+ - enhenced description of command.onCmdRun hook
+ - moved ICONPATH and ICONSIZES to VFCommands.py
+ - moved Pmv icons from ViewerFramework
+
+VFGUI.py
+ - renamed reCamera in rebuiltCamera
+ - camera size doesn't change anymore when camera is rebuilt
+ - repaired stereo_buffers (was not working with the new docking)
+ - put back code to restore all '<KeyPress>' and '<KeyRelease>' event handlers
+   when camea is docked or floated
+ - fixed dockaCamera and floatCamera to restore these bindings
+
+basicCommand.py
+-added code in save session command when npr outline mode is on graph controlpoints and sensitivity are saved
+
+customizationCommands.py
+ - replaced read molecule with read python or session script
+
+dejaVuCommands.py
+ - repaired stereo_buffers (was not working with the new docking)
+ - added tooltip for setCartoonOutlines iCommand
+ - added setNPRparams command
+ - now, after a cancel the tile rendering gui make sure the height and width values respect the aspect ratio of the actual opengl context.
+ - removed undocking when tile rendering and extent opengl cam to the max for tile rendering.
+
+
+Release 1.4.3 (September 2006)
+------------------------------
+New features:
+- reduced self.ROOT.minsize to width = 200, height = 200
+- added Viewer.suspenRedraw
+- added  self.vf.GUI.ROOT.config(cursor='watch') in BrowseCommandsCommand.guiCallback
+- now we print the exception in SourceCommand
+- the stereo icon now has a triangle to indicate the menu
+
+
+Release 1.4.2 (May 2006)
+------------------------
+Changes and bug fixes:
+
+-self.ROOT.bind('t', self.VIEWER.toggleTransformRootOnly)
+-replaced SimpleDialog with tkMessageBox.askokcanel
+-replaced addToolBar with configureToolBar
+-added self.VIEWER.GUI.top.master.protocol("WM_DELETE_WINDOW",self.showHideDejaVuGUI)
+-removed placeholder in the InfoBar
+
+customizationCommands.py
+- added 'mode':'both'to global dict used to execute Python script
+  so that sesions can be restored
+
+customizeVFGUICommands.py
+-fixed a bug in undo command for MESSAGE_BOX
+-replaced buttonRoot with Toolbar
+-Moved menues from File --> customize into File --> Preferences
+
+dejaVuCommands.py
+
+-repaired tile-renderer
+-added red-green stereo color separation
+-introduced STEREO COLOR SEPARATION
+- made the colormapGUI not an instance variable inthe showCMGUI command
+  but rather have doit return the instance
+- changed colorByProperties and colorByexpression get the returned value
+- removed global variable newvar from SaveImage command.
+  and added new transparentbg keyword argument to the command
+-fixed the problem in SetCameraSize when MESSAGE_BOX is not packed
+
+Release 1.4.1(March 2006)
+_____________________________________________________________________________
+
+What's new since rel 1.3alpha2:
+--------------------------------
+-In VF,getOnAddObjectCmd method added, made sure the geometry name is unique in
+self.geoms and in parent.children.Renamed createGeom method of GeomContainer to 
+addGeom and changed it signature to remove the first argument (geomName). 
+Updated the files in Pmv and AutoDockTools to call addGeom(geom, cmd).
+Added a trapExceptions attribute to ViewerFramework constructor.  Defaults to
+True (i.e. commands run in a a try and exceptions are displayed).  Should be
+set to False when running tests that assert that an exception is raised.
+
+-In VFCommand,createGeom method of GeomContainer is renamed to addGeom and changed it signature
+to remove the first argument (geomName).  Updated the files in Pmv and
+AutoDockTools to call addGeom(geom, cmd).Added virtual updateGeom(self, event, geomList) 
+for updating geometries belonging to a command upon ModificationEvents.
+
+-In VFGUI,belowCamera method is added to place the menu window under the camera when
+  the camera is floating.Added naturalSize method to VFGUI.Made VFGUI to resize the 
+  Pmv main window to the right initial size.Made self.vwrCanvasFloating Toplevel transient 
+  for VFGUI.ROOT so that the camera iconizes along with the molecular
+  viewer.Camera and Viewer x buttons when clicked prompts whether to quit or
+  not.
+
+-In basicCommand,added check button,scrolledtextbox in browseCommands widget to display documentation depending up on selection(command or module or pacakge)
+
+-In dejaVuCommands:
+  *constraint widget is added to render large image to comstraint aspect ratio 
+   of camera;
+  *added Viewer.stopTileRendering() method; 
+  *added cite button to saveImage widget and to select transparent back ground;
+  *added class "ColorGeomsByName" which allows the user to choose a color for geometries 
+   selected by name via regular expressions. However, did not add this command to the commandList 
+   at the end of the module so it is not automatically loaded.
+-In helpCommands, show documentationCommand now shows command and its documentation only.
+-In customizationCommands, changed SaveSessionCommand to call vi.getViewerStateDefinitionCode and vi.getObjectsStateDefinitionCode directly instead of calling vi.Exit.logScene.  Now vi.Exit calls saveSession.
+
+Bug Fixes:
+---------
+-VF:
+*added passing parent geoemetry as arguement.
+*modified tryto to raise idlelib shell on exceptions and removed check for
+  trapExceptions
+*added newlines in if else one liners
+*made width and height default values None in VF.getUserInput
+*moved updateCommand from specific command to the bacse class
+*deleted self.geomUpdateFuncs from GeomContainer.  This attribute was used
+  previously to store a function to be called to update a given geometry.
+*removed line that decremented self.commandNestingLevel in except clause in
+  tryto.  This was causing failing tests to hang because the commandLock was
+  never released.
+*added self.cmdUpdatesGeom = {} attribute to geom container to store what
+  command updates what geometry.
+*modified createGeom(self, geomName, geom, func) to
+  createGeom(self, geomName, geom, cmd=None).  Rather than passign a function
+  to update the geoemtry we now pass the command creating the geometry.
+  If changes occured cmd.updateGeom will be called.
+*added transformedCoordinatesWithInstances(self, hits) method to compute
+  transformed coordinates for pick.hits.  Used in dejavuCommands
+  CenterSceneOnVertices.
+*Load automatically the showCitation command
+*removed trapExceptions user preference
+
+-VFCommand:
+*reorganized and updated the documentation. Description of a command and its methods is now under the command class
+
+-VFGUI:
+*made VFGUI.getGeom() return a list of 4 int instead of 4 strings
+*replaced ScrolledText by Pmw.ScrolledText in class msg_box
+*removed body frame in class msg_box
+*changed self.ROOT.geometry('%sx%s+%s+%s' to self.ROOT.geometry('%dx%d+%d+%d'
+*call vf.naturalSize after changing font size
+*made height of msg_box 10
+*Restoring the callbacks associated to the KeyPress and KeyRelease event when
+docking and floating the camera. These callbacks were lost
+*Restored the Modifier/ICOM which was lost when added the dock/float camera.
+*Save the fog state to restaure it along with the camera state when docking/floating the camera. The Depthcueing is not lost any longer when docking the
+camera....
+*Fixed Message box to expand with the menus.
+
+-basicCommand:
+*loadmodule and loadcommand are modified such that they show the modules as browseCommands(using FindModulesInPackage instead of cmdlib and modlib).Modified BrowseCommands such that documentation will be displayed
+*added a comment about instance matrices that need to be considered
+*added traceback.print_exc()
+*Fixed the browseCommands by adding a optional argument event=None to the
+displayCmds_cb and displayMods_cb callback functions.
+When clicking on "Enter" an exception was raised.
+*Fixed the doit of browseCommands when a command is not found it doesn't crash any longer but loads the other commands.
+
+-customizationCommands:
+*added deprecation warning in setUserPeref command for trapExceptions
+
+-customizeVFGUICommands:
+*fixed bug in changFont, naturalSize is actualyl in vf.GUI not vf
+*call vf.naturalSize after changing font size
+*added naturalSize method to VFGUI
+
+-dejaVuCommands:
+*added VFGUI.isCameraFloating() method
+*renamed Viewer.enableTileRendering Viewer.startTileRendering
+ tile rendering now switched to not autoRedraw mode
+*Fixed RenderLargeImageCommand and made sure we use square tiles, undock and redock the camera if it was docked
+*replaced ScrolledText by Pmw.ScrolledText in class msg_box
+*removed body frame in class msg_box
+*renamed DejaVu menu 3D Graphics
+*fixed CenterSceneOnVertices to work with instances
+*added some comments
+*Changed some code in relation to the position of the camera.
+*Changed self.ROOT.geometry('%sx%s+%s+%s' to self.ROOT.geometry('%dx%d+%d+%d').
+*added a button cite in the widget
+*moved saveImage command from Pmv.fileCommands and added a check button for Tranparent background
+
+-helpCommands:
+*fixed Load Commands to widget to expand properly
+*modified helpCommand to show onlyloaded commands and their documentation
+
+-serverCommands.py:
+*StartWebControlServer command imported Pmv and did nothing with it but
+creating a bad dependency on Pmv, removedit and replaces Pmv in documentation
+by ViewerFramework
+	
+-test_VF:
+*added test for new constructor option: trapExceptions.  fixed bugs in old tests.
+*Added a function to test the restoration of the state when docking/floating the
+cameras.
+
+_____________________________________________________________________________
+Release rel 1.3alpha2 (10/20/2004)
+_____________________________________________________________________________
+
+What's new since rel 1.2beta1:
+--------------------------------
+
+- The camera can now either be docked or floating. In the latter the camera is separated from the menu bar.
+- The loadCommands and loadModule commands are not logged as browseCommands. These commands will disappear in 
+  the release 1.3
+- A SearchCommand has been implemented and can be found under the Help menu. This commands allows the user to type
+a string which will be matched against either the name of the commands, the name of the modules, the documentation string
+or everything.
+- The former documentationCommands module is now helpCommands module.
+- Renamed ViPEr Vision.
+- Implemented a new API between Pmv and Vision (formally ViPEr)
+  - added new attribute self.visionAPI to /ViewerFramework/VF.py
+- New commands in the dejavuCommands module:
+  RenderLargeImages command allows the user to save an image bigger than the screen 
+  SetCameraSize command allows the user to modify the size, and the offset of the camera.
+- New serverCommands module implementing a set of commands to start and connect to a server. This will allow to start 
+MGLTools applications from  a web page.
+- Add to the inputforms a HELP button which will display the documentation page of the command.
+- The Warning message pop up now display the name of the command creating the message.
+- Added a new optional argument verbose (False)to the MoleculeViewer, ViewerFramework and ViewerFrameworkGUI to suppress DejaVu.Viewer's 
+  print statments.
+- Added a new button to the info bar to open the DejaVu GUI. This button is located to the right of the Information Box.
+- The VFGUI object has:
+  - two new attributes selfscreenWidth and self.screenHeight
+  - a new Geometry(width, height, xoffset=None, yoffset=None) method which  configures the DejaVu camera to 
+  have the given height and width. The given xoffset and yoffset specify the upper left corner of the GUI.
+  It returns the width and height of camera. 
+
+
+
+Bug Fixes since rel 1.2beta1:
+--------------------------------
+- Fixed the ShowHideGUISection commands. Now the gui section can be hidden and shown and they are repacked in 
+  the right order.
+- The quit_cb of the ExitCommands now calls the Exit method of the viewer which destroys the Camera properly.
+- Fixed numerous bugs in picker.py
+- Fixed the busy Icons problem by:
+  Implementing a new SetIdleLight method in VFGUI which :
+  - set the previousState
+  - change the busyIcon to the given state
+  - set the currentState to the new state.
+  Adding a new flag suspendIdleLight when turn on True the state of the
+  busyIcon cannot be modified.
+
+- The askFileOpen and asfFileSave method now return relative path
+  These methods also have a new argument relative=True that can be used to
+  specify if the path should be relative or not.
+
+- modified constructor of ViewerFramework to overwrite DopIck method for all cameras
+
+
+
+Release rel 1.2beta1 (12/15/2003)
+_____________________________________________________________________________
+
+
+What's new since rel 1.2alpha (09/18/2003):
+
+- VF and VFCommand:  worked on sourceCommand and undoCommand to use the right 
+  local and global IT IS NOW REQUIRED TO USE self. to refere to the molecule 
+  viewer's attributes in scripts.
+- VF: added progress bar to status bar
+- VF: Added the new browseCommands to the viewer under the "File" menu
+- VFCommand: A command now stores the last used values of the optional 
+  arguments of the doit into a dictionary called self.lastUsedValues.
+  This dictionary is created and initialized by introspection in the 
+  constructor. It is then updated each time the command is called in the 
+  doitWrapper.
+  This dictionary is used rather than the default value by the picking command
+  for example.
+  This dictionary never contains neither the negate nor the only args.
+- basicCommands: Implemented a new command browseCommands to load dynamically
+  module or command in the viewer. This command will search your path for 
+  packages, subpackages and python modules containing the 'initModule' which 
+  describes a module implementing commands.
+  This command will replace the loadModule and loadCommand in the next release.
+  Replace in your script:
+  self.loadCommand("displayCommands", ['displayLines', 'displayCPK'], "Pmv")
+  by
+  self.browseCommands("displayCommands", commands=['displayLines', 
+                                                   'displayCPK'], 
+                       package="Pmv")
+  and self.loadModule('displayCommands', 'Pmv') by
+  self.browseCommands("diplayCommands", package="Pmv")
+  look at the _pmvrc as well for more examples.
+
+
+Bug Fixes since rel 1.2alpha (09/18/2003):
+
+- VF: fixed GeomContainer.delete to only remove the 'master' geometry of the
+  molecule in the Viewer's TreeWidget
+- VFGUI: removed X Y W and H entries from InfoBar becaues the callback 
+  updating them was creating all the beeping
+- basicCommands: Fixed the logScene methods to log the transformation of the
+  objects properly.
+- customizationCommands: Fixed the undo of the BindAction
+- dejaVuCommands: Fixed the signature of the __call__ to match the signature of
+  the colorMapEditor in the colorMapEditor
+
+
+Changes since rel 1.2alpha (09/18/2003):
+
+Known Issues:
+
+Backwards INCOMPATIBLE Changes since rel 1.2alpha (09/18/2003):
+

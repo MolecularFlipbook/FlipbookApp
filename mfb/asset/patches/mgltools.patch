@@ -1,0 +1,13 @@
+molkit/molecule.py:1491:
+    def getCenter(self):
+        """sets self.center<-getCenter(self)"""
+        try:
+            coords = self.allAtoms.coords
+        except:
+            coords = self.getAtoms().coords
+        self.center = sum(coords)/(len(coords)*1.0)
+        self.center = list(self.center)
+        for i in range(3):
+            self.center[i] = round(self.center[i], 4)
+        #print "center =", self.center
+        return self.center

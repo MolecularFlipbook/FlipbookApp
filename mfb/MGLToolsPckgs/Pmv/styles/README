@@ -1,0 +1,35 @@
+How to create a style
+
+load a molecule
+display the geometries you want
+perfect the colors and rendering styles
+save the Pmv session
+
+edit the session file
+
+remove uneeded commands (starting with self.xxx) such as reading the molecule
+try reapplying the style by starting Pmv, loading the molecule and doing 
+sourcing the file to make sure it still works
+
+run python sessionToStyle.py stylefile molname
+  e.g. python sessionToStyle.py Pmv/styles/style_01.py 1jff
+  this will create Pmv/styles/style_01_style.py in which 1jff is replaced
+  and the style will be a function call apply style that can be applied to
+  any molecule using applyStyle('1jff', self) where self is the molecular
+  viewer
+
+edit the style by hand to:
+
+1 - define the bnumber of molecules
+2 - create a documentation string
+3 - fix the signature of the applyStyle fucntion to reflect the number of 
+    molecules
+
+COMMON THINGS TO FIX:
+
+1 - remove pivot, scale, translation, rotation, near, far, fov, lookAt,
+    lookFrom and direction from camera state
+2 - remove transformation on root object or comment our applying the state
+    to root
+3 - add setupUndo=0 to pmv commands since the undo of applyStyle will take of 
+    that

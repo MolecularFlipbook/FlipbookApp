@@ -1,0 +1,655 @@
+Vision Release Notes
+====================
+
+RELEASE 1.5.4 (November 2008)
+-----------------------------  
+IPythonNodes.py
+   -new file
+
+ImageMagickNodes.py
+  - corrected Photoimage needs a master to find the right tk instance
+
+StandardNodes.py
+  -corrected runFuntion Node
+  -now run pause and stop buttons correspond to the current network
+  -introduce typeManager for network when running without gui
+  - modified readTable node to work more efficiently.
+	- removed numpyIndices for slicing as this can be done using a sliceData node.
+	- the node now always outputs a numpy array
+	- the node only reads the file if filename, sep or datatype changes
+  -corrected default params for eval node
+
+UserLibBuild.py
+  -moved some path additions to NOGUI editor
+  -comment indicate better path for home directory under windows
+  -added resourceFolder argument which defaults to 'mgltools'
+  - fixed flextreelib dependencies on FLIPDock
+
+VPE.py
+  -modified warning to tell user to install ksh
+  -now run pause and stop buttons correspond to the current network
+  - added NoGuiNetworkBuilder, NoGuiVPE and NoGuiExec classes to have an
+    editor object even when we run withjout the gui. This enables the execution
+    of network with macros as standalone programs
+  -added resourceFolder argument which defaults to 'mgltools'
+  -added socket-based communication to network executing in remote process
+  - moved processWithoutGui to network
+  -added GANTT button and debug buttons
+  - made execution in external process bind widgets to process
+  - introduced button "run saved network without gui"
+  - running network can be stopped with user panel
+  - change "continuous run" into "immediate run"
+  - got rid of the reference to global 'Vision.ed' in OpalUtil
+
+__init__.py
+   -added IPython to the list of NONCRITICAL_DEPENDENCIES, so the test_dependencies test would pass.
+  -added resourceFolder argument which defaults to 'mgltools'
+  -run network with vision hiden as interactive
+  - solved more ipython issues for pmv and vision
+  - now from Vision import runVision; runVision() will launch the active Vision and deiconifyies it.
+
+gantt.py
+ - added prototype of GANTT plotting class
+
+matplotlibNodes.py
+  -added if not 'matplotlib.backends' in sys.modules: to avoid "UserWarning:  This call to matplotlib.use() has no effect..." message from
+matplotlib/__init__.py", line 801
+  -ver 1.5.4 rev 0 => numpy 1.1 and matplotlib 0.98
+
+flowengine_6.gif
+  - added 3 icons
+
+runVision.py
+   -solved more ipython issues for pmv and vision
+
+
+doc/Tutorial/
+  -updated tutorial
+
+
+
+RELEASE 1.5.2 (July 2008)
+-----------------------------
+
+
+RELEASE 1.4.5 (May 2007)
+-----------------------------
+New features and bug fixes:
+
+StandardNodes.py
+ - introduced node ScrolledList
+
+__init__.py
+ - vision can now easily be launched from python shell
+ - moved __main__ into __init__
+
+matplotlibNodes.py
+ - added various Vision nodes that expose matplotlib.
+   Plotting Nodes:
+    Bar --- for plotting bar plot.
+    BarH --- for plotting horizontal bar plot.
+    BoxPlot --- for plotting  box and whisker plot for each column of x.
+    CSD --- for plotting a cross spectral density of data
+    Contour --- contour and contourf draw contour lines and filled contours.
+    ErrorBar --- for plotting x versus y with error deltas in yerr and xerr.
+    Fill --- plots filled polygons.
+    Log --- loglogplot with log scaling on the x and y axis.
+    Pcolor --- for making a pseudocolor plot
+    PcolorMesh --- for making a pseudocolor plot
+    PcolorClassic --- for making a pseudocolor plot
+    PlotDate --- plots the the second against the first.
+    ScatterClassic --- plots a scatter diagram for two lists of numbers.
+    SemiLogx --- semilog plot with log scaling on the x axis.
+    SemiLogy --- semilog plot with log scaling on the y axis.
+    Quiver --- for making  a vector plot (U, V) with arrows on a grid (X, Y)
+    Specgram --- for plotting spectrogram of data
+    spy --- for plotting parsity pattern of the matrix Z using plot markers.
+    spy2 --- for plotting the sparsity pattern of the matrix Z as an image
+    PSD --- for plotting a power spectral density of data
+
+   DemoNodes:
+    meshgrid --- converts vectors x, y with lengths Nx=len(x) and Ny=len(y) to  X, Y
+    bivariate_normal ---Bivariate gaussan distribution for equal shape X, Y
+
+   Misc Nodes:
+    ColorBar ---plots color bar
+    SaveFig ---for Saving figure
+    Legend ---plots legend
+    MergeText,Text ---plot text on figure
+
+Vision/Examples/matplotlib :
+  - added example networks for all nodes in matplotlibNodes.
+  - added data files under Data/ for example networks.
+
+RELEASE 1.4.4 (December 2006)
+-----------------------------
+New features and bug fixes:
+
+
+ - introduced node ImageFromArray
+ - added BugReport to Help button
+ - added node library for MatPlotLib
+ - added node Legend
+ - added setmatplotlibparams node for setting rendering options
+   (such as color, grid, size etc) for axes, figures etc.
+ - added rendering options for Histogram, Plot, Scatter, FigImage nodes
+ - added node OneTexturedPolygonNE
+ - introduced node StickImageNE
+ - solved transparency when not in immediate rendering
+ - major rewrite to make Figure nodes be children of plotting nodes
+ - each node creates its own Figure and Axes and display them
+ - Axes can be display in multiple figures
+ - Added DejaVuFigure node to output a texture mapped quad for DejaVu
+ - added 2d texture to geometries 
+
+Release 1.4.3 (September 2006)
+-----------------------------
+
+Changes  and bug fixes:
+
+- node 'show/hide GUI' is deprecated;
+- fixed port colors of dialintNE and thumbwheelintNE;
+- removed annoying deprecation warning;
+- corrected sizes when vision opens
+
+
+Release 1.4.2 (May 2006):
+-------------------------
+
+Changes and bug fixes:
+
+PILNodes.py
+-now all the libraries are using UserLibBuild.addTypes() to load types
+
+StandardNodes.py
+-now the node "Cast" only casts when validate is False
+
+UserLibBuild.py
+-smaller and toggable port's icons in the library GUI
+-introduced cascade menu for FastLibs
+-mRequiredTypes and mRequiredSynonyms are class variables in the class node
+-now node save source code generates necessary lines to load synonyms
+-added addtypes()
+-ordered the lib to load smoothly at startup
+-corrected bug on saving doit function when saving macros,
+-corrected bug on automatic loading of nodes in mydefaultlib
+-network are saved with state
+-corrections in saving macros
+-corrections in loading mydefaultlib
+-single connections on macros
+
+VPE.py
+-now loadLibs button in toolbar is a menu
+-cascade menu for FastLibs in vision toobar, smaller icon for diamond ports,
+-smaller and toggable port's icons in the library GUI
+-now button bar and menu bar havefixed size
+-now the nodes are drawn with their ports in the GUI as in the networks
+-input ports outline  is black, gray or red. Ports that are not required
+ have a gray outline.
+
+bin/runVision.py
+- added Splash Screen in Vision
+-added new icons for the Splash Screen
+
+
+Release 1.4.1 (March 2006):
+----------------------
+*In PILNodes.py:
+ - replaced use of Bufarray in GetFrontBuffer with Numeric.
+ - updated the portsDescr: our new append method now understands passing values,as keywords, 
+   i.e. instead of appen({'name':'foo'}) we can now say append(name='foo')
+*In StandardNodes.py:
+ - added StdDev to compute standard deviation
+ - modified the IsTrue node to be scheduling because it should ONLY run children of the True or False
+   port, not both
+ - added import pickle in Read Field compute function
+ - modified all Port Descriptions: we no longer pass a dictionary, instead we call the append 
+   method with keywords (name=value instead of 'name':'value')
+ - added PrintfFS node to print variable number od arguments into a string
+ - added optinal ports mini and maxi to Dial node
+ - modified setType_Dial to set the type of these ports
+ - re-wrote DialIntNE to sublass DialNE
+ - removed DialFloatNE
+ - added mini and maxi port to ThumbWheel node
+ - added ThumbwheelInt node
+ - added optional argument to port.setDataType(makeOriginal=False).  When true
+   the port's originalDataType attribute (which is use to restore type upon
+   disconnection) will be set to the type passed to this function
+ - added Zip node to zip lists just like the Python zip function
+ - added Select node to select input form various ports
+ - added DelayBuffer node to delay data in a network by a user-specified
+   number of executions
+ - added lockedOnPort=True keyword to some widgets for which it makes no sense
+   to allow the user to unbind them
+*In matplotlibNodes.py:
+ - renamed MPLGraph2DNE node FigurePanelNE 
+ - renamed MPLSubgraph2DNE node FigureAreaNE
+ -added Pie and Scatter plot node
+ -changed the name of nodes to use Graph2D and Subgraph2D
+ -added this file gere while waiting that it gets added to the matplotlib package
+
+Bug Fixes:
+----------
+*In StandardNodes,fixed showFAQ to get the file from the Vision package rather than current directory.
+*In matplotlibNodes,fixed setPlotRegion to handle correctly the case when no axes is specified but the node has a pointer to an existing axis.
+-fixed the format widget in the PieNE node
+-fixed many bugs, including deleting nodes, setting the subgraph etc.
+
+Release September 1, 2004
+-------------------------
+Note: The release Notes for NetworkEditor describe the changes in greater
+detail.
+
+What's new (compared to release December 17 2003):
+
+Due to a name conflict we needed to renamed ViPEr. The new package is called
+"Vision". Obviously, this breaks all old networks, hence we provide a script
+(in Vision/bin) that updates old networks. Please read the documentation
+contained within this script.
+
+- We added a Frequently Asked Questions page to the Help menu.
+- We made saving and restoring networks more resilient. Vision used to be
+  unable to restore networks containing one or more obsolete nodes. Now, it 
+  will restore all nodes and connections that can be restored and only
+  obsolete or otherwise faulty nodes will be missing.
+- We added a browse library command enabling a user to load a library of 
+  computational nodes from any Python package. This method replaces the old 
+  load library function that required declaring all libraries in a 
+  configuration file and prevented users from loading undeclared libraries 
+  without restarting Vision. The old load library panel is still available.
+- We also modified the saving mechanism to load all libraries required by a 
+  network.
+- We rewrote entirely the widget and the port management. This enables us to  
+  show and hide ports, bind and unbind widgets to ports and move widgets to 
+  separate panels.
+- Separate panels can now be created using the "Create User Panel" menu
+  entry in the main menu entry "Edit".
+- We added a widget editor to alter the appearance of the various widgets.
+- We also added a widget grid editor which allows to modify the gridding
+  of widgets in a given panel.
+- Macros are finally working as intended. Also, saving and restoring nested
+  macros is now working properly.
+- We rewrote entirely the saving networks code. For each node we save only
+  what has changed compared to the respective node definition in the node
+  library.
+- We also rewrote from scratch the save source code methods.
+- Users can now create User Libraries, and add new nodes and even macros to
+  such libraries, thanks to the overhauled save source code mechanism.
+- The data validation and casting mechanism has been re-written and we added 
+  support for propagating data types on ports with not data type requirements.
+- Many aspects of the graphical user interface where modified. This includes: 
+  adding support for changing the fonts of all graphical items in Vision,
+  support for drawing connection between nodes using splines rather than line 
+  segments, color coding nodes by node library color, extending tooltips of
+  output ports with the values present on the port, the ability to show and
+  hide libraries, preliminary support for creating libraries on the fly and
+  populate them with new nodes, a new node editor widget supporting the Python
+  syntax with keyword coloring, tooltips, etc.
+- We added preliminary support for finding nodes using regular expression 
+  matching on the nodes' documentation string. This function can be used to 
+  search the current library only, all loaded libraries, and all libraries
+  found in the user's python-path.
+- We extended the data flow mechanism to support the creation of cycles. This 
+  was not possible previously, because a node would never execute before all 
+  parents have run, creating a deadlock situation for cycles. It is not
+  possible to tag any connection as 'non-blocking' (i.e. the execution of the
+  parent node is not necessary for the child to be able to run), hence 
+  enabling the execution of cyclic networks.
+- we added new nodes to the Standard library such as Iterate, Accumulate,
+  If/Else, Show/Hide GUI.
+- The accumulation node enables to accumulate information during an iteration,
+  thus enabling the creation of 'for-loops'.
+- We created three new libraries of nodes:
+  (1) ImageMagic (wrappers for the functionality found in the ImageMagic
+  imaging library) -- however, this library is not part of our standard
+  distribution;
+  (2) a volume library with support for reading volumetric data in various
+  formats (CCP4, UHB, DX, DelPhi, MRC, etc.), isocontouring and direct volume
+  rendering;
+  (3) the FlexTree library of nodes supporting the representation of protein 
+  flexibility.
+- Nodes can now also be moved by selecting them and using the <Arrow> keys.
+- The _visionrc file is now better structured, contaning extensive
+  documentation.
+
+
+Release December 17, 2003
+------------------------
+
+Please read also Release Notes for NetworkEditor, where most changes happend!
+
+What's New (compared to release Sep 18 2003):
+
+- important change: the library now has two new attributes:
+  varName stores the name of the library as defined in the file (e.g. 'stdlib')
+  and modName stores the import path (e.g. 'ViPEr.StandardNodes')
+  This allows now to distribute nodes to other libraries, and saving/restoring
+  will now work properly with such nodes.
+- added new keyword forLib=1 in node.getNodeSourceCode(), to add node to 
+  user-defined library
+- commented out menu entries to add/delete categories, to create libraries,
+  to add nodes to libraries.
+  This is to prepare for our next release of ViPEr, where these features will
+  not be accessible (since they are partly broken and need more time to fix).
+  NOTE: They will be made available again as soon as humanly possible.
+- added a method setFont() to Visual Programming Environment that allows
+  to change the font individually of Menu Entries, Library Tabs,
+  Category Labels, Network Tabs. (see also NetworkEditor release notes)
+- NodeLibrary objects have 2 new methods: addType and addWidget that mimic 
+  the addNode method to add types and widgets to a library
+- Added Example directory with some networks. You need to be in the Example
+  directory when running viper -i foo_net.py for data files to be found.
+
+Bug Fixes
+
+- fixed bug that caused iterate in Macro not to fire children in parent network
+- fixed creating user libraries and adding nodes to these libraries (Note:
+  this is not exposed to the user right now)
+- addLibraryFormName needs second argument pathstr which was not passed
+  when a user-defined library is loaded (this would fail previously)
+- loading new library would ignore the lib tab font configuration if set
+  by user. This is fixed now.
+- fixed a bug in NodeLibrary addCategoryFrame when setting the font for node
+  proxies (which would fail if the font was None).
+- fixed bug in Image type validation function and added class key
+- fixed iterate node to update progress bar even if not children nodes 
+  are present
+- made fromInd, toInd and step ports of Slice node optional
+- added normalize operator to UnaryFuncs
+- fixed Operator2 node to work with Numeric arrays (the problem was that
+  numeric arrays do not have an __len__ attribute
+- fixed browse library not to use addLibraryFromName but rather
+  addLibraryInstance
+
+Backwards INCOMPATIBLE Changes: 
+- split addLibrary method of Network into addLibraryFromName and
+  addLibraryInstance. Addind an instance now requires to provide the module
+  where the instance is defined and the name (both as strings). This was needed
+  to generate the network descdription source code with the right imports of
+  libraries.
+- The key class in a widget description has to be a string now. Previously we 
+  would accept a class but this required the presence of 
+  globals().update(widgetTable) in the library file.
+- the .vprc file was renamed _vprc
+
+
+Fix for users:
+search and replace 'addLibrary' in existing networks with either
+'addLibraryFromName' or 'addLibraryInstance'
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Release February 26, 2003
+-------------------------
+
+What's New (Highlights only)
+
+- StandardNodes moved back to the ViPEr package (see Compatibility Information)
+- users can now cusomize ViPEr using a '.vprc' customization file
+  (see documentation inside the .vprc file distributed in the ViPEr package)
+- the viper startup script was renamed from 'viper.py' to 'viper'. It is now
+  executable, has been cleaned up and documented
+- ViPEr has now an idle shell
+- Added a 'Load Libraries' menu entry to the ViPEr main menu bar
+- added concept of singleValue port. This allows to pass a 'single' value
+  to a port, for example, if the value was encapsulated in a list
+- Added Unbind/rebind capability to widgets: widgets can now be bound to the
+  node or the param. panel or unbound through the node editor GUI 
+- rewrote flow.py (for multi-threading) completely. This makes the
+  Iterate node much more robust. Each execution of a sub-network runs now in
+  a separate thread (rather than one thread per node). This is much faster
+  and the application remains alive. It also greatly simplifies the iterate
+  node.
+- The Iterate node got a little progress bar
+- added buttons to start / stop / pause execution when running multi-threaded
+- added menu entry to freeze / unfreeze a network
+- changed the Param. Panel packing to be expand=1 and fill='both' so that it
+  can be resized; paramPanel title is set to node.name
+- Network items now have an attribute iconMaster which is the canvas to
+  which they belong. This was added so that node incons in libraries know
+  their canvas and can be selected, deselected etc ...
+- ViPEr has now a module finder to easily find nodes in node libraries
+
+Bug Fixes / Changes in details
+
+NetworkEditor:
+Editor.py:
+- fixed a bug where binding a widget to a port then renaming the port name
+  would raise an error
+- fixed name of Output Port Editor
+- removed validateSrc field from Input Port Editor
+- fixed bug in removePort method of node. Was breaking when there were
+  connections
+- Fixed bug inPortWidget.scheduleNode. We now check is callback is not None
+  before calling it
+- binding a widget to a param. panel using the Editor would not activate
+  the node menu entry 'show param. panel'. This has been fixed.
+
+
+flow.py:
+This module has been rewritten from scratch:
+- removed the multi-threaded execution model
+- each execution of a sub-network runs in a separate thread now (rather
+    than one thread per node). This is much faster and the application
+    remains alive. It also greatly simplifies the iterate node.
+- only flash the outline of nodes is much less expensive
+- added the ability to pause, resume, stop execution
+- moved many methods around
+- renamed several things
+- added progress bar to network items
+- enabled progress bar on iterate node
+- added buildSmallIcon method to node to build a small icon for library
+- added AfterExecution object to flow.py. This starts a thread that will run
+  a user specified function after the network finishes running
+- added managment for pause and stop buttons
+- added setProgressBar method to NetworkItem
+- fixed some bugs in scheduling (after pause, stop is required before run)
+- renamed network.isExecStatusGo() network.checkExecStatus()
+- net.execStatus is set to 'running' and 'waiting' by the run method of
+  the ExecutionThread object
+- new possible values for execStatus are:
+        'waiting': waiting: for nodes to run
+        'pending': set by network.run method when a new thread is created
+        'running': nodes are currently running
+        'stop': execution will stop ASAP
+        'pause': execution will pause ASAP
+- rewrote waitForCompletion to check for end of job. Previous version was
+  simply trying to acquire network's run lock which it could do sometimes
+  before run method of ExecutionThread.
+- fixed a bug in flow.py that caused temp_uniqueFloodIndex attribute not to be
+  deleted
+
+
+itemBase.py
+- net.hide() destroys node menu
+- NodeProxy item has an attribute dummyNode which hold the NetworkNode item
+  used to build its icon
+- added test in run method not to call update_idletask under win32
+- restored Run Multi-Threaded Network menu option to allow execution of nodes
+  in main thread. Defaults to not threaded on windows and threaded on other
+  platforms. the run method only calls update_idletasks if the platforms is NOT
+  windows OR we are not running multi threaded.
+- cleaned up pulldown menu of nodes and ports: entries are now capitalized
+- delete in the node pulldown menu now deletes all currently selected nodes,
+  not just the one that was right-clicked
+- added a cut menu entry to the node pulldown menu, works same as the delete
+- capitalized menu entries in simpleNE main menu bar
+- fixed a bug where pasting a node would raise an exception because
+  self.preFreezeStatus was not defined in the init of class Network
+- added a new attribute isSchedulingNode that is used to prevent scheduling
+  of nodes if set to 1 (example: the iterate node)
+
+items.py
+- saving widgets now calls widget.getDataForSaving() method, instead
+  widget.get()
+- fixed bug in dial introduced when adding singleValue argument
+- create output port before input ports to allow input to alter outputports
+- fixed a bug in NEcombobox. Set method now calls self.selectioncommand
+- fixed bug in removePort method of node. Was breaking when there were
+  connections
+- Fixed bug inPortWidget.scheduleNode. We now check is callback is not None
+  before calling it
+- Modified NEComboBox to use kbComboBox rather than Pmw.ComboBox
+- fixed the NEComboBox widget's set method to call the self.selectionCommand
+  if there is one whenever set is called regarless of the value of run.
+- creation of widgets is now done properly in the instanciate method of
+  the network node (rather than in addNode method of net).
+  Had to move node instanciation of the node toward the end of addNode to make
+  sure ports had already been added to the node. I also removed the code to
+  instanciate ports from addInputPorts and addOutputPorts methods since it
+  is called by the node's instanciate method. (going towards separation of
+  network description and visual representation).
+  This also fixed the node "migration" when a network was saved and restored
+- Fixed bug that caused the widgets to be tagged as modified when they are
+  set for the first time while creating the node.
+- renamed addWidgetToIcon showInNodeWidget in source and regression tests
+- addInputPort and addOutputPort call the port's instanciate if it is not the
+  node's first instanciation and there is a canvas
+- Port's instanciation method now calls showIcon automatically
+- fixed a bug with visibleInNode that caused network load to fail
+
+
+net.py
+- deleted the getWidgetConfigurationText() method since this moved to items.py
+- fixed bug in dial introduced when adding singleValue argument
+- create output port before input ports to allow input to alter outputports
+- fixed a bug in NEcombobox. Set method now calls self.selectioncommand
+- fixed a bug that caused nodes not to become root nodes after all parent
+  connections were deleted.
+- deleting a child node would add it to the rootNodes list and prevent the
+  network from running again (because runNetwork would try to run a node that
+  no longer exists. This bug was fixed in the deleteNodes method
+- net.hide() destroys node menu
+- fixed a bug where network execution would hang if the execStatus was
+  'stop' or 'pending'
+- nodes are no longer scheduled if their attribute isSchedulingNode is set
+  to 1. This fix allowed us to move the StandardNodes back to the ViPEr
+  package (Iterate node was the problem).
+
+
+ports.py:
+- fixed a bug that would prevent binding/unbindig of widgets to ports
+
+
+simpleNE.py:
+- cleaned up pulldown menu of nodes and ports: entries are now capitalized
+- delete in the node pulldown menu now deletes all currently selected nodes,
+  not just the one that was right-clicked
+- added a cut menu entry to the node pulldown menu, works same as the delete
+- capitalized menu entries in simpleNE main menu bar
+- fixed a bug where pasting a node would raise an exception because
+  self.preFreezeStatus was not defined in the init of class Network
+- added configure method that allows to configure various settings
+- class NodeProxy and class NodeLibrary moved to the ViPEr package
+- added idle shell (self.pyshell)
+- reworked addLibrary, showLibrary, added new method loadLibrary:
+  we have a new mechanism to source resource files, in there the node
+  libraries are specified as a dictionary of key/value pairs
+- added a new method sourceFile to source resource files
+
+
+widgets.py:
+- updated the doc to better describe what visibleInNodeByDefault exactly means
+
+
+ViPEr:
+VPE.py:
+- subcategories in libraries are now sorted by name
+- removed threads constructor option
+- moved make lock objects to NetworkObject
+- added support for pause and stop buttons
+- added libraryNodesFont attribute to editor. If None (default) the nodes in
+  the libraries use the same font as on the Canvas.
+- modified nodeLibraries to check for packages before adding library
+- modified addToolbarButtons to use findPackagePath.py
+- added module finder
+- fixed bug in search that caused "read" not to find second read node
+- cleaned the method showLibrary(): added two new methods:
+  createLibraryCategoryFrame() and addNodeToLibraryCategoryFrame()
+  This allows the NetworkEditor/simpleNE.py class NodeLibrary method
+  addNode() to be much shorter since it reuses this new code.
+- This also fixed a bug where PMV would raise an exception when loading
+  a second molecule while ViPEr is running
+- class NodeLibrary and NodeProxy moved from NetworkEditor to here
+- self.libraries dict moved here
+- added a createMenus() method to add new menus to the main menu bar
+- added a Libraries menu
+- added load libraries to Libraries menu
+- updated the loading of libraries:
+   - added a loadLibrary method
+   - updated loadLib_cb and addLibrary and showLibrary
+     library can be either a string or a NodeLibrary instance
+
+
+StandardNodes.py:
+- moved them back to the ViPEr package
+- added the attribute isSchedulingNode=1 to the Iterate Node
+- the NodeLibrary moved from NetworkEditor to ViPEr. Fixed the import
+  statement.
+
+
+Compatibility Information
+
+- multi-threaded (MT) execution on certain Silicon Graphics platforms and on
+  certain Windows platforms can lead to core dump. Therefore, we added a test 
+  to the viper script that turns MT off when runnning on those platforms. The
+  user can still choose to run single-threaded or MT execution once ViPEr is
+  running.
+- moving StandardNodes back to ViPEr breaks all existing networks
+  Solution: edit network save-file and change the line
+  'from NetworkEditor.StandardNodes import ...'
+  to
+  'from ViPEr.StandardNodes import ...'
+
+
+Known Issues
+
+- saving networks with macro nodes does not work currently. This will be fixed
+  as soon as possible
+- Undo is disabled since it is currently broken
+- Hyperbolic Scaling was removed from the menu since this was never working
+  properly
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Release November 25, 2002
+-------------------------
+
+What's New
+
+- StandardNodes moved to NetworkEditor (see Compatibility Information)
+- added toolbar buttons (icons) with balloon help
+- added support to load nodes in different libraries
+- nodes are now displayed sorted by node name
+- changed showLibrary so that the user can now type the node name in the
+  node library window and the canvas will scroll to the corresponding node
+- added regression tests
+
+
+Bug Fixes
+
+- fixed some problems in adding nodes to library interactively
+
+
+Compatibility Information
+
+- multi-threaded execution on Silicon Graphics platforms can lead to core 
+  dump. Therefore, the user can choose to run single-threaded execution
+  which works fine on SGI.
+- moving StandardNodes to NetworkEditor breaks all existing networks
+  Solution: edit network save-file and change the line
+  'from ViPEr.StandardNodes import ...'
+  to
+  'from NetworkEditor.StandardNodes import ...'
+
+Known Issues
+
+- saving networks with macro nodes does not work currently. This will be fixed
+  as soon as possible
+- Undo is disabled since it is currently broken
+- Hyperbolic Scaling was removed from the menu since this was never working
+  properly
+- removed show special ports entry from menu nodes as it is broken

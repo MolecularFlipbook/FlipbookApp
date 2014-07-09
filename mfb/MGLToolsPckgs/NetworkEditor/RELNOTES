@@ -1,0 +1,1006 @@
+Network Editor Release Notes
+=============================
+-----------------------------
+Release 1.5.4 (November 2008)
+-----------------------------
+itemBase.py
+ - fixed some problems in UserPanel related to the No GUI execution of networks
+ - added NoGuiNetworkBuilder, NoGuiVPE and NoGuiExec classes to have an
+   editor object even when we run withjout the gui. This enables the execution
+   of network with macros as standalone programs
+ - added class Communicator to support socket-based communication with network
+   running as independent process
+ - named the network process-`pid` during remote execution
+ - added debug=False to to node.run() method
+ - added select() to read from stdin and execute commands gotten from there
+   when the network runs in a detached process
+ - introduced button "run saved network without gui"
+ - running network can be stopped with user panel
+
+items.py
+ - now for macro network we are looking for the main network name
+ - introduce typeManager for network when running without gui
+ - run network withoout gui with separate stop button
+ - saves raw values (r"") for types.StringType
+ - introduced splitratio for connections
+ - repaired blocking feature to enable data loop
+ - corrected small bug when saving nodes inheriting original node
+ - got rid of the reference to global 'Vision.ed' in OpalUtil
+
+net.py
+  -now run pause and stop buttons correspond to the current network
+  -corrected saving categories for webservices
+  - added the clientSocket variable in the main scope of the server when command is executed.
+    This variable point to the socket from which the command came from and can be used 
+    to specify where results should be sent back.
+  -added test for empty connection list when calling select (necessary on windows)
+  -added class Communicator to support socket-based communication with network
+   running as independent process
+  - named the network process-`pid` during remote execution
+  - added GANTT diagram for time profile and debug capability
+  - added node.nameInlastSavedNetwork to save name of node in network executed
+    in a remote process
+  - introduce typeManager for network when running without gui
+  - added help to run network without gui
+  - default network are in imediate mode
+  - repaired blocking feature to enable data loop
+  - now Network.freeze simply set runOnNewData to False
+  - added arg -w on command line of stand alone network to run with or without vision
+
+ports.py
+  -repaired special ports icon position
+
+simpleNE.py
+  -added resourceFolder argument which defaults to 'mgltools'
+  -solved rare problem when node name already exists
+  -changed "continuous run" into "immediate run"
+  -quit open in the correct window when several instance of vision are running
+
+
+widgets.py
+  -repaired griding of widget when it moves between node and param panel
+  -now for macro network we are looking for the main network name
+  -added bindToRemoteProcessNode(), def _procTrigger() and
+   def unbindFromRemoteProcess() to support binding GUI to remote process
+   execution
+
+-----------------------------
+Releases 1.4.6 - 1.5.2 (July 2008)
+-----------------------------
+--Moved from Numeric to numpy
+
+Glyph.py
+  - new file
+
+LICENSE
+  - -added TSRI to the copyright part.
+
+customizedWidgets.py
+  - mousewheel in scrollabled canvas
+  - now widgetsOnBackWindowsCanGrabFocus is in mglutil.gui
+
+datatypes.py
+  - added type 'object' as synonym for 'None'
+  - repaired casting to list
+
+itemBase.py
+  - better updateGuiCycle and solved re-run of stopped node
+  - when the network stops, the last node hasn't run properly,
+    so it is marked with forceExecution 1
+  - corrected error on postedmenu when delete connection
+  - introduced "soft run" in vision
+  - now parameter panel otion is immediate by default
+  - first commit of NOGUI execution of networks
+  - set runOnNewData to True while implementing, got rid of autorun
+  - now parameter panel otion is not immediate by default
+  - now networks runs in saved directory
+
+items.py
+  - network don't freeze anymore, just the nodes in it
+  - repaired networkDefaultDirectory
+  - now network reloads the opal web categories
+  - set runOnNewData to True while implementing, got rid of autorun
+  - renamed runOnConnect into runOnNewData and generalized it to new data and set it to false
+  - stop network from running when we rebind widget at loading time
+  - in function node pos args can have widgets too
+  - correct rebind widget
+  - now pmv command can be cut and pasted
+  - repaired saving of RunFunction node
+  - added filebrowser for input files in function node
+  - added combobox for selection in function node
+  - now parameter panel option is not immediate by default
+  - now widget's labels can have ballons
+  - repaired saving of pmvviewernode
+  - now FunctionNode can be saved with importString
+  - readded construct parameter
+  - FunctionNode takes function or string
+  - introduced node Split
+  - now FuntionNode has dynamic output ports
+  - started dynamic output ports
+  - selfGeneratingNode is now FunctionNode and eval is applied on the commandString
+  - now selfgeneratingnode is not self-subclassed but use args on addNode()
+  - corrected menu label
+  - corrected bug in adding input port to doit function
+  - made sure adt and pmv run without vision
+  - introduced networkDefaultDirectory
+  - automated reload of modified libraries
+  - correct reload of overwritten nodes in libraries
+  - user library can be reloaded
+
+macros.py
+  - solves issue with saving macro nodes introduced buy noGuiRun
+  - now runOnNewData is using reference_value
+  - set runOnNewData to True while implementing, got rid of autorun
+
+net.py
+  - better updateGuiCycle and solved re-run of stopped node
+  - when the network stops, the last node hasn't run properly,
+  - so it is marked with forceExecution 1
+  - introduced "soft run" in vision
+  - now runOnNewData is using reference_value
+  - now the nodes are not ran anymore when we load the network
+  - corrected save for FunctionNode
+  - adjusted menu shortcuts
+  - removed adding of local path to sys.path
+  - corrected filename for self running network
+
+ports.py
+  - objects can retain their current position when reparenting in vision
+  - stop network from running when we rebind widget at loading time
+  - corrected save for FunctionNode
+  - corrected getdescr, originalDatatype is returned only for inputport
+
+simpleNE.py
+  - better filter for open and save dialogs
+  - repaired networkDefaultDirectory
+  - runOnNewData has an icon
+  - now we can loadNetwork without taking the focus
+  - now fonts are automatically saved in vision
+  - repaired vision shell
+  - now vision can re-run
+  - argument "ins" can be pass to runVision()
+  - added keyboard shortcuts
+  - better font size on mac osx
+
+
+widgets.py
+  - repaired networkDefaultDirectory
+  - now runOnNewData is using reference_value
+  - renamed runOnConnect into runOnNewData and generalized it to new data and set it to false
+  - added combobox for selection in function node
+  - corrected default value for labelBalloon
+  - corrected save for FunctionNode
+  - now widget's labels can have ballons
+  - removed useless NERadioButton
+  - made sure adt and pmv run without vision
+  - corrected widget filename path on win32
+  - repaired configure of initialValue
+
+
+
+-----------------------------
+Release 1.4.5 (May 2007)
+-----------------------------
+
+New features, bug fixes:
+
+customizedWidgets.py
+ - introduced widgetsOnBackWindowsCanGrabFocus
+   now, on windows, the widget grab the focus only if the window is already activated.
+
+items.py
+
+ - corrected bug when copying node with deleted port
+ - corrected widget delete when port has been deleted and recreated
+
+macros.py
+ - changed contextual menu 'Delete' network into 'Close' to solve bug
+
+net.py
+ - now we run the nodes before the connection (in the saved network)
+
+ports.py
+ - now, default port data is 'no data yet'
+
+simpleNE.py
+ - added "Open Recent" menu
+
+widgets.py
+ - introduced node ScrolledList
+ - fixed to set _modified =True in NEEntry Button widget.
+   Now entry widgets in saved networks remember values
+
+
+-----------------------------
+Release 1.4.4 (December 2006)
+-----------------------------
+
+New features, bug fixes:
+
+ - moved user panels to the network and added delete user panel handling
+ - added datatype 'coord2'
+ - introduced self launchable network depending on the existence of a user panel
+ - moved user panels to the network and added delete user panel handling
+ - removed menubar in user panel, made buttons instead
+ - introduced placer in user panels
+ - repaired bug when deleting connections, the callback can destroy some connections in the list
+ - we don't restore the pmvViewer states on first run (only for regular viewer)
+ - moved n.beforeRemovingFromNetwork() after deleteConnections()
+ - introduced node StickImageNE
+ - we don't run automaticaly the saved network anymore
+ - corrected the writing of launchVisionToRunNetworkAsApplication()
+ - moved user panels to the network and added delete user panel handling
+ - introduced self launchable network depending on the existence of a user panel
+ - introduced placer in user panels
+ - revised saving network as application
+ - a safer saveNetwork()
+
+------------------------------
+Release 1.4.3 (September 2006)
+------------------------------
+
+New features, changes:
+ - Network connections are highlighted in pink when mouse is over it.
+ - node 'show/hide GUI' is deprecated;
+ - reparenting menu is only for geometry nodes;
+ - modified 'Next parenting' to affect any parenting;
+ - introduced new SelectMultipleGeometry;
+ - improved casting and validation;
+ - suppressed unused ObjectType;
+ - now loading of network in pmv shows both regular and pmv networks at the same time; 
+ - introduced pmv vision network as _pmvnet.py;
+ - now when you delete a macro, the currentNetwork doesn't change anymore;
+
+Bug fixes:
+
+ - corrected glflabels when several labels are given;
+ - corrected name proposal when saving new node;
+ - corrected saving of nodes for userlib;
+
+
+-----------------------------
+Release 1.4.2 (May 2006)
+------------------------------
+Changes and bug fixes:
+
+Editor.py
+-corrected small bug to allow node saving when we delete a port
+-now macroNode only permits single connection ports.
+-corrected bug when deleting output ports
+-corrected bug when renaming ports
+
+datatypes.py
+-corrected validate in ArrayType
+-introduced StringType and ObjectType based on anyarraytype
+-now node save source code generates necessary lines to load synonyms
+-introduced Types files per library
+-corrected getTypeFromClass to return the instance of AnyArrayType for None
+-add indice2 type
+
+itemBase.py
+-corrected bug related to "show legend" and apply.
+-corrected bug when closing colormap settings
+-corrected bug when closing colormap settings
+
+items.py
+-cascade menu for FastLibs in vision toobar, smaller icon for diamond ports,
+ smaller and toggable port's icons in the library GUI
+-now the nodes are drawn with their ports in the GUI as in the networks
+-better comments and menu lines on "save source code"
+-mRequiredTypes and mRequiredSynonyms are class variables in the class node
+-we prepare the save node to load types and widgets when instanciated
+(we still need to find a solution to load synonyms).
+Commented code that displays port in library vision gui
+-corrected bug when saving colormap node source code,
+-reduced default colormap node to 16 values
+-corrected bug on saving doit function when saving macros,
+-corrected bug on automatic loading of nodes in mydefaultlib
+-object's states are now saved at the end of the networks,
+- fixed NetworkNode.outputData to allow outputing None
+-added try: arround connections in saved networks
+-dependent code for nodes doesn't save doit if not necessary,
+ when the port name changes, it changes in the code as well
+-corrected bug when saving colormap node source code
+
+net.py
+-corrected bug on saving doit function when saving macros,
+-corrected bug on automatic loading of nodes in mydefaultlib
+-now parenting geometry nodes can be done througth macros
+-added try except around masternet run() in saved network
+
+ports.py
+-corrected getDataStr to accept single values as Numeric array
+-changed gray to make not required ports more differentiable
+-adjusted port's display, now not required ports have a gray outline
+-input ports outline in vision library gui are black, gray or red.
+-modifications to prepare drawing the port icons in the vision gui
+
+simpleNE.py
+-added self.pyshell.begin() and self.pyshell.close()
+
+Release 1.4.1  (March 2006)
+-------------------------------
+What's New since 1.3alpha2:
+--------------------------
+-In datatypes.py:
+  * moved colorRGB and colorsRGB types to NetworkEditor.datatypes;	
+  * moved the type InstanceMatricesType from NetworkEditor to DejaVuNodes;
+  * added support of moving widget to macroParamPanel
+-In itemBase.py:
+  * replaced 2 calls to c.tk.call by a single one in NetworkItems.run
+  * modified port.getData to always print message if editor.verbose is true
+    and data is bad or missing
+  * modified NetworkNodeBase.computeFunction to turn node outline orange if data is missing
+  * made NetworkItem.run check for 'Stop' status to avoid overwriting orange
+    outline with execution failed outline color
+-In items.py:
+  * added a check for the existance of initialValue in widgetDescr of unbound
+    widgets when generating source code.
+  * added node.ischild(node) method to find out if a given node is a child of another
+    one.  This is used in net.runNodes to remove children nodes of nodes who
+    return 'STOP'
+  * added safeName() method to NetworkNodeBase to remove all bad symbols from
+    node name so we can use node name in saving network.
+  * added NetworkNodeBase.getUniqueNodeName() to return a unique name usable
+    as a variable in a saved network. Changed all definitions of nodeName
+    to call this method instead
+  * modified getNodeSourceCodeForWidgetValue to Set widget with run=1. That way
+    Root nodes will present the data on their output port when restored.
+  * modified net.getNetworkCreationSourceCode to freeze network before
+    connecting nodes and unfreeze after the conections are created.  This avoids
+    running the network when it is restored.
+  * replaced inputPorts[] by getInputPortByName() and outputPorts[] by getOutputPortByName()
+-In net.py:
+  * modified scheduling to propagate node return value. Returning 'stop'
+    prevents children nodes from running again
+  * added new accelerator <CTRL-f> to freeze/unfreeze the current network.	
+  * added self.runOnConnect attribute to network to be able to prevent
+    execution of the hold node upon connection.  This was causing macros such
+    as rotateScene to execute when restored from a file
+  * made node2 runn upon deletion of a connection only if port2 is not required.
+  * modified net.deleteConnections to set _newdata to True in input port of
+    child node and schedule the child node's execution
+  * check if the mouse moved only a few pixels upon releasing left mouse button.
+    If we are below a threshold we assume we did not move. This is usefull for
+    deselecting selected nodes for people who don't have a steady hand (who move
+    the mouse when releasing the mouse button, or when the mouse pad is very soft
+    and the  mouse moves because it is pressed in the pad...)
+  * added self.runOnConnect attribute to network to be able to prevent
+    execution fo the chold node upon connection.  This was causing macros such
+     as rotateScene to execute when restored from a file
+  * modified special connection to use stipple gray75 and with 4 by default
+  * added comment in net.runNodes about status==0 .. I am not sure when this
+    happens if at all .. and if we shoudl do the same as for stop or not
+  * modified runNodes method to no longer break out of the loop running nodes
+    when a node returns 'Stop', but rather remove all the children of this node
+    from the list of nodes to be run.
+  * modified getNodeSourceCodeForWidgetValue to Set widget with run=1. That way
+    Root nodes will present the data on their output port when restored.
+  * modified net.getNetworkCreationSourceCode to freeze network before
+    connecting nodes and unfreeze after the conections are created.  This avoids
+    running the network when it is restored.
+-In ports.py:
+  * changed PortsDescr.append to accept eiter a single dict or a list of kwy=values
+-In widgets.py:
+  * added newValueCallback method to set _newdata when widget is modified so that portHasNewData 
+    works properly.  This function is now the command bound to the widgets instead of scheduleNode 
+    which is called by newValueCallback.
+  * added lockedOnPort key word for widgets allowing a programmer to disable
+    widget unbinding.  This facilitates writting the doit() method of the node
+    as it can be expected that the widget is always there
+-In Editor.py:
+  * added CodeEditorIdle_python24 class for editing files with python2.5 idlelib.EditorWindow
+-In macros.py:
+  * made InputPortNode the last root in the list to be run by InputPortNode and
+    removed OutputPortNode from this list as it is not a root !
+  * modified MacroNetwork.getNodeDefinitionSourceCode to also freeze before
+    creating connections and unfreexing after
+  * modified getHeaderBlock, getInitBlock, getBeforeBlock, getAfterBlock in
+    MacroNode to ignore self.library because when we get source code we want
+    to subclass MacroNode and not the original Macro
+  * 
+
+BugFixes:
+---------
+-In Editor.py:
+  * older versions of idlelib which may be distributed with Python cause problems with the source code
+    editor. Modified the test in Editor.py so that it will fail when an older idlelib is detected and 
+    use the Pmw code editor instead.
+-In itemBase.py:
+  * fixed frozen color when selecting/unselecting and when coloring
+    by Node Library. Even if the node is colored by library, it is colored blue when frozen.
+-In items.py: 
+  * refresh network did not color the node icons correctly. Frozen color or node library color 
+    was lost. This was fixed in buildNodeIcon().
+  * fixed Node's updateCode() method which as assuming there is no space
+    between doit() and the following self.
+  * fixed safeName to avoid names starting with a number
+-In macros.py:
+  * saving a macro with no connections would raise an exception. The problem was that we defined 
+    "macroNetworkName" inside the test if we have len(connections). Moved the definition outside 
+    of the test
+  * autoRun=False was not saved for macro nodes. Fixed this.
+  * added macNet._originalNodes = [] and macNet._originalConnections = [] in
+    MacroNode.buildOriginalList to make sure that we build the list starting from
+    an empty list.  This caused a bug in the CoarseMolSurf macro which was
+    written to subclass the UT_IsoDecim macro.  Its beforeAddingToNetwork method
+    called the on of UT_IsoDecim which put its nodes into the list. then the
+    call to buildOriginalList at the end of beforeAddingToNetwork of the macro
+    appended to the lsit of nodes from UT_IsoDecim
+-In widgets.py:
+  * fixed ScrolledText widget to save its value, and 'right-click' to pop up menu.
+  * fixed a bug in TkPortWidget: in the configure method we need to test if tkOptions is not None, 
+    since this might be None and then we cannot iterate over it
+
+
+
+
+Release September 1, 2004
+-------------------------
+
+What's New (compared to release Sep 18, 2003)
+
+- added a widget editor to modify the appearance of a widget
+- added a widget grid editor to modify the grid position of a widget and
+  to modify the label of a widget
+- invisible ports are no longer taken into account when computing the position
+  of ports. Hiding a port (by binding a widget), or deleting a port will cause
+  all ports to the right to be shifted to the left.
+- displaying a previously hidden port (by unbinding a widget) triggers moving
+  all ports right of it to the right.
+- added new method updateIconPosition() to ports.py which moves the port icon
+  and its connections
+- added new port attribute port.visible which is needed for the new
+  setPortPosX()
+- made widget background colored
+- addInputPort() and addOutputPort() methods in items.py now generate unique
+  port names and correctly update node.inputPortsDescr/outputPortsDescr
+- update ports.py buildIcons() method to be more clever when resize the node
+  icon, added support for SpecialPorts, and most importantly using the
+  correct tags for Tkinter
+- added new method destroyIcon() to ports.py that destroys port menu and
+  port icons
+- moved startConnectRubberBand, drawRubberBand, createConnection from
+  class OutputPort to Port so that SpecialPorts (who now inherit from Port
+  and not from InputPort or OutputPort still work)
+- cleaned up SpecialPorts:
+  - they no longer implement their own buildIcon() and createIcon() method
+  - but they implement a computePortPosX() method now
+- added a new TreeView widget to introspect a node or data and replaced the
+  idlelib introspect GUI with this new widget, which allows us more flexibility
+- added autoRun attribute to itemBase; moved frozen attribute from NetworkNode
+  to NetworkItems; added frozenTk and autoRunTk variable to NetworkItems;
+  added toggleAutoRun_cb method to NetworkItems; moved toggleFrozen_cb,
+  freeze and unfreeze methods from NetworkNode to NetworkItems; added check to
+  run method to not run nodes with autoRun==False or frozen==True;
+  added autoRun constructor option to NetworkItems
+- added new method _setModified() to access the attribute _modified
+- changed all direct access to _modified to go through this new method
+- completely rewrote the saving of networks: all methods called by
+  getNodeDefinitionSourceCode() were rewritten. Note: older networks can still
+  be loaded!
+- no code modification, but an organisatory change:
+  moved code blocks that belong together (code for saving a network,
+  code for generating source code)
+- added a new attribute _id to NetworkNode which is a unique number and used
+  when saving networks
+- added configure() and getDescr() to NetworkNode which is now used by
+  save/restore, copy/paste; changed getNodeSourceCodeForModifications() to 
+  use the new framework with configure() a node
+- added new attribute hasMoved which is set to True if the node changes its
+  position in a network
+- show/hide special ports is now handled by the node's configure() method
+- showSpecialPorts() and hideSpecialPorts() set node._modified=True
+- changed attribute value self.specialPortsVisible from 0/1 to True/False
+- added new method resetTags() to node which resets both _modified and
+  _original
+- changed all getNodeSourceCodeFor<NetworkItem>() methods to use _original
+- reworked the getNodeSourceCodeForPorts() method to make it more
+  human-readable
+- adding or deleting a port does no longer set the node's _modified to True
+- deleting or unbinding a widget now sets port._modified=True
+  We use this information now when we create code to save a network in
+  getNodeSourceCodeForWidgets()
+- saving networks no longer sets widget values by default, but only if the
+  widget value is different from the class defined initialValue
+- setting widget value now sets widget._modified=True
+  This allows to save/restore macro nodes from node libraries with much less
+  code to be saved (no more setting all widget values again)
+- updated connection.getSourceCode: we now test if the connection goes to a
+  MacroInput/OutputNode, and whether  we have to connect to 'new' or to an 
+  existing port (to avoid creating new ports)
+- macros now use again the getNodeDefinitionSourceCode() method to generate
+  a string to save data
+- when saving, if we hit a macro node, we first recursively loop over all
+  macro networks and add all the macro nodes, then we start filling the
+  leaf macro networks with nodes, and connect them, then move down the tree
+  towards the root macro(s)
+- added some "smartness" to saving macros: if the macro comes from a node
+  library and we just change a widget value, we might not have a handle to the
+  node. Thus, if we reach such a case we now check if the node has already
+  be declared, if not, we add a line.
+- deleted all methods in MacroNetwork since we no longer need them (the editLog
+  is gone)
+- changed signature of method getNodeSourceCode(): we no longer pass a
+  keyword nodeNumber and forLib
+- added a new base class NetworkItemBase from which all network items inherit
+- changed attribute .editor to be a weakref and added mechanism to remain
+  backwards compatible (even though this is a weakref, we can still access
+  it as it would be a normal attribute, we do not need to call it ->
+  not object.editor()
+- changed access to .editor to use the new method getEditor()
+- moved the method updateCode() from ports.py to items.py, subclassed this in
+  macros, changed code wherever this was accessed
+- the paramPanel immediate flag can now be set through the node's configure()
+  method with the new keyword paramPanelImmediate. Also, the node's getDescr()
+  method returns this new keyword. This is used to save the status fo the
+  immediate flag of the param Panel.
+- added new class UserPanel
+- added support to UserPanel for moving widgets and labels using arrow keys
+  (after middle clicking to select widget to move)
+- added try/except statments to saved networks allowing to restore partial
+  networks
+- made connectNodes accept either port numbers or port names
+- added 2 metods to node class getInputPortByName and
+  getOutputPortByName
+- double-clicking on nodes with displayed paramPanel now hides the panel
+  (double-clicking again displays panel, etc.)
+- added new method getSize() that returns a tuple with (width, height) of this
+  node, in pixels
+- added blocking attribute to connections to allow for cycles
+- added a new class CodeEditor that inherits from either idlelib if avialable
+  or from Pmw. SourceCodeEditor and CallbackEditor use this new base class
+- deleted classes SourceCodeEditorIdle and SourceCodeEditorPmw in Editor.py,
+  fixed methods there to work with the new additions and changes
+- removed show/hide Param. Panel from node menu, replaced this with a new
+  checkbutton entry named "Parameter Panel", added new variable paramPanelTk,
+  double-clicking on node to show Param. Panel also sets this variable
+  correctly
+- added a checkbutton under Edit menu to togle splined connections on and off
+- added toggleSplineConnections call back to betwork for handling checkbutton
+- added setSplineConnections methos to network to set smooth option on and off
+- added support to move selected nodes with arrow keys. Pressing arrow ke
+  moves selected subgraph 1 pixel. Pressing SHIFT+Arrow key moves 10 pixels
+- made dynamic inputports of macrooutput nodes not required
+- added new accelerators for some operations (such as load/save network),
+  create macro, etc. One can now hit CTRL+l to load a network, etc
+- moved the code to force node execution upon instanciation from
+  Vision.VPE.endDD to NetworkEditor.net.AddNode so that nodes restored from a 
+  file behave the same way as when they are created from a library 
+  interactively
+- clarified definition of 'waiting' for execStatus
+- set execstatus to running and reset to waiting in run method
+- removed attempt the acquire and release runlock in toggle pause method as
+  this method calls pause and resume which each do that
+- added runAgain attribute to handle rerunning the network in case a run
+  was requested while te network is already running
+- added new method deleteConnection() which accepts "node1, port1, node2, port"
+  (versus deleteConnections() which accepts a list of connections)
+- added new method nodeIdToNumber(): network nodes now have a unique ID. This
+  method allows to get for a given node the current index in network.nodes
+- modified connectNodes to test singleConnection is True to support 'auto' as
+  a valid value for this attribute
+- adding a node to a network tags the network modified
+- added source code to saved networks to restore user panels
+
+Bug Fixes
+
+- Fixed ParamPanel applyFun (was node.schedule) which would not trigger node
+  to run, new applyFun is node.schedule_cb, which first sets
+  node.forceExecution=True, then calls node.schedule()
+- deletePort() method now accepts and properly propagates keyword resize
+  used to resize the node icon
+- rewrote large parts of itemBase.deletePort() method:
+  - special ports are now correctly treated
+  - proper deletion of port icons
+  - proper handling of node.inputPortsDescr and node.outputPortsDescr
+  - proper computing portposx for remaining ports
+  - proper renumbering etc for remaining ports
+- fixed a bug in items.py when network is refreshed and special ports are shown
+  the node menu correctly displays now 'hide special ports'
+- fixed items.py buildIcons() method:
+  specialPorts buildIcons() method is now called here instead in
+  addSpecialPorts() method (before, we would build the icons twice)
+- deleted the Port attribute "tags", which was the source of many strange
+  problems, for example, after refreshing a network and then moving a node
+  would also move port icons of other nodes, SpecialPorts would not move at
+  all, and others... this is now fixed
+- fixed a bug when exiting with a expanded macro network: Pmw wants to set
+  the current network after a network was deleted which would fail here
+  since the macro's main network was already deleted from editor.networks.
+- fixed bug that caused node to run when asked to by the used if autoRun was 
+  False
+- commented out checking for new data in run since this will be done anyways
+  in computeFunction called by run
+- fixed a bug when exiting with a expanded macro network: Pmw wants to set
+  the current network after a network was deleted which would fail here
+  since the macro's main network was already deleted from editor.networks.
+- compeletly rewrote the node.move() command, which is now using the
+  network.moveSubGraph method, that also updates connections.
+- fixed moveSubGraph() method to update connections when nodes move, added
+  new keyword absolute=False, that allows to move the subgraph BY dx,dy or
+  TO dx,dy, when absolute=True
+- added new method updatePosXPosY() that sets the node's posx and posy
+  this method is used in quite a few instances in net.py
+- bugfix: node.posx and node.posy were not set correctly. Now, when a node
+  is moved, we call node.updatePosXPosY() to set these two attributes
+  correctly. We use the upper left coordinate of node.outerBox as posx, posy
+- fixed finally the problem we had that nodes move after adding to a network
+  when they have widgets bound. There was some very old code in buildNodeIcon
+  that moved a node after instanciation, but with wrong values. Fixed this, 
+  also set initial posx, posy to 0, moved the 'move' statement from 
+  buildIcons to buildNodeIcon where it belongs
+- fixed a bug in determining the needed nodesize: if the last port was
+  invisible, this would not work properly
+- set port attribute width, height to default None, updated this in all files
+- changed behaviour of ports so that they now use the new width, height
+  defined in datatypes to build port icon; also updated datatypes; we no 
+  longer need port shapes 'rect1', 'rect2', etc, but just 'rect' since
+  now the user can specify width, height and define the shape. Note:
+  currently we continue to support keywords such as 'rect1', but we ask users
+  to update their datatypes to use the new scheme
+- refreshing a network would add duplicate menu entries to connections pulldown
+  menu. Fixed this by implementing a destroyIcon() method in
+  NetworkConnection, and in net.py deleteNodes() now calls this method
+  properly (instead of just looping over self.connections and set c.id=None)
+  as was done previously
+- updated special ports to use proper icon size (8x8, not 4x4)
+- saving and restoring a node with displayed special ports would fail because
+  we did not update the pulldown entry. Fixed this in items.py:
+  we now call directly the two methods show/hide special ports, rather than
+  calling a callback function. The two methods do implement the proper
+  setting of the pulldownmenu; restoring a network with nodes with special
+  ports connected would fail because in net.py the connectSpecialNodes()
+  method was not updated to find ports by names (instead of numbers)
+- fixed yet another bug with special ports: if there was a connection,
+  refresh network would not properly restore the connection
+- fixed saving nodes with unbound widgets (we now save "nodeX.unbindWidget(.."
+  instead of "nodeX.deleteWidget(..."
+- fixed identation bug in saving networks which could cause endless loop
+- fixed a bug in getNodeSourceCodeForPorts where ports where not properly
+  deleted if more than 1 port in a row were deleted
+- bugfix in saving widget values: if the value is not of type string, we should
+  not put the value in quotes.
+- made checking for 'stop' pause' and 'frozen' case insentitive
+  (scheduling nodes)
+- fixed a bug in node.computeFunction that caused string arguments passed
+  to dynamic function to be lower-cased
+- changing the data on a port now also updates the Introspect GUI
+- fixed a bug in setting the source code: if we use " instead of ' the code
+  is no longer loadable. Using string.replace in setFunction()
+- fixed a bug in saving source code: since port.getDescr() adds a key
+  _previousWidgetDescr if the widget of this port is unbound, this gets passed
+  to addInputPort(). Updated this method to accept _previousWidgetDescr and
+  add this as an attribute to the port. This allows the port to rebind the
+  widget. 
+- saving a node with a deleted widget now saves a lines to delete the widget,
+  not unbind it
+- saving a node with an unbound widget now first saves a line to set the
+  widget value to the current value, THEN adds a line to unbind the widget.
+  Therefore, after rebinding the widget, one gets the previous value, not the
+  default value
+- fixed cut/copy/paste problems with nodes inside macro networks that came
+  from a node library: these nodes are set _original=True and therefore
+  did not generate source code upon cut/copy
+  Fixed this problem by adding a new keyword ignoreOriginal=False to the
+  signature of getNodeDefinitionSourceCode() which overrides the tests in there
+- saving source code of nodes that came from a node libary (like most nodes)
+  we now inherit from the original node. This fixes a bug where we would
+  loose methods that were defined in the original node.
+- Moved updating the source code editor GUI into the setFunction() method
+  where it actually should be done. Now, configuring the node with new code
+  automatically updates the GUI.
+- fixed a bug in copy/paste nodes inside a macro network that came from a
+  node library: we copied the nodes but not the connections because we did
+  not pass ignoreOriginal=True to the connection.getSourceCode()
+  Needed to update methods in macros.py, items.py and net.py
+- bugfix: if only the compute function inside a macro node from a node libary
+  was modified, we forgot to call the checkIfNodeIsDefined() method to add
+  a line to get a handle to this node. This is now fixed.
+- the temporary editor attribute _tmpListOfSavedNodes is now an attribute
+  of NetworkBuilder. This change was needed to address the issue above.
+  Needed to update items.py, macros.py, net.py and simpleNE.py to use this
+  new attribute properly
+- made list of children nodes unique in scheduleChildren()
+- modified node's rename method to avoid quotes in name, which could cause
+  problems for saving/restoring and copy/paste
+- bugfix: deleting a node with an open widget editor now deletes this editor
+- fixed method moveSubGraph which did not move connections properly
+- fixed a bug in refreshing a network with nodes with widgets bound to node,
+  and the node was expanded. Prior, this would cause the node icon to be
+  redrawn compeletly wrong. Fixed this by hiding the widgets in node before
+  destroying the node.
+- when we delete nodes, we do not want to update the node code signature.
+  Fixed this in deleteNodes()
+- fixed a bug in deleteNodes() method: We were looping over the ports and
+  inside the loop we would delete ports from the list we were looping over.
+  This caused all kinds of unpredictable results:
+  for example, deleting a node with open editor windows (such as port editor)
+  would not always delete these windows.
+- net.py: connectNodes now calls port's afterConnect callback BEFORE the node
+  is scheduled if data is present on the port
+- before and after connection callbacks can now return a new connection.
+  This allows these callbacks to replace the connection that has been made
+- check for valid callback name when editing port callback
+- fixed a bug in deleteConnection(): we could reach a condition where 'conn'
+  was undefined. Set conn=None by default.
+- prevented macro nodes and MacroInput nodes from executing  when they are
+  added to a network (they would execute because they have no inpout ports
+  before connections are created).
+- made input ports of MacroOutputNode singleConnection='auto' to prevent
+  creating a list of objects when there is a single parent
+- made stop, run set the execStatus in all macro networks in addition to the
+  current network.  This fixes the bug in which stoping a network with an
+  iterate in a Macro node would not stop the iteration
+
+
+Backwards incompatibilities
+
+1) Implemented much better handling of connect and disconnect events. This is
+   incompatible with nodes that implement a beforeConnect(), etc method:
+  
+   Deleted the methods beforeConnect(), afterConnect(), beforeDisconnect() and
+   afterDisconnect(). Added four new keywords to Port constructor:
+   beforeConnect, afterConnect, beforeDisconnect, afterDisconnect. The value
+   for these keywords is a textstring describing the source code for the method
+   to be carried out (similar to the node source code). Updated configure()
+   method of ports to handle these new keywords. Also, fixed configure()
+   methods of ports: the class OutputPort did not use the configure method of
+   the base class. Updated connectNodes() and disconnectNodes() methods in 
+   net.py to work with these new changes. Exposed these new features in the 
+   port editor: one can now use idlelib or a Pmw text editor to edit the
+   function.
+
+   Nodes which implement a beforeConnect() etc. method need to be rewritten.
+   For an example, please have a look at Vision/StandardNodes.py class ListOf
+
+
+
+Release Dezember 17, 2003
+-------------------------
+
+What's New (compared to release Sep 18, 2003)
+
+- added try except statments around node instanciation code in saved networks
+  This allows restoring networks with problems.
+- made connectNodes accept either port numbers or port names. The network
+  source code generation now uses the port's naem by default
+- added 2 metods to node class getInputPortfromPortFromName and
+  getOutputPortfromPortFromName
+- added a new getDescr() method for port description
+- added a getSourceCode() method in class NetworkConnection
+- commented out main menu entries to add/delete categories, to create 
+  libraries, to add nodes to libraries. This will be re-activated in a later
+  release (once these things work properly)
+- added optional argument updateSignature to deletePort method. Was needed for
+  runPmvCommand node
+- added capability to delete a node proxy icon in a category frame:
+  added deleteNodeFromCategoryFrame() method to class NodeLibrary
+  This method deletes the icon and calls a new rebuildNodesInCategoryFrame()
+  method that first deletes all icons and rebuilds the icons
+- added new method deleteSmallIcon() to items.py which deletes the node proxy
+  icon in a node library
+- added capability to change font of various GUI components:
+  - changing the font for node proxies (node icons in node library windows)
+  - changing network node fonts now works (using refresh to rebuild icons)
+    Note: I do not change balloon font for ports. Don't know if I should or not
+  - exposed this functionality in a Form accesible through the Edit menu
+- added a ChangeFont form to Forms.py
+- editor.font is now a dictionary that contains the fonts descriptions of the
+  various gui components, also removed attribute editor.libraryFont because
+  this is now stored in editor.font
+- added kw 'net=None' to refreshNet_cb() method in items.py
+- added new method getLeafNode() to find leaf node in a nested macro
+- added a couple more regression tests for load/save macros, delete networks
+  with macros
+- made network canvas grey75 so white arrows for None type can be seen
+- added methods isModified() and resetModifiedTag() to items.py
+- users can no longer save a network if it is an instance of a MacroNetwork
+  to prevent problems (i.e. saving the macro network but not the main net)
+- changed 'Color Node By Library' so that it will also color/uncolor all nodes
+  already present in all networks
+- changing the datatype of a port now sets the flag self._modifed=True
+- changed balloon help in ViPEr so that every GUI element has its own attribute
+  'balloons'. This fixes some problems where we have to re-create
+  Pmw.Balloon in order to move the yoffset, also this allows us to change
+  the font individually
+- toolbarbutton.py needed to be updated after this change
+- turned multi threading off by default
+- enabled changing widget master in Editor
+- fixed ParamsForm (widget editor) to only return modified values
+- fixed ParamsForm to handle boolean properly
+- allow None as a valid entry for int and float type (need for dial and
+  thumbwheel min and max)
+- added 'Cancel', 'Apply' buttons to widget editor
+- made widget editor destroy widget when new widget is built
+- added dict of currentValues to widget editor so we only add options that
+  are no default values
+- added a file browser button to the right of the Entry in the WithFileBrowser
+  widgets. This was done because on some Linux machines double-click event are
+  somehow lost on the Entry !
+- added menu entry 'Unbind Widget' to port menu. Unbinding a widget will
+  add menu entry 'Rebind Widget' to port icon. This makes un- & rebinding
+  widgets so much easier!
+- added type boolean to TypeManager
+- modified validation function of data type to return True instead of 1
+- made widget background colored
+- made widget's label background colored
+- added beforeConnect(port1, port2) and afterConnect(conn) methods to node
+- changed frozen color to light cyan which helps reading text in nodes
+- modified loadNetwork to replace underscores by minus
+- added borderwidth=3, relief='sunken' , bg='#c3d0a6' to node.iconMaster
+
+
+Bug Fixes
+
+- fixed missing applyCmd method in PMW-based code editor
+- many fixes in saving macro networks. Fixed indentation of nested macros
+- many fixes for saving widgets
+- fixed some issues with _previousWidgetDescr
+- deleting a port now updates the node source code properly
+- fixed problem in saving code for nodes that come from different files
+  such as done in the regression tests
+- fixed a bug in setting fonts on Windows machines
+- fixed deletion of nested macros
+- fixed a bug in getLibraryImportCode that would fail if a node has no library
+- fixed a bug in the exit_cb that would fail if a macro network is present
+  (i.e. red ink when exiting ViPEr)
+- fixed a bug in macros where a macro could not be saved/restored if the
+  macro name had a space in the name 
+- fixed import net from NetworkEditor rather than simpleNE in macros.py
+- deleting a network with a macro would not delete the macro-subnetwork
+- fixed creating user libraries and adding nodes to these libraries (Note: this
+  functionality is currently not exposed to users, wait for next release)
+- fixed a bug in deleting networks where sometimes a macro would not delete
+  its macro network. The problem was that in the Network.delete() method
+  we looped over self.nodes, but subsequently would delete an item from
+  self.nodes, which would result in unpredictable results. Simple fix was
+  to loop over a copy of this list
+- fixed a bug in copy/paste nodes which occured after changes in the
+  getLibraryImportCode() method (the signature of this method changed)
+- fixed some bugs in scaling nodes:
+  - we are now using the current node font rather than a system font when
+    scaling (which looked really ugly on some operating systems)
+  - show/hide widgets in node works again (sort of, this needs more work, at
+    least now it does show and hide the widget rather than raise an exception)
+  - resolved many conflicts with tags mixed up: we assigned node.iconMaster
+    to ports (port.iconMaster = node.iconMaster). This caused almost
+    unreproducible problems after 'refresh' was hit: port icons of nodes would
+    move when other nodes were moved, etc
+  - 'refresh' is supposed to reset scaling. However, we would use a wrong 
+    relposx so port icons would end up in wrong places after refresh. This 
+    was solved by calling setPortPosX() in createIcon() in ports.py
+  - 'refresh' would not reset the scaled port icons. This was because the 
+    node's attribute scaleSum was not reset to 1.0
+- creating a macro while the option 'Color Node by Library' was turned on
+  would fail. This is now fixed
+- fixed unbind / rebind widget in class InputPort. Fixed bugs and made methods
+  more clever (show/hide node widgets if specified previously, etc)
+- fixed default values for NEDial and NEThumbwheel in widgets.py
+- fixed many things in ParamsForm (the widget editor)
+- fixed bug which caused specified configuration options to be lost when
+  widget was rebuilt. For instance (size=60, type='int') would loose type
+- fixed a bug in copy/paste nodes inside a macro network: in the method
+  pasteNetwork_cb() where we execute the code object, we have to pass 'net' for
+  self, rather than 'self'
+- fixed a bug in cutting selected nodes, where the Cut and Copy buttons would
+  remain active and thus give the user the ability to overwrite the current
+  paste_buffer with an empty list. Cutting now disables the Cut and Copy
+  buttons
+- fixed a bug in pasting nodes when all networks were deleted. The Paste button
+  still remains active if there is data in the paste buffer, but no exception
+  will be raised if the button is pressed and no network is present.
+- fixed a bug in cut&copy nodes to prevent these operations on Macro Input-
+  and Output Nodes of Macro Networks. One can now safely "Select All" nodes
+  in a macro network and cut/copy them without copying these two nodes (which
+  will get automatically deselected now upon cut/copy)
+  Cut/Copy/Paste of Macro nodes of course still works as before
+- fixed bug that caused new nodes added to a frozen network not to be frozen
+- fixed a bug in widthFirstChildren
+- fixed bug in connectNodes. Port descr was assumed to have datatype key.
+
+Backwards compatible Changes (renaming of methods, attributes)
+
+- renamed method setPortPos() to setPortPosX()
+- renamed attribute modified to _modified, changed value to Boolean
+- changed in macro networks how macroinput and macrooutput node are saved
+- changed method getNodeDefinitionSourceCode() in MacroNode, split this in 
+  two halfes, main work is now done in MacroNode.getNodeSourceCode()
+- major overhaul of saving networks: changed the signature of all methods
+  involved in producing source code for saving networks
+- changed again how networks are saved. Everything is much easier now, because
+  we add the code to import all necessary libraries at the very beginning.
+  Macro Nodes need no longer to save a beforeAddingToNetwork() method, they
+  no longer have to loop over all ports to import libraries that are needed
+  for port data types, and they don't have to import the libraries again in
+  their afterAddingToNetwork() methods since this is now done at the beginning
+  etc, etc, etc. Removed getLibraryImportCodeHeader method, removed
+  self.libraryImportCache
+- moved deletePort() method from items to itemBase. Subclass this method in
+  items and in macros
+
+
+Backwards INCOMPATIBLE Changes
+
+- split addLibrary method of Network into addLibraryFromName and
+  addLibraryInstance. Addind an instance now requires to provide the module
+  where the instance is defined and the name (both as strings). This was needed
+  to generate the network descdription source code with the correct imports of
+  libraries.
+  - getLibraryImportCode was fixed in net.py and added to MacroNetwork
+    (macros.py)
+  - updated node libraries to reflect these changes
+
+Suggested Fix for users:
+Search and replace 'addLibrary' in existing saved networks with either
+'addLibraryFromName' or addLibraryInstance'
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+Release November 25, 2002
+-------------------------
+
+What's New
+
+- every node now has its own param. panel. The param. panel has now an
+  'immediate' checkbutton (on by default: this triggers node execution upon
+  value changes of widgets in the param. panel), an apply button, which forces
+  node execution, and a dismiss button to hide the param. panel
+- added multi-threaded execution model and added a lock and condition to the
+  network object such that iterate nodes can schedule the excution of
+  sub-networks for each value in their list
+- added support for cut, copy and paste nodes and connections
+- added selectAll (nodes) functionality
+- added mechanism to dynamically load libaries
+- StandardNodes are now part of the NetworkEditor
+- added new nodes to StandardNodes: ScrolledText, Multi-Checkbuttons, 
+  ChangeBackground (to change the background color of the ViPEr canvas,
+  call method, getattr, setattr, len, iterate
+- added more documentation to many nodes
+- added support for moving nodes by clicking and dragging with middle button.
+  When middle button is pressed on top of a node, this node becomes
+  temporarly selected and can be moved until the button is released.
+  When the button is released, the selection is restored.
+- added the ability to show/hide widgets in nodes by double clicking on the
+  node.
+- added ability to reshape connections using left mouse button
+- runNodes checks whether new data is provided on at least 1 input port
+  before executing node. This can be overruled by setting the new 
+  forceExecution flag. Inputports now know whether they have new data.
+- scaling nodes scales the label and hides widgets when node is too small
+- added eventHandler
+- added new menus to simpleNE, changed old ones
+- regression tests were added
+
+
+Bug Fixes
+
+- data viewer windows are now destroyed when the corresponding node is deleted
+- loading and saving networks was completely reworked
+- many issues in Editor.py were adressed and fixed
+- nodes now resize according to the ports, the label and the widgets
+- picking on node has now priority over picking on connections
+- refresh now restores the highlighting of the selected nodes
+- fixed bug that was not putting widgets in node to the proper location
+- moved ballons help down 30 pixels, to avoid flashing when balloon appeared
+  over node
+- fixed bug that caused widget value to disappear after show/hide/show.
+
+
+Compatibility Information
+
+- multi-threaded execution on Silicon Graphics platforms can lead to core 
+  dump. Therefore, the user can choose to run single-threaded execution
+  which works fine on SGI.
+
+
+Known Issues
+
+- saving networks with macro nodes does not work currently. This will be fixed
+  as soon as possible
+- Undo is disabled since it is currently broken
+- Hyperbolic Scaling was removed from the menu since this was never working
+  properly
+- removed show special ports entry from menu nodes as it is broken

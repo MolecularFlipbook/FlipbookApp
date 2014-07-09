@@ -1,0 +1,21 @@
+This folder contains the following examples of Vision network:
+
+pdb2pqr_net.py: reads 1crn from pdb.org saves it and runs pdb2pqr web service
+
+The following networks are here for historic reasons
+babel_net.py:  reads HIS.pdb, sends it to Babel web service at
+               http://mgldev.scripps.edu/services, that adds missing Hydrogens, 
+               which we then retrieve and display in PMV.
+
+msms_net.py:    reads HIS.pdb, sends it to MSMS web service at             
+                http://mgldev.scripps.edu/services, that computes molecular 
+                surface which we then retrieve and display in PMV.
+
+pdb2pqr_net.py: reads HIS.pdb, sends it to pdb2pqr web service at             
+                http://ws.nbcr.net:8080, that converts pdb to pqr
+                which we then retrieve and display in PMV.
+
+viperdb_met.py: sends '2plv' pdb_id to viperdb web service at           
+                http://mgldev.scripps.edu/services that retrieves 2plv.pdb
+                which we then display in PMV.
+

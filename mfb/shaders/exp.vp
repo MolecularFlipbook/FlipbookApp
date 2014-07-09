@@ -1,0 +1,10 @@
+varying vec3 n;
+
+void main()
+{
+	gl_FrontColor = gl_Color;
+	gl_TexCoord[0] = gl_MultiTexCoord0;
+	vec4 co = gl_ModelViewMatrix * gl_Vertex;
+	n = normalize(gl_NormalMatrix * gl_Normal);
+	gl_Position = gl_ProjectionMatrix * co;
+}

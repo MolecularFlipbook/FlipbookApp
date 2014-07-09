@@ -1,0 +1,419 @@
+
+Volume package Release Notes
+============================
+Release 1.4.5 May 2007
+
+Bug fixes:
+VisionInterface/VolumeNodes.py
+ - in UTVolRen node:
+    -- fixed  self.outputData(...) function call ( replaced utvolGeom output 
+       name by UTVolRen );
+    -- modified  appendGeometry() to add UTVolRenGeom object (volgeom)
+       to the viewer before calling volgeom.AddGrid3D method(in order to render
+       volume, volgeom  has to have the viewer attribute).
+ - added 'padding' input port to UT-Blur node to specify the size of the padding around a molecule.
+
+
+Release 1.4.4 December 2006
+---------------------------
+
+
+Release 1.4.3 September 2006
+----------------------------
+
+New features
+  -Binary AVS Field data parser is added.
+  -added all supported files in ReadAnyMap node.
+Bug fixes
+  -fixed orthoslice for axis Y in Grid3D.py;
+  -ContourSpectrum widget is now set correctly with min and max
+  -Corrected reader for AVS/UHBD in readANYMAP listchooser
+
+
+Release 1.4.2 May 2006
+----------------------
+Changes and bug fixes:
+
+VisionInterface/ContourSpectrum.py
+
+-moved the widget to the Parameter Panel;
+-fixed bug when widget was moved to macro param panel;
+
+VisionInterface/VolumeNodes.py
+-corrected macronodes using the modified QSlim
+-now geometryNode renames and doesn't duplicate
+-now all the libraries are using UserLibBuild.addTypes() to load types
+- added frontPolyMode='line' to gridBB node geometry to compensate for
+  new dafult mode of IndexedPolygons
+-corrected several setDataType
+-added check button to UT-isocontour node
+
+VisionInterface/VolumeTypes.py
+-introduced Types files per library
+
+
+Release 1.4.1 March 2006
+------------------------
+
+What's new (compared to release September 2004):
+-----------------------------------------------
+
+Volume/Grid3D.py:
+    - removed some debugging code that worked only for CCP4 files but not for MRC
+    - added centerPoint() method to Grid3D to cmopute point at the center of the grid
+    - added function 'overlapWithBox':
+    - params: grid3D, Box
+    - returns: 2 lists of 3 floats giving the indices of a box on a grid3D.
+    - currently used by the ClipMapWithBox node
+    - renamed overlapBB to be more explicit: now called overlapWithGrid another function, overlapWithBox will        soon be added.
+
+Volume/IO/AutoGridReader.py:
+    - added normalization parameter for proper function with ReadAnyMap node
+
+Volume/IO/DelphiReader.py:
+    - added normalization parameter for proper function with ReadAnyMap node
+
+Volume/IO/UHBDGridReader.py:
+    - added normalization parameter for proper function with ReadAnyMap node
+
+Volume/IO/WriteVolumeToFile.py:
+    -added an optional argumet 'packType' to write_file() method of WriteVolumeToRawiv class.
+
+Volume/IO/dxReader.py:
+    - modified dxReader to separate reading the file from parsing the data.
+      This allows to get the data over a socket for instance
+    - added normalization parameter for proper function with ReadAnyMap node
+
+Volume/IO/rawivReader.py:
+    -moved ReadRawiv class from rawivReader.py to volReaders.py .
+    - added normalization parameter for proper function with ReadAnyMap node
+
+Volume/IO/volReaders.py:
+    - moved ReadRawiv class from rawivReader.py, made it a subclass of
+        VolumeReaderBase class. Added code for reading float data that could also
+        be stored in this file format. Modified to use unpack method for reading
+        data instead of Numeric.fromstring (fromstring() is dependent on the byte order).
+    - compute the origin of the grid in MRC maps using xorign, yorigin and zorigin
+    - added conditional to the "describe" function, check if has an 'lskflg' value
+      before trying to print it
+    - added a reader to parse SPIDER - formatted files
+    - corrected origin calculation in BRIX parser
+    - moved describe() function to VolumeReaderBase class,
+    to reduce redundancy.  must now add 'mapType' and 'dimensions'
+    and 'filename' to the header
+    - calculation of origin fixed for DSN6 parser
+    - ReadBRIX only returns to beginning of file if a DSN6 file, not BRIX
+    - added BRIX file format parser to the BRIX read node.  Node can
+        now read BRIX and DSN6 formatted files.
+    - added DSN6 Reader, which will eventually also read BRIX-formatted data as well.
+    - modified getGRDElemSize method to use arraytype = Numeric.UnsignedInt8
+        for unsigned char data
+    - make the data array contiguous in the case of FORTRAN style data organization
+    - removed normalization from readGRD
+    - added same functionality as the CCP4 reader to read other modes of data
+    - i.e. (1,2,3), (3,2,1), (1,3,2), etc...
+    - corrected read data and stepsize function for readGRD node
+    - added readGRD node to read "GRD" type files
+    - fixed CVS/XPLOR reader
+    - implemented new algorithm to read data
+    - the grid step size was not being calculated correctly, this was fixed.
+    - crystal cell dimensions and angles are now implemented in the reader.
+    - corrected bug in CNS reader: nc, nr, ns now correspond to the actual
+    lengths of each axis, not the number of grid points along each edge
+    - added a readCNS node, although this node has not been thoroughly tested yet
+    - Changes to the CCP4 Reader:
+        - reads the space group number as an int
+        - reads number of bytes used for storing symmetry operators as int
+        - Value "extra" renamed as "future_words"
+        - Also reads additional values:
+	    - "lskflg" (int) Flag for skew transformation
+	    - "skwmat" (9f) Skew matrix
+	    - "skwtrn" (3f) Skew translation
+
+Volume/IO/volWriters.py:
+
+    -added  class WriteRawiv .
+    - now reads in new values:
+        - ispg as int, not short
+        - nsymbt as int, not short
+        - lskflg as int
+        - skwmat as 9 floats
+        - skwtrn as 3 floats
+        - "extra" renamed to "future_words" as 15i
+    - "nsymbt" number of bytes are added directly after the header information,
+        in order to account for symmetry information
+-Added New Data files,
+    npma.ccp4,
+    nwv1.ccp4,
+    nwv1.mrc,
+    nwv2.ccp4
+    nwv2.mrc
+
+Volume/Operators/clip.py:
+    - added clip.py which contains ClipMeshWithMask.  This object can clip an
+    IndexedPolgyons object using a Grid3D mask object
+
+Volume/VisionInterface/VolumeNodes.py:
+
+    - added call to isocontour.delDatasetReg to destroy old ConDataset when
+    creating new one
+    -added WriteRawiv node
+    - added UT_Iso, UTiso+Decim and CoarseMolSurf macro nodes
+    - fixed a bug in IsoContour which cause it not to isocontour if Grid3D
+    changed in input port
+    -modified UTMesher node to set origin and stepSize of the grid.
+    -added UTsdf node.
+    - added UTblurSpheres node(a second version of UTBlurSpheres)
+    - added .map extension for ccp4 reader and made it default
+    - added UTBlurSpheres node
+    - added importMolKitLib to UTBlurring node and made sensitivity of blobyness 1
+    -modified UTBlurring node to use origin and stepSize of the volume.
+    -added UTblurring node
+    -modified LBIE_Mesher node due to modifications in the wrapper. Added
+    checkFaces() and removeUnusedVerts() methods.
+    -in LBIE_Mesher node: added newValueCallback() calls to the thumbwheels callback functions of the node (so      that modifying of the thumbwheel's value will trigger execution of a node connected to the LBIE_Mesher node).
+    -added two checkbuttons to LBIE_Mesher node: to show the outer surface of computed mesh and to show a cross-section.
+    - added ClipMeshWithMask node to clip a surface using a mask
+    - modified the output of ReadRawivfile node to be Grid3D (instead of Grid3DUC)
+    - modified LBIE_Mesher node to input Grid3DF object instead of .rawiv file
+    - added SetOrigin and SetStepSize nodes
+    - removed Scale node
+    - fixed Scale node to also scale origin
+    - added centr node to venter a grid ona given 3D point
+    - added sclae node to scale volumes when header have values in nano meters for instance
+    - made length of CCP4 writer entry box 20 (same as reader)
+    -removed afterAddingToNetwork() method - not needed.
+    - added LBIE_Mesher node
+    - Users can now select to not create a box within the RegionBox node
+    - re-organized the nodes in the library
+    - added ReadSPIDER node
+    - added SPIDER to list of readable formats in ReadAnyMap
+    - file browsers for readers only display files of that map type.
+    - added ReadAnyMap node, which will use all the available parsers
+    (except the Binary) to read an input map.
+    - the node will check the extension of the input file, and if
+    it is recognized will call the correct parser
+    - if the extension is not recognized, a listchooser box will appear
+    and the user can select the map type from this box.
+    - added normalization parameter to all the parsers for uniformity
+    - added an entry box to the UT-Isocontour widget so that it is easier to set
+         the isocontour value.
+    - added node to read BRIX/DSN6 file formats
+    - added readGRD node to inputs.
+    - removed 4 spurious lines accidentally left in the Isocontour node while testing.
+    - added readCNS node to the interface
+    - UT-Isocontour node defaults to 1.0
+    - added dial widget to the FillMapWithBox node, which sets the Fill Value
+    used to fill the box.
+    - added a dial widget to the ThresholdMask, which sets the Threshold value
+    to be used.
+    -  The dial type (float, int) and min/max values are set using an onConnect
+     method that is changed according to the type of connection made to the
+     input
+    - Renamed the Icontour node UT-Isocontour and UTVolRen UT-VolRen
+    - added node: RegionBox
+    - Creates a box within the boundaries of the volume for use in clipping,
+      fillBox, etc.
+    - User chooses from a set list of possible positions for the box:
+        - can choose to view any of the octants in the grid
+        - can view any half of the data
+    - Node ClipMapWithBox now calls the Grid3D function 'overlapWithBox' to determine
+    the box indices in relation to the grid
+    - node still checks that the box is within the data grid
+    - fixed bug in ClipMapWithBox class: if box was completely
+    outside of the data grid, data was shown, and could crash.
+    - added check to make sure that at least one of the corners of the
+      clipping box is within the data grid
+    - if no corners are within the grid, print an error,
+      "box is out of range of the data"
+    - calls to overlapBB() fixed to agree with renaming of function to overlapWithGrid()
+    - Node ToGrid3D was accidentally left out, inserted into library
+    - updated the portsDescr in all nodes:
+    our new append method now understands passing values as keywords,
+    i.e. instead of append({'name':'foo'}) we can now say append(name='foo')
+    - added new volume reader: ReadEM - this format holds electron densities derived from electron microscopy tomographic 3D reconstructions. Exposed this also as a Vision node.
+    - added ArrayScalarOp node to multpiply, divide, add or substract a scalar
+   value from the data in a a grid
+   - added ArrayArrayOp node to multpiply, divide, add or substract the values of
+  2 grids whith same shape
+   - added Grid3DTo2D node to project 2D grid along axis
+
+-Moved Volume/renderer to UTpackages
+===============================================================================
+
+Release September 1, 2004
+-------------------------
+What's new (compared to release December 17 2003):
+Volume/Grid3D.py:
+	- implemented new methods:
+	    - normalize method to normalize data and fix header;
+	    - stats method to compute min, max, mean and standard deviation 
+              of a list of values;	
+	    - overlapWithGrid method to compute the overlap volume;
+	    - getOriginReal method to return the origin of the grid 
+              in real space;
+            - getStepSizeReal method to return the stepsize of the grid
+              in real space;
+	- added crystal attribute to Grid3D object to hold 
+          mglutil.math.crystal.Crystal instance to convert between cartesian 
+          and fractional space.
+
+Volume/IO/volReaders.py:
+	- in ReadCCP4 class:
+             - added code to process mapc, mapr and maps. Now we handle 
+               Fortran and Cstyle properly and print a message if another 
+               organization is encountered;
+	     - added calaculation of mean and rms to CCP4 reader;
+             - added crystal instance to map built by CCP4 reader;
+	     - made data array allocation allocate the right dimensions;
+             - added angles and indices order to CCP4 description;
+	     - added code to speedup reading maps with data organized using C-convention;
+	     - added check for little-endian byteswap;
+	- in ReadMRC class:
+             - added checks for byteswapping;
+             - added max,min,mean, & rms correction;
+             - examines and handles index speeds in the same manner as CCP4;
+             - added a 'describe' function;
+
+Volume/IO/volWriters.py:
+	- added CCP4 writter prototype;
+ 	- added code to write non contiguous arrays using C-convention;
+
+Volume/Operators/MapData.py:
+	- replaced padding code by code that pads with fillValues
+        - replaced Numeric.minimum.reduce(grid.data.flat) by
+          minf(minif(minf(grid.data) where minif is 
+          Numeric.minimum.reduce. That way it works in non contiguous 
+          arrays as well.
+
+Volume/Operators/blurSpheres.py:
+	- implemented blurSpheres function;
+
+Volume/Operators/spheres2Voxels.py:
+	- implemented class SphereMask to build a discrete grid of voxels 
+          representing a sphere;
+	- implemented class discreteSpheres to build a 3D grid with 1 inside 
+          the spheres, and 0 outside;
+
+Volume/Pvv/transferCommands.py:
+	- added a callback function that can be set by another application.
+          The callback function is invoked everytime the transfer function 
+          is modified.
+          We are now able to apply the same transfer function to 2 different
+          volumes.
+        - added  SetCallback method to set the callback function.
+               
+Volume/Renderers/UTVolumeLibrary/DejaVu/UTVolRenGeom.py:
+     	- used the new SetMatrixComponent method to set volren's matrix;
+	- added support for rendering at low quality during motion;
+	- made volume rendering fit iso-contouring for nomegav;
+	- replaced calls to RenderMode() by Set();
+
+Volume/VisionInterface/VolumeNodes.py:
+	- due to renaming ViPEr package to Vision:
+              - replaced "ViPEr" with "Vision";
+	      - repaced <package>/ViPEr with <package>/VisionInterface;
+	      - replaced "viper" with "vision";
+	- added Orthogonalize node to resample data onto a volumetric grid;
+ 	- added FillMapWithBox node;
+	- added GaussiansMask prototype node;
+	- added ThresholdMask node to create a binary mask usable for clipping          by thresholding a grid;
+	- added support for crystal instance to Sample, ClipMap, SphereMask, 
+	  GridBB and Isocontour node;
+ 	- MapGrid node now creates an attribute called newgrid.dataDims 
+	  which provides the shape of the data array before padding to make 
+          power of 2;
+	- added normalize heck button to ReadCCP4 node in param panel;
+	- made GridBB node draw non-orthogonal boxes when a Crystal object
+          is passed;
+        - made SphereMask node accept a Crystal object and use it to clip non-ortho grids properly;
+	- made SpheresMask and ClipMapWithMask propagate the header as a copy;
+
+
+
+Release December 17, 2003  (1.2.beta1)
+------------------------
+
+What's New (compared to release Sep 18 2003):
+
+Volume/Grid3D.py:
+	-implemented Grid3D class  to represent 3D discret volumetric data.
+Volume/IO/AutoGridReader.py:
+	-implemented ReadAutoGrid class to read a AutoGrid map files.
+Volume/IO/DelphiReader.py:
+	-implemented DelphiReader for binary file format.
+Volume/IO/UHBDGridReader.py:
+	-implemented UBHDReaderASCII class
+Volume/IO/dxReader.py:
+	- modified to return Grid3D objects.
+Volume/IO/rawivReader.py:
+	- modified to return Grid3D objects.
+Volume/IO/volReaders.py:
+	- modified volume data file parsers to return Grid3D objects;
+	- added original CCP4 header documentation.
+Volume/Operators/MapData.py:
+	- added the MapGridData class;
+	- modified to perform type conversion on the original data only if no          mapping is required.
+Volume/Operators/Tests:
+	-added test_mapGrid.py for testing Volume/Operators/MapData.py.
+Volume/Pvv/boundboxCommands.py
+	-added updateBox() method for UTVolGeom.
+Volume/Pvv/gridToVolumeCommands.py
+	-modified to use Volume.Operators.MapData.MapGridData.
+Volume/Renderers/VLI/shared/
+Volume/Renderers/UTVolumeLibrary/shared/:
+	-renamed sunos, linux, irix64 directories to
+	 sunos5, linux2, irix6 respectively.
+Volume/Renderers/UTVolumeLibrary/DejaVu/UTVolRenGeom.py:
+	- added AddGrid3D method to UTVolRenGeom and made UtVolRen node 
+          use this method.
+Volume/ViPEr:
+	-renamed volumeRederNodes.py to VolumeNodes.py.
+Volume/ViPEr/VolumeNodes.py:
+	- added GridPoints nodes;
+	- made nodes use Grid3D objects for volumetric data
+	- add node ToGrid3D to convert 3D data to a Grid3D object
+	- added MapGrid node to change grid data format, pad to powers
+	 of 2 and map data ranges;
+	- added ReadAutoGrid node;
+	- added BoundingBox node to draw the bounding box of a Grid3D;
+	- added ReadDelphiBin node (untested);
+	- added TransposeGrid3D node to doa Numeric.transpose operation on a Grid3D;
+	- added addType and addWidget methods to NodeLibrary object
+	  and updated all libraries to use these methods rather than just 
+	  defining a list;
+	- added ReadUHBDAscii node;
+Volume/ViPEr/Tests/:
+	-added test_volib.py.
+
+
+Backwards imcompatible modifications:
+
+
+Bug Fixes
+Volume/Grid3D.py:
+	-Numeric.Float added to class Grid3DF.
+Volume/IO/volReaders.py:
+	- fixed some bugs in CCP4 reader.
+	
+Volume/Operators/trilinterp.py:
+	- fixed many bugs in trilinear interpolation.
+Volume/Pvv/gridToVolumeCommands.py:
+	-fixed a bug for creating a UT volume of different X, Y, Z 
+	dimensions.
+
+Volume/Renderers/UTVolumeLibrary/DejaVu/UTVolRenGeom.py:
+	- protected UTVolRenGeom against initializing VolumeRenderer if 
+	  not OpenGL context is available. This was causing 
+	  segmentattion faults;
+	- fixed utvolGeom's maxBB and minBB for normalize center to 
+          work properly.
+Volume/Tests:
+	- fixed some bugs test_*.py
+Volume/ViPEr/VolumeNodes.py:
+	- fixed ReadDelphiBin node;
+	- fixed MapGrid node to handle srcand dst range properly;
+	
+
+Known bugs:
+

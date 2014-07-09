@@ -1,0 +1,290 @@
+		The Python Volume Viewer (PVV) overview.
+PVV is a volume visualization application integrated with the Python 
+Molecule Viewer (PMV). The latter is built on top of DejaVu and 
+ViewerFramework Python packages designed to provide 
+support for building 3D visualization applications.
+At present time PVV is designed to use two volume rendering technologies:
+-- VolumePro(tm): VolumePro 500 graphics card (the real-time 3D volume 
+rendering hardware) and its API, the Volume Library Interface (VLI);
+
+--VolumeLibrary: OpenGL based library, developed at University of Texas.
+
+  Starting PVV
+
+- Start PMV by typing:  pmv23
+- From File menu choose "Load Module"
+- "Load command Modules" GUI form will appear.
+  Type: Volume.Pvv in the provided entry field under "Package:" followed by
+  "Enter" key stroke.
+- If both volume rendering libraries are available for your platform, a 
+  GUI form will appear allowing to choose the library. Choose the library and
+  press "OK" button.
+- Choose "loadAllCommands" from the list of modules of the "Load command Modules" form, press "Load Module" button.
+- Press "Load All Commands" button under Volume Renderer entry of the menu bar at the top. All available commands will be loaded in the Viewer.
+
+  PVV commands overview
+
+Read file :
+	Enables loading a volume from a data file (.vox  file for VLI renderer, .rawiv file for UT volume library renderer). 
+	
+Bounding Box :
+	Adds/removes a volume bounding box to the viewer
+	
+Transfer Function :
+     Command to edit the color and opacity transfer functions.
+     The function is drawn at the top of the interface as a series of
+     circles (points) connected by line segments. The X location of each point
+     indicates the data value, the Y location indicates the opacity of
+     that data value. Clicking the left mouse button on a point selects it. 
+     Dragging the point with the left mouse button modifies the opacity. 
+     Left clicking or moving the circle in the area labeled Hue/Saturation
+     changes the color of the selected point. The red-green-blue-opacity
+     values can be directly typed in the text entries.
+     Shift-left button click in the transfer function window adds a new set of
+     four points(a shape) to the function. Middle clicking and dragging a
+     point of the shape moves the shape left or right in the window.
+     Double left click on a line connecting two points adds a point to the
+     shape. Dragging a point up out of the window deletes it.
+     The Split Interval button allows to zoom in on a particular interval of
+     values. The user must enter the starting and ending value points of
+     a new interval in the pop up form. This will result in splitting the
+     initial interval of values into two or three intervals that will appear
+     in separate transfer function windows.
+     The 'Reset' button sets the lookup table to grayscale-ramp color values
+     and linear opacity values.
+     The 'Save TF' button allows to save current color and opacity values to
+     a file.
+     The 'Save LUT' button allows to save the lookup table to a .lut file, which
+     can be used later to restore the current transfer function.
+     The 'Load LUT' button loads a .lut file.
+     An ISO value can be added by pressing 'Add new' button.
+     In the pop up dialog the user can specify the scalar value,
+     opacity and RGB values for the new ISO point.
+     The RGBA values of selected ISOval can be typed in the corresponding
+     entry fields.
+     
+VLI Options (available for VLI volume renderer):
+     Options include:
+     - set or clear the gradient magnitude opacity,
+       specular illumination and
+       diffuse illumination modulations;
+     - set the blend mode to be used during the rendering
+       process. There are three options: front to back blending,
+       maximum intensity projection, minimum intensity projection;
+     - set rendering modes: 
+        hexagon (the volume is rendered as a flat hexagon),
+       3-D (The base plane is projected onto the front faces of the volume
+       parallelepiped. This results in a more pleasing display, but does not
+       correctly embed geometry inside the volume. All surface/volume
+       interactions are done outside of the volume);
+     - set the supersampling factors for the rendering context
+       (the number of sample slices for each voxel slice).
+       Supersampling in the x and y directions results in more samples in the
+       base plane. Supersampling in the z direction results in more slices
+       in the viewing direction.
+       Supersampling allows a maximum of 3 additional samples between two
+       voxel slices in the X and Y directions, and 1,2 or 4 in the Z direction;
+     - specify the material properties used in lighting:
+       -- diffuse reflection coefficient;
+       -- specular reflection coefficien: the valid range is
+          from 0.0 (no reflection) to 1.0 (maximum reflection);
+       -- emissive coefficient: the valid range is from 0.0 (no emission)
+          to 1.0 (maximum emission);
+       -- specular exponent (controls the size and brightness
+          of the specular highlight): the valid range is from 0.0 (no highlight)
+          to 128.0 (very focused highlight);
+     - turn on/off cropping using the mouse;
+     - reset the crop box;
+       The following mouse button/keyboard key bindings are available to set the
+       subvolume (crop box) size:
+       -- 'Control' + mouse button 1, 2 or 3 are used to change the crop
+          box size along X, Y, Z respectively;
+       -- 'meta' + mouse button 3 changes the crop box size in all directions;
+       -- 'meta' + button 1 moves (translates) the crop box inside the volume
+          in all directions (screen coord. translation mode);
+       -- 'meta' + mouse button 1, 2, or 3 translates the box along X, Y, Z
+          respectively (object coord. translation mode).
+       The GUI consists of a set of menu buttons used to control gradients,
+       blend mode, render mode , sampling factors and mouse crop.
+       Pressing a menu button causes the associated menu (containing radio or
+       checkbuttons) to be posted under the menu button.
+       A set of sliders is used to specify material properties."""
+ 
+VLI Transformation:
+	Allows the user to scale and translate the volume geometry object along 
+the X, Y and Z axes.The command sets the modeling transformation matrix.
+     	The GUI: the user can choose to scale or translate
+the volume object by pressing a corresponding radio button.
+The amount to scale or move the object in each direction can
+be specified either by typing X, Y, Z values in the provided entry fields orby 
+rotating the thumb wheels.
+	
+Light (available for VLI renderer only):
+	Command to add, remove and change the direction of
+one or more light sources. A light direction is specified in
+world space. A light intensity is set to 1 (full intensity).
+The GUI consists of eight check buttons corresponding to
+a similar set of buttons in DejaVu GUI. These allow
+the user to select a light source and include a switch for
+turning selected lights on/off and
+a combo box with a dropdown listbox containing the light
+direction info. Picking one of the list entries
+selects a corresponding light source.  
+A set of entry fields is used to specify the the current
+light direction.
+
+Crop:
+	Command to create and define a crop box. Cropping removes parts
+of the volume using box shapes. The crop box comprises three sets of
+parallel planes (Xmin and Xmax, Ymin and Ymax, Zmin and Zmax)
+that define three corresponding slabs (SlabX, SlabY and SlabZ).
+Cropping options:
+- Subvolume: a subvolume defined by the three slabs is displayed;
+- Cross: a subvolume between any two pairs of
+  orthogonal clipping planes is displayed;
+- Inverted Cross (the inverse of Cross): a fraction of the volume 
+  outside of at least two pairs of orthogonal clipping planes is
+  displayed;
+- Fence: a fraction of the volume between any pair of
+  orthogonal clipping planes is displayed;
+- Inverted Fence: a fraction of the volume outside of all
+  orthogonal clipping planes is displayed.
+The crop box (CB) size can be set by using the GUI or
+the following combination of keyboard and mouse buttons:
+'Control' + mouse button 1, 2 or 3 are used to change the CB size
+along X, Y, Z respectively;
+'meta' + mouse button 3 change the CB size in all directions;
+'meta' + button 1 moves the CB inside the volume.
+ 
+Cursor (available for VLI renderer only):
+ 
+	Command to insert a hardware generated, software controlled
+3D cursor into the volume data set being rendered. Cross-hair and
+cross-plane types of cursor are available. The cursor type and
+location can be set using the command input form.
+The X,Y,Z cursor colors are red, green and blue, respectively.
+The cursor is not visible on the volume faces
+(i.e. if the cursor is at (0,y,z) the the y, z cursor components
+are not visible).
+ 
+CutPlane (available for VLI renderer only):
+	Command to add/remove a cut plane to/from the context.
+The command input form allows to set the cut plane orientation
+(plane normal vector (A,B,C)) and distance (D) from
+the origin to the plane in world space. The cut plane is
+defined by equation:
+Ax + By + Cz + d >= 0.
+The user can set the cut plane to render voxels inside or
+outside of the slice, a fall-off value and thickness of the plane.
+The thickness determines two parallel planes and
+grows in the direction of --D (toward the origin) in world space.
+ 
+Get Subvolume (available for VLI renderer only):
+	Command to get a subvolume from a displayed volume and
+load it in to the viewer as a separate volume.
+	GUI description:
+Cropping box (CB) is used for selecting the subvolume size:
+'Control' + mouse buttons 1,2,3 are used to change the CB size
+along the X, Y, Z axes, respectively;
+'meta' + mouse button 3 changes the CB size in all directions;
+'meta' + mouse button 1 moves the CB inside the volume. 
+Press ' >> ' to get a subvolume.
+Press ' << ' to return to the original volume.
+Press the 'volume outline' check button to display the outline
+of the original (parent) volume.
+To switch to another parent volume use the 'Dismiss' button followed
+by 'Get Subvolume' from the main menu. """
+
+Grid To Volume:
+	Command to create a volume from the autogrid data
+(read in by Pmv grid commands or specified in a .map file), display the volume
+or save it into .vox file.
+	GUI description:
+The user can select the type of data scaling (linear or logarithmic)
+by pressing the corresponding radio button and specify the mapping
+intervals by typing in the provided entry fields.
+The actual data has to be mapped to scalars in range [0<=scalar_min,scalar_
+max<=4095].
+If the mapping intervals are specified by supplying data min and max values
+other than the global data minimum and maximum value, then the mapping will 
+proceed asfollows:
+     [global_data_min,data_min] is mapped to [0,scalar_min],
+     [data_min,data_max] is maped to [scalar_min,scalar_max],
+     [data_max,global_data_max] is mapped to [scalar_max,4095].
+By pressing the 'New grid to volume' button the user can obtain a new
+input form (GUI) for converting another AutoGrid
+object or .map data file into a volume.
+
+Zoom (available for VLI renderer only):
+	Command that enables the user to navigate
+through large data volumes by choosing a subvolume from a lower
+resolution dataset (with a crop box or a geometry box) followed by
+loading (zoomming in) that part of data from a higher resolution
+dataset into the viewer as a new volume.
+The datasets file names, the lowest resolution number , the cache and
+page size have to be provided by the user in a separate text file (currently
+with .data extension).
+Current limitations:
+ - the lowest resolution number must be a power of two;
+ - the resolution ratio between two consequent datafiles must
+   be equal to 2;
+ - the number of datafiles must correspond to the given lowest
+   resolution (e.g., if lowest_resolution == 8 then number_files = 4);
+ - the datafile names must be given in the increasing resolution order,
+   starting from the file with the lowest resolution (no
+   order check is done);
+ - the data length must be 8 bit;
+ - .vols datafile format is supported (SDSC 'VOL' volume file format;
+   info at http://vistools.npaci.edu/Documentation/C++Doc/Formats/index.html).
+ An example of .data file:
+  Lowest Resolution 8
+  File brain_stride_8_int.vols
+  Page Size 14803
+  Cache Size 1391485
+  File brain_stride_4_int.vols
+  Page Size 59474
+  Cache Size 11181112
+  File brain_stride_2_int.vols
+  Page Size 238875
+  Cache Size 30000000
+  File brain_full_size_int.vols
+  Page Size 1048576
+  Cache Size 64000000
+  scale 1.5 1.0 1.0
+
+     GUI description:  
+	A subvolume can be selected by operating with a zooming tool,
+which can be either the crop box (select the 'crop' button) or
+an outlined geometry box (select the 'box' button).
+The following mouse/keyboard bindings can be used to interactevly
+manipulate a chosen zooming tool:
+-- 'Control' + mouse button 1, 2 or 3 are used to change the size
+   of the zooming tool along X, Y, Z respectively;
+-- 'meta' + mouse button 3 changes the zooming tool size in all directions;
+-- 'meta' + button 1 moves(translates) the zooming tool inside the volume
+   in all directions.
+The maximum viewable volume size is 256 voxels in
+any dimension. Pressing the 'Max Zoomable Box' button sets the zooming tool
+dimensions to 256/ratio (where ratio is the resolution ratio between two
+consequent datafiles).
+Pressing the 'Reduce To Zoom' button reduces the zooming tool dimensions 
+exceeding the value of 256/ratio to 256/ratio.
+Pressing the 'Zoom In' button results in acquiring a subvolume from
+the subsequent level (a higher resolution dataset) and loading it as a new
+volume into the viewer.
+Pressing 'Zoom Out' button results in loading a volume from the previous
+level (a lower resolution dataset). The crop box or geometry
+box will show the area that was cropped or outlined in the level
+the zooming out was initialized from.
+Pressing the 'Zoom To...' button pops up a new interface that allows to
+select a zooming level.
+The 'Show box' button makes the geometry box visible/invisible.
+The 'All outlines' button shows the nested outlines of volumes following
+any number of zoom-in actions.
+The 'Reset crop' and 'reset box' buttons reset dimensions of the crop
+and geometry boxes (respectively) to the volume dimensions.
+
+
+
+
+

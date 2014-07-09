@@ -1,0 +1,1806 @@
+DejaVu Release Notes
+====================
+
+Release 1.5.4 (November 2008)
+------------------------------
+Arcs3D.py
+ - renamed geometry in examples
+ -  modified Fan object to compute vector orthogonal to disc normal when it is not provided
+Points.py
+  -adjusted selection lines not to interfer with selection
+  -adjusted selection crosset not to interfer with selection
+
+SelectionGUI.py
+ - now contour selection has a settings panel
+Spheres.py;
+  -radii can be int and not just float
+
+Trackball.py
+  -repaired: now button 1 stop the spin
+  -now spinning can be managed by any button
+
+Viewer.py
+  -adjusted clip translation
+  - adjusted far and near for TranslateCurrentObjectZ
+  - adjusted far and near for AutoDepthCue and TranslateCurrentObjectXY
+  - added self.OneRedraw() in FocusCameraBB
+  - replace 0,001 by 0.01 in setting lastFrameTime
+  - added def getVisibleGeoms(self, geom=None) method
+  - limited  self.lastFrameTime to more than 0.01
+  - added if self.lastFrameTime == 0: in FocusCameraBB
+  - added FocusOnObject and FocusCameraBB methods
+
+ViewerGUI.py
+  - corrected geom properties propagation
+  - now Ambient Occlusion Gui has a Button, not a checkbutton
+
+VisionInterface/
+    DejaVuNodes.py
+      - added missing default values for not required paremeters
+    
+    GeometryNodes.py
+      - spheres node has default values
+      - cylinder node has default values
+      - repaired instanceMatrices in geometryNode
+
+
+Releases 1.4.6 -  1.5.2 (July 2008)
+------------------------------
+- moved fron Numeric to numpy
+
+
+Camera.py
+  - corrected behaviour when changing selectedgeom in geometryNode and corrected sticker text
+  - introduced pivotOnPixel
+  - adjusted mouse transform info in viewergui
+  - allow mac intel GMA to run without preventing intel bugs
+  -added geomReparented() method to OcclusionCamera class to update the name of a reparented geometry in the GUI.
+  - moved compute button away from apply button
+  - re-organized GUI a bit
+  - Geometry objects for which we compute occlusion do no longer automatically
+    occlude. However, adding a geom to the list for computation adds it by
+    to the list of occluders (but it can be removed).
+    addded a test for at least 1 occluder. Currently it prints a message to the
+    shell and returns if no occluders are present.
+  - more checks in normal calculation code for ambient occlusion
+  - added percentage counter for completiom of occlusion calculation
+  - created DynamicComboBox class to subclass Pmv.Combobox and allow to
+    fill the pulldown menu as it gets posted
+  - added OcclusionCamera class to compute occlusion using OpenGL
+  - corrected numpy arrray test for antialiasing
+  - fixed  Bug 895
+  - corrected cartoon bug due to PIL imports
+  - now widgetsOnBackWindowsCanGrabFocus is in mglutil.gui
+  -fixed a small bug in Set() method ( pivot attribute).
+  - adjusted mousewheel on win32
+  - protect from bug in mac intel when zomming on molecule 1BX4
+  - replaced  l.visible is False with l.visible in (False,0) to fix light visibility problem
+
+
+ColorChooser.py, ColorWheel.py
+  - repaired test for 4 channels colorchooser
+  - allowed managment of alpha channel
+  - a better colorChooser
+
+Cylinders.py
+  - added highlight to cylinders
+
+DataInput.py
+  - repaired read obj
+  - corrected pb in readobj
+
+Geom.py
+  - added def getOcclusionPointsDir(self) method to Geom
+  - repaired tests for numpy
+
+
+IndexedPolygons.py
+  - indexedPolygons can be exported as indpolvert not vert
+
+Insert2d.py
+  - retrieved lost function getTile
+  - solved small bug, plus corrections for vista
+  - bad cast introduced when preparing move to numpy, tuple not float
+
+LICENSE
+  - -added TSRI to the copyright part.
+  - -added LICENSE file
+
+MaterialEditor.py
+  - moving to numpy
+
+Materials.py
+  - - modified .GetProperty() method to handle a vector as second argument of getFrom and an (r,g,b) tuple as the first getFrom argument.
+  - fixed len(values.shape) problem in SetMaterial
+
+Spheres.py
+  - -in Set(radii) added a check if type of radii is 'ndarray'.
+  - UTSpheres can be used in pmv
+  - - added def makeTemplate(self): pass to UTSphere to avoid building
+  -   template
+  - -updated  utimposter-releted code in UTSpheres
+  - in Set() replaced the statement : "if rad or v:" by
+    if rad != None or v != None:" - caused an error if rad is numpy array.
+
+StickImage.py
+  - renamed stickimage into stickerimage
+
+StickerImage.py
+  - renamed stickimage into stickerimage
+
+Textured2DArray.py
+  - replaced "if foo" with "if foo is not None"
+
+Trackball.py
+  - now spin launch with the mouse is working
+
+
+Viewer.py
+  - objects can retain their current position when reparenting
+  - fixed ALT-TAB problem reported by Oleg on 06/27/2008
+  - adjusted pivotOnPixel
+  - introduced pivotOnPixel
+  - repaired center when root only and current object is root
+  - repaired center when object has been translated
+  - adjusted mouse transform info in viewergui
+  - added mouse transformInfo in viewerGUI
+  - repaired Normalize and CenterCurrentObject
+  - repaired CenterCurrentObject
+  - -added ReparentObjectEvent class and a call to dispatchEvent() in ReparentObject() method.
+  - - Added RemoveObjectEvent class to Viewer and dispatch call for these events
+  - -added addScenarioButton attribute to the Viewer( if set to False the Scenario button is not added to the Viewer's GUI even if Scenario is enabled in _dejavurc). This is to allow VF scenarioCammand add this button to the button bar of the Molecular Viewer.
+  - -added class AddObjectEvent(Event).
+
+ViewerGUI.py
+  - introduced pivotOnPixel
+  - adjusted mouse transform info in viewergui
+  - introduced NoteBook tabs for property gui
+  - added mouse transformInfo in viewerGUI
+  - - added Ambient Occlusion GUI
+  - -added addScenarioButton attribute to the Viewer( if set to False the Scenario button is not added to the Viewer's GUI even if Scenario is enabled in _dejavurc). This is to allow VF scenarioCammand add this button to the button bar of the Molecular Viewer.
+  - added enabled Scenario
+  - -modified startScenario() method.
+  - now networks runs in saved directory
+  - now networks run into the saved network directory
+
+__init__.py
+  - now vision runs even without a directory to write to
+  - added 'pytz' to the list of NONCRITICAL_DEPENDENCIES.
+
+
+glfSticker.py
+  - now glfSticker has its own gui
+
+opengltkCanvas.py
+  - file opengltkCanvas.py was initially added on branch wx.
+  - work in progress with wxpython
+
+run.py
+  - file run.py was initially added on branch wx.
+  - attempt to wx
+
+utils.py
+  -the function returns also vertex normals (it averages duplicated normals).
+
+videoRecorder.py
+  -added code to display the folder that contains saved mpg file in the file browser.
+
+VisionInterface/DejaVuNodes.py
+  - objects can retain their current position when reparenting in vision
+  - -in the QSlim node replaced all occurrences of 'if ###:' statement by 'if ### is not None:'
+  - -QSlim node: moved build_model() and decimate() methods (that are also used by GeometryNodes.DecimateGeom node) to a new class QSlimDecimate; renamed ConnectedComponents to ConnectedComponents0.
+  - added GeometryNodes.ConnectedComponents  node to vizlib.
+  - in RemoveDupVertices nodes(Python and C++ versions) removed setting of vnormals of the resulting geometry.
+  - -in RemoveDuplicatedVerticesNE , added vnormals parameter to IndexedPolygons()
+  - renamed stickimage into stickerimage
+  - changed func name: doit instead of computefunction
+
+
+VisionInterface/DejaVuWidgets.py
+  - repaired configure of initialValue
+
+VisionInterface/GeometryNodes.py
+  - when nodes rerun the recreated geoms keep their state and position
+  - objects can retain their current position when reparenting in vision
+  - corrected sticker text to keep user's modifications on rerun
+  - corrected behaviour when changing selectedgeom in geometryNode and corrected sticker text
+  - -modified class DecimateGeom: it is no longer derived from QSlim class - it creates an instance of DejaVuNodes.QSlimDecimate() instead.
+  - now erasing a geom in vision erases it in pmv also
+  - -ConnectedComponents node: removed 'outgeoms' output port, added some comments, removed 'print' statements
+  - repaired GeometryNode to recreate the currents geometries on each run
+  - corrected datatype of output of geometry node
+  - added .vert/.face reader
+
+scenarioInterface/__init__.py
+  - expand viewergui to accomodate Animate buttons
+  - fixed creating clipping plane actor in autotrack mode.
+  - in getActorScript() replaced 'print warning' lines by 'tkMessageBox.showwarning' .
+  - -modified getActorScript() to add linkedKeyFrames anf kfSetId to the actor's script.
+  - added a redraw actor.
+  - added autotrack feature.
+  -replaced saveAnimation() by getActorScript(). Moved part of the code for saving current animation to scenario/gui.py
+  - added code for saving/restoring current scenario in/from a script.
+
+scenarioInterface/actor.py
+  -added methods to RedrawActor for recording movies.
+  - added a redraw actor.
+  -modified setValue() and getValue() methods of DejaVuRotationActor to use quatToMatrix() and matToQuaternion() from scenario.interpolators .
+  -modified setValue() and getValue() of DejaVuRotationActor to use UnitQuaternion.
+  -added a check for white spaces in the actor's name.
+
+
+
+scenarioInterface/actorsDescr.py
+  -added description of Light.direction actor.
+  -worked on autotrack feature.
+  -added fieldOfView actor.
+  -added DejaVuRotationActor class. Updated the description of this actor.
+
+scenarioInterface/interpolators.py
+  -added a keyword 'active' to the parameter list of the interpolators constructors.
+  -added LightColorInterpolator.
+
+
+
+Release 1.4.5 (May 2007)
+------------------------------
+
+New features and bug fixes
+
+Camera.py
+
+ - repaired fuzzy AA with Thumbnail. move thumbnail just before swapBuffers.
+ - improved auto depthcueing and fog;
+ - new keyboard bindings: Shift - to scale the camera; Alt - to translate the camera.
+   Also, mouse wheel is now used to scale the camera;
+ - introduced allowedAntialiasInMotion;
+ - now camera z translation updates fog sliders
+ - fixed redrawing of the clipping plane frame
+ - improved hightlight
+ - introduced widgetsOnBackWindowsCanGrabFocus
+ - imporoved selection texture
+ - corrected camera light in stereo
+
+ColorChooser.py
+
+ - adjusted target for colorchooser
+ - imporoved gui buttons
+ - introduced new background-clipplane-light color chooser
+
+ColormapGui.py
+
+ - introduced widgetsOnBackWindowsCanGrabFocus
+   now, on windows, the widget grab the focus only if the window is already activated.
+
+Common2d3dObject.py
+
+ - introduced deleteOpenglTemplateList
+
+Geom.py
+ - corrected inheritLineWidth missing redoDisplayList
+ - now pointwidth is an int
+ - now linewidth is an int, corrected list bug
+ - added propagate property to children
+ - modified cull into culling
+ - modified shademodel into shading
+
+Light.py
+
+ - corrected light broadcast in material editor sphere
+ - introduced new background-clipplane-light color chooser
+ - corrected Set()
+
+MaterialEditor.py
+
+ - introduced spinOptionMenu
+
+Trackball.py
+
+- introduced spinOption Menu, can be accessed trough Pmv or Viewer GUI 
+
+Transformable.py
+ - added transpose=True argument to def GetMatrix(), Should be backward compat.
+
+Viewer.py
+
+ - added EventHandler mix in class to Viewer class and created events for
+  setting current object, camera, light and clipping plane
+ - added callback mechanism when currentObject is set
+ - corrected scale on Normalize
+ - corrected near and far, Normalize and AutoDepthCue
+   now NormalizeCurrentObject translates the rootObject and the camera
+ - introduced graham light model
+ - added spinning in _dejavurc
+
+
+ViewerGUI.py
+ - improved propagate property to children
+ - added pointwidth to geom properties menu
+ - added linewidth to geom properties menu
+ - now inherit options are disabled for root
+ - rearranged object gui
+ - made sure depthcue check button is updated
+ - introduced new background-clipplane-light color chooser
+ - now camera z translation update fog sliders
+ - introduced RelabelingCascadeMenu
+ - added spinning checkbox
+ - improved the appearance of the gui
+ - added to display histogram in graphtool.added showHistogram to support that
+
+VolumeGeom.py
+
+- the following lines of VolumeGeom.__init__():
+         self.immediateRendering = 1
+         self.transparent = 1
+   are moved below the "apply(Geom.__init__ ...)" statement to
+   prevent setting of these attributes to False (in the Geom.__init__()).
+
+colorMap.py
+ -repaired color map output
+
+
+glfLabels.py
+
+- fix bug where you could not set to False the keyword billboard or includeCameraRotationInBillboard 
+  at the initialisation of geom.
+- introduced includeCameraRotationInBillboard
+
+videoRecorder.py
+ - added a GUI for recording movies in DejaVu Viewer. This GUI can be accessed through the Viewer's gui or 
+   from Pmv '3d Grafics' menu.
+
+
+
+Release 1.4.4 (December 2006)
+------------------------------
+New features and bug fixes
+
+ - introduced current context verification
+ - introduced viewer.enableOpenglLighting()
+ - introduced Camera.lastBackgroundColorInPhotoMode
+ - got rid of the camera scale, as it seems to block the viewer when overused
+ - replaced some glFlush() with glFinish()
+ - renamed Camera StandardCamera added class RecordableCamera which can create
+   mpg movies. Camera is set to the latter if pymedia.video.vcodec can be
+   imported else it is set to StandardCamera
+ - added glFinish to grab buffer
+ - repaired stereo_buffers (was not working with the new docking)
+ - introduced 'cameraScale'
+ - root color is set to gray during motion with NPR
+ - introduced Common2d3dObject; now Geom inherit Common2d3dObject
+ - make sure togl is properly loaded
+ - better managment of CCW
+ - now we redo all the display list when global lighting changes
+ - now objectsNeedingRedo is a dict
+ - docking and floating adjustments without calling deleteOpenglList
+ - introduced sharpColorBoundaries for lines, cylinders and surfaces
+ - introduced ownGui for ColorMapLegend
+ - implemented invert normal per geometry (and it is exportable)
+ - corrected bug in normals calculation in Set method of Geom objacts
+ - corrected Normal calculation when set vertices and faces at the same time
+ - changed to create the light model first, then the material editor.
+ - repaired lighting on sphere in Material editor
+ - now material editor works also without lighting
+ - now we activate the camera when it is added
+ - added hasRedrawn attribute to viewer (used by recordable camera to save
+   only unique frames)
+ - we erase the last camera first on exit
+ - repaired stereo_buffers (was not working with the new docking)
+
+- implemented GraphTool Widget for adjusting non photo rendering parameters.
+
+DejaVu/VisionInterface
+ - added DecimateGeom node that inherits from  QSlim node and GeometryNode.
+ - QSlim node: fixed decimation of colors.
+ - introduced node sticker
+ - introduced node StickImageNE
+ - removed glutLabels node
+ - corrected output port names in GeometryNodes
+ - repaired bug when deleting connections, the callback can destroy some connections in the list
+ - introduced texture in GeometryNode; now most of the GeometryNodes can receive texture
+ - adjusted GeometryNode following inheritance of Common2d3dObject
+ - added node OneTexturedPolygonNE
+ - introduced type 'geomOrInsert2d'
+
+
+Release 1.4.3 (September 2006)
+-------------------------------
+New features
+
+ - introduced legend with glf font;
+ - introduced glfLabels, renamed node LabelsNE into GlutLabelsNE;
+ - introduced VRML for glf labels;
+ - added showLegend and hideLegend to colormapgui;
+ - added NucleicBases.py for displaying Nucleic Bases;
+ - added Ribbon representation for DNA/RNA;
+ - added option for coloring DNA/RNA ribbons;
+ - added customization options for  Nucleic_Acids_properties;
+ - made NPR rendering work for docked and undocked cameras and global
+   anti aliasing;
+ - made NPR drawing independent of Numarray;
+ - added all NPR attributes to Set method and getState;
+ - now geoms have attr 'invertNormals' for stl and vrml saving;
+ - added texCoordsIndex ( we use it for the ARPlatform geometries)
+   if geometry vertexSet as  texCoordsIndex attribute then added to vrml2 output file
+ - now in the networks, we save only the part of the material that is not PER_VERTEX or PER_PART 
+   (it was too big);
+ - implemented tside by side stereo of ilerenderer;
+ - the colormap can handle labels and the colorpalette is modifiable;
+ - modified getTexture for VRML2 output to support 2D texture.
+
+
+Bug fixes
+
+ - corrected scissor on resize and inheritance;
+ - fixed  NPR skewed and set lighting;
+ - fixed a bug when switching to stereo buffer withoou pmv;
+ - corrected colormapgui expanding by itself in pmv on win32;
+ - corected bug when the viewer modifies the name of the colormap;
+ - corrected right button straight ramp generation;
+ - corrected bug (lights > #2 in pmv were not working);
+
+
+
+Release 1.4.2. (May 2006 )
+------------------------
+Bug fixes and modifications:
+
+ Camera.py
+-implemented stereo color separation, added red-green stereo color separation;
+- added drawThumbnail to the list of options that can be set for a Camera;
+- added support for point rendering in thumbnail;
+
+ ColormapGui.py
+-introduced editable color palette via colorPaletteCommands,
+ made it resizable;
+-added ability to handle a list of labels;
+-left click on the colormap allows to draw straight ramp. It is previewed 
+ with a black and white line.
+
+ Legend.py
+-fixed bug: under Mesa in vision depth buffering wasn't working
+-simplified and cleaned colormap legend
+-corrected vertical/horizontal positionning in some corner
+-the legend in the colormap and in the camera is drawn using the same function
+
+Viewer.py
+-replaced SimpleDialog with tkMessageBox.askokcanel
+-saved networks now restore the viewer state
+- made twoSide light model default
+- made light model panel in gui initialize checkbuttons with current values
+- corrections in saving macros
+- corrections in loading mydefaultlib
+
+ ViewerGUI.py
+- made backPolyMode and FrontPolyMode GL_FILL by default
+- added code to disable culling when a clipping plane is enabled
+- added drawThumbnail to list of options that can be set for a Camera
+- added a checkbutton under Camera Panel in GUI to toggle this values
+- made twoSide light model default
+- made light model panel in gui initialize checkbuttons with current values
+
+ colorTool.py
+-adjusted HSVRamp to allow size =1
+
+ VisionInterface/DejaVuNodes.py
+-moved filename in colormap node to the parampanel
+-made Box  a GeometryNode
+-implemented node Labels
+- added CenterOnPickedVertex node allowing to turn mouse picking
+  into scene centering opeartion using lastPicked vertex
+- added CenterOnVertex node to allow to center on a 3D point
+-added support for colorMap with only one color
+-introduced Types files per library
+-suppressed annoying deprecation warnings
+-corrected bug when saving colormap node source code,
+-reduced default colormap node to 16 values
+-saved networks now restore the viewer state
+-corrected bug in SetInstances
+-corrected TextureType
+-corrected bug related to "show legend" and apply.
+-corrected bug when closing colormap settings
+-corrected bug when saving colormap node source code
+-corrected bug when apply colormap settings with 'show legend' off
+-corrected TextureType to accept Colormap
+
+ VisionInterface/DejaVuTypes.py
+-now all the libraries are using UserLibBuild.addTypes() to load types
+
+ VisionInterface/DejaVuWidgets.py
+-corrected bug in colorEditor callback
+-corrected bug when saving colormap node source code,
+-reduced default colormap node to 16 values
+
+ VisionInterface/GeometryNodes.py
+-corrected bug in geom's deletion
+-now geometryNode renames and doesn't duplicate
+-changed minimum sphere radius from 0.1 to 0.0000001
+-now geometries are set with  tagModified=False
+-now parenting geometry nodes can be done througth macros
+
+
+Release 1.4.1.  March 2006
+----------------------------
+What's new since 1.3alpha2:
+---------------------------
+*Added support for saving 'png' files with transparent background in Camera
+*Added assertion that width and height of camera are int.  When passing a float the camera.width and .height could become float which cause some OpenGL functions not to execute (for instance glViewport) ultimately leading to segfault on some other OpenGL calls
+*added an option to save a VRML2 file with colors per vertex or color per face. Added a checkbutton to the VRML2 save panel to toggle this. If colors are currently per vertex and the user chooses per face, the colors are interpolated to give a reasonable result (code by Michel). Vice versa was already implemented and applied by default. Note: the materials of the geometry are not modified by this operation in DataOutput.
+*Added tests foe colorChooser,Ellipsoids
+*The OGLWidget in Material Editor now has a width and height attribute which are used to set the width and the height of the widget instead of using the current height and width.
+*Added dialogbox such that when camera x button is clicked asks whether to quit or not?
+*Added Viewer.stopTileRendering method
+*Modified Viewer.OneRedraw() to check is autoRedraw is on and in this case switch it off for the duration of this redraw and restore its previous value.This way it is OK to call OneRedraw when autoRedraw is on.Also the rotateScene macro no longer has to stop and start autoRedraw at the beginning and the end of the iteration.  The nice thing about this is
+that interrupting the rotateScene macro no longer leaves the viewer in autoRedraw off mode, and it is possible to interact with the rotating scene with the mouse.
+*Added a dialog box such that when x button of ViewerGUI is clicked asks whether to quit or not.
+*Added Viewer.GUI renameObject method, to change the name of an object in the widget tree
+*Added a checkbutton to allow the user to set the thumbwheels to the given colorMap values.
+*Added SelectMultipleGeometry node to select geometry object using regex on name in ImageViewer.
+*Added new check button to IndexedPolygons node to create new geometry when name changes in ImageViewer.
+*Added utils for algorithms operating on geometries
+*Added ConnectedComponents,Distance<atrix,ScaleLegend,Qslim and DDM nodes
+*Added functionality to import binary STL files. Exposed this also as a new DejaVu-Vision node.
+* Added support for detecting 1-based indiced in face fils in
+  IndexedPolygonsFromFile
+* Modified materialEditor.setObject() to take one more argument  to specify
+  if the editor is bound to the front of the back facing polygons.  This method
+  now also calls self.defineMaterial to set the material editor to reflect the
+  material of the object it is bound to.
+  self.defineMaterial was modified to only use the first entry from each
+  property.  Previousely it copied the complete vector which was then sent to
+  the object with only the forst entry modified.
+
+Bug Fix:
+--------
+*fixed Camera.lift method to work for docked and floating camera
+*fixed a bug in Camera.Set which would cause the Viewer to stopAutoRedraw
+*fixed cam.Set(width=, height=, posx=, pasy=) to make sure the windows changes
+  before returning
+*fixed camera.Geometry method to add 2*frameBorderWidth to width and height
+*fixed some bugs in handlePick (p was not incremented properly and mini
+  was never set)
+*In Cylinders,Fixed a bug in asIndexedPolygons method when radii specified for each vertex.
+*In Ellipsoids,fixed a bug in Draw which caused only one ellipsoid to be drawn
+*In geom,fixed ObjSubTreeBB to compute the bounding box with instance matrices
+*fixed a bug in ClipVisible method with cause only clipping plane 1 to be made visible in VieerwGUI.
+*fixed a bug in colorMap.setRightXVals
+
+DejaVu/Arcs3D.py:
+- added quality keywords to Arcs3D
+- set Lighting to False since the draw method only handles colors
+- added redoDspLst = 1in Set method
+- removed nsegments argument from _arcTemplate method
+- added check for divide by 0 in Arcs3D.arcdraw
+- moved GL.glColor4fv(colxf) or of vertex drawing loop for an arc
+- added function validateFloat to check values used to set floarVectors of
+  scalars.
+- Added Set method to Fan3D and Arc3D, fixed the existing tests
+- removed obsolete PickedVertex method
+- append Axis class to Arrows.py
+
+DejaVu/Camera.py:
+- added test in DrawOneObject to call obj.Draw() in immediate rendering mode
+- added support for saving 'png' files with transparent background
+- fixed a bug in Camera.Set which would cause the Viewer to stopAutoRedraw
+- fixed cam.Set(width=, height=, posx=, pasy=) to make sure the windows changes
+  before returning
+- modified cam>Set(width=, height=) to make sure the windows does resize before we return from the call
+- added swap attribute to camera (to avoid swapping after redraw in some cases)
+- made the camera only swap if c.swap is true
+- modified Expose method to not do anything if in the viewer is in autoRedraw
+  mode.  This was creating a racing condition when the tile renderer lifted the
+  camera
+- fixed Camera.lift method to work for docked and floating camera
+- added camera.frameBorderWidth attribute to camera
+- fixed camera.Geometry method to add 2*frameBorderWidth to width and height
+- added camera.getGeometry method
+- added assertion that width and height of camera are int.  When passing a
+  float the camera.width and .height could become float which cause some
+  OpenGL functions not to execute (for instance glViewport) ultimately
+  leading to segfault on some other OpenGL calls
+- commented out picked code in ActivateClipPlanes
+- commented out loading a name for clipping plane as it changed the length
+  of the picking names vectors .. now clipping planes cannot be picked.
+- fixed some bugs in handlePick (p was not incremented properly and mini
+  was never set)
+- removed some extr space characters
+- modified pickObject to store instance info together with vertex in hits
+  dictionary rather than in separate instance dictionary
+- reverted to previous PickObject with seprated lit of hits and instances
+- modified PickObject.hits to provide a list of (vertex, instance) tuples for
+  each geometry
+- deprecated DrawPickingSphere, CenterPick_cb
+- modified set to clamp rootx and rooty at 0
+
+DejaVu/Cylinders.py:
+- removed self.radius from Cylinders and CylinderArrows
+- added first pass of CylinderArrows object, need to add Set method for
+  headLength and headRadius attributes, and may be caps.
+-Fixed a bug in asIndexedPolygons method when radii specified for each vertex.
+
+DejaVu/DataOutput.py:
+- added an option to save a VRML2 file with colors per vertex or color per face. Added a checkbutton to the VRML2 save panel to toggle this. If colors are currently per vertex and the user chooses per face, the colors are interpolated to give a reasonable result (code by Michel). Vice versa was already implemented and applied by default. Note: the materials of the geometry are not modified by this operation.
+
+DejaVu/Displayable.py:
+- modified initColor and InitMaterial to check for OVERALL binding and else
+  use propr[num]
+
+DejaVu/Ellipsoids.py:
+- fixed a bug in Draw which caused only one ellipsoid to be drawn
+- added self.redoDspLst=1 in .Set method
+- removed obsolete PickedVertex method
+
+DejaVu/Geom.py:
+- added attribute instance to calls to ApplyParentsTransform and
+  TransformedCoords
+- removed obsolete PickedVertex method
+- worked on incorporating instances into ApplyParentsTransform,
+  TransformedCoords and GravityCenterSubtree
+- added SetForChildren(self, recursive=False, **kw): method to Geom
+- in .Set(name=...) do not rise an exception if the name matches the name of
+  of the object itself
+- added .replace attribute to Geom.  This attribute is used in AddObject to
+  decide if a geoemtry should be renamed or replace an existing geometry if
+  they have the same name (among children of the same parent)
+- added check for name unicity in Set(name=...) method
+- fixed ObjSubTreeBB to compute the bounding box with instance matrices.  The
+  problem was that geoemtries with no vertices where skipped before the
+  instance matrices where considered
+
+DejaVu/MaterialEditor.py:
+- added ownsMaster attribute
+- added _destroy method to force deleting opengl contexts in this editor
+- The OGLWidget now has a width and height attribute which are used to set the width and the height of the widget instead of using the current height and width.This was causing the OGLWidget to get bigger and bigger with each step back in the colorMapGUI.
+
+DejaVu/Points.py:
+- removed obsolete PickedVertex method
+
+DejaVu/Polylines.py:
+- removed obsolete PickedVertex method
+
+DejaVu/Spheres.py:
+-fixed an 'import' statement and the names of UTImposter Spheres methods
+- added skeleton of imposterRenderer-based spheres
+- removed obsolete PickedVertex method
+
+DejaVu/Transformable.py:
+- modified logic for re-building the viewer's display list after in
+  ConcatRotation
+- added optional instance attribute to BuildMat, GetMatrix and GetMatrixInverse
+- worked in adding support for instance in BuildMat, GetMatrix and
+  GetMatrixInverse
+- added SetTransformation(self, matrix, transpose=False, redo=True) to
+  the Transformable class to set an object's transformation from a 4x4
+
+DejaVu/Viewer.py:
+-added dialogbox such that when camera x button is clicked asks whether to quit or not?
+- renamed Viewer.enableTileRendering Viewer.startTileRendering
+- added Viewer.stopTileRendering method
+- tile rendering now switched to not autoRedraw mode
+- worked on tilerendering, works better now
+- added print statment for each tile rendered
+- replaced while loop to find toplevel by winfo_toplevel()
+- added destroying the MaterialEditor in the Exit moethd if the Viewer
+  This forces the opengl contexts created for this editor to be deleted
+- uncommented some functions
+- fixed a bug that crated a problem when replacing a geometry
+- added redo=False argument to RemoveObject
+- fixed bug in RemoveObject, no object could be removed because of a logic
+  error
+- removed the topObjects list, There can only be one root object now
+- modified the Viewer's contructor to create root (rather than using AddObject
+- replace unique=1 argument to AddObject by replace=True
+- removed 'top' as a legal parent object in AddObject
+- rewrote most of AddObject
+- made reparenting work
+- added emopty lines for demo od cvs
+- replaced all after_idle() by after(10) for autoRedraw
+- added self.pendingAutoRedrawID attribute to Viewer to same the ID of the
+  after() call used by autoRedraw
+- modified viewer.stopAutoRedraw() to kill the last after() call and
+  made sure ReallyRedraw will not be called for the pending after call
+- modified OneRedraw() to check is autoRedraw is on and in this case switch
+  it off for the duration of this redraw and restore its previous value.
+  This way it is OK to call OneRedraw when autoRedraw is on.
+  Also the rotateScene macro no longer has to stop and start autoRedraw at
+  the beginning and the end of the iteration.  The nice thing about this is
+  that interrupting the rotateScene macro no longer leaves the viewer in
+  autoRedraw off mode, and it is possible to interact with the rotating scene
+  with the mouse.
+
+DejaVu/ViewerGUI.py:
+-self.root is checked whether instance of Toplevel before self.root.protocol('WM_DELETE_WINDOW', f).If its a frame it doesn't have protocol attr
+-added a dialog box such that when x button  is clicked asks whether to quit or not
+-fixed a bug in ClipVisible method with cause only clipping plane 1 to be made visible
+- added support for quick transform key panel
+- replaced children property by a new panel that pops up and provides 2
+  radio buttons to turn a given property on or off for all direct children
+  (i.e. not recursively) of an object.  The panel is initialized and shows the
+  radio button selected if all children have the property set to True,
+  deselected if all children have the property set to False.  If there is a
+  mix of values neither the on nor the off button is set.
+- Fixed typo i nPreference menu "Transf. Root Only" The R was missing
+- added renameObject method, to change the name of an object in the widget tree
+- modified the addObject method which adds DejaVu geoemtry objects to the
+  widget tree to automatically add the children of the object recursively
+- added a FIXME comment about calling GetMatrixInverse
+
+DejaVu/colorMap.py:
+- fixed a bug in setRightXVals and commented what is computed
+- In setRightXVals sometimes the ramp_range is equal to 0.0 which then causes a problem when normalizing the color values.
+- Using the value .666667 instead of the ramp_range until understanding why the
+ramp_range can be 0.0.
+- In setRightVals if idStr is 'Hue' need to normalize the ramp values by dividing the values by (max(ramp) - min(ramp) instead of using the arbitrary values of .66666667
+- In OGLColorMapWidget the width attribute is now set in the constructor of the base class OGLWidget.
+- Cleaned up the code by removing some the commented section.
+- Modified the behavior of the Interval.
+- Added a button to set the interval to the given value
+- Added a checkbutton to allow the user to set the thumbwheels to the given colorMap values.
+- Changed the widgets to specify the intervals from Tkinter.Entry to Thumbwheel.
+- added glAllMaterialWithCheck function, but not used yet
+
+DejaVu/imageViewer.py:
+- added SelectMultipleGeometry node to select geometry object using regex on
+  name
+- added new check button to IndexedPolygons node to create new geometry when
+  name changes
+- fixed bug in Viewer node that created endless recursion when adding a
+  geom container to the viewer when the parent already belonged to the viewer
+
+DejaVu/utils.py:
+- added utils for algorithms operating on geometries
+
+DejaVu/Tests/test_Arcs3D.py:
+-added new tests for radii and angles
+- added function validateFloat to check values used to set floarVectors of
+  scalars.
+-changed comparison of R values to comparison of B values for viewer test which hinges on toggling inheritMaterial...
+-restructured tests into 3 classes: Arcs3D_init_Tests, Arcs3D_Set_Tests and Arcs3D_Viewer_Tests. removed tests already covered by Geom class.. NOTE: Fan3D class has no tests at all, currently.
+
+DejaVu/Tests/test_Arrows.py:
+-removed empty comment from beginning of file
+-removed unnecessary imports.
+-restructured tests into 3 classes: Arrows_init_Tests, Arrows_Set_Tests and Arrows_Viewer_Tests. removed tests already covered by Geom class.. .
+-vi.stopAutoRedraw() is removed,vi.update() is added to make the image visible while running tests
+-OneRedraw is now raising an exception when viewer in autoRedraw mode ,fixed by calling stopautoRedraw before OneRedraw
+-updated the tests by rearranging creation of self.geom... also:
+added lines: self.vi.update() and self.vi.currentCamera.DoPick(0.,0.) to setUp
+to force drawing geometry
+-restructured tests into 3 classes: Box_init_Tests, Box_Set_Tests and Box_Viewer_Tests. removed tests already covered by Geom class.. .
+
+
+DejaVu/Tests/test_Camera.py:
+- modified some tests in camera to properly set the width and height
+- modified test in Cylinders to not use radius at all anymore
+- fixed tests for setting camera width and height to rally check that the
+  window size actually changed
+- added tests to check that setting camera.with or .height with floats raises
+  an exception
+-removed testing whether setting contours to an invalid value raised a ValueError because the test depended on the "hasNumarry", a global variable in Camera which varies between platforms.
+-modified tests to verify that rootx and rooty are set to 0 if negative values
+  are provided
+
+DejaVu/Tests/test_Clip.py:
+-removed Image<which we were using for debugging purposes only> because it broke things on the apple platform.
+-apparently can get these tests to pass if make sure that the camera is on top of all the other widgets: added camera.master.master.lift before each Redraw.
+-fixed rotating_clip_removes_top_half,setup_spheres_clips_right_sphere tests
+-corrected translating clip removes half left_sphere test
+
+DejaVu/Tests/test_ColorChooser.py:
+-added tests
+
+DejaVu/Tests/test_ColorMap.py:
+-Updated the test_ColorMap to reflect the changes made to the default values
+of mini and maxi
+
+DejaVu/Tests/test_ColorWheel.py:
+-added some more tests
+
+DejaVu/Tests/test_CrossSet.py:
+-added lines: self.vi.update() and self.vi.currentCamera.DoPick(0.,0.) to setUp
+to force drawing geometry
+-restructured tests into 3 classes: CrossSet_init_Tests, CrossSet_Set_Tests and CrossSet_Viewer_Tests. removed tests already covered by Geom class
+-vi.stopAutoRedraw() is removed,vi.update() is added to make the image visible while running tests
+-OneRedraw is now raising an exception when viewer in autoRedraw mode ,fixed by calling stopautoRedraw before OneRedraw
+
+DejaVu/Tests/test_Cylinders.py:
+-added "self.geom.Set(radii=5.0)" to Cylinders_Viewer_Tests setup method...Otherwise, the test hangs because the geometry cannot be redrawn...
+- modified some tests in camera to properly set the width and height
+- modified test in Cylinders to not use radius at all anymore
+-forced redraw in setUp by calling currentCamera.DoPick...
+-restructured tests into 3 classes: Cylinders_init_Tests, Cylinders_Set_Tests and Cylinders_Viewer_Tests. removed tests already covered by Geom class.. .
+
+DejaVu/Tests/test_Ellipsoids.py:
+-added tests
+
+DejaVu/Tests/test_Fan3D.py:
+-added lines: self.vi.update() and self.vi.currentCamera.DoPick(0.,0.) to setUp
+to force drawing geometry
+-changed def xtest to def test
+-added comment strings
+-added new tests for keywords radii,angles,vectors
+- Added Set method to Fan3D and Arc3D, fixed the existing tests
+-restructured tests into 3 classes: Fan3D_init_Tests, Fan3D_Set_Tests and Fan3D_Viewer_Tests. removed tests already covered by Geom class.
+
+DejaVu/Tests/test_Geom.py:
+-changed name of  IndexedGeom_BaseTests to IndexedGeom_Set_Tests.
+-restructured previous tests to focus on testing specifics of the Geom class and those of the IndexedGeom class. now this module contains 4 test classes: Geom_init_Tests which test the possible combinations of parameters to Geom.__init__, Geom_Set_Tests which is designed to test setting each keyword which is specific to the Geom class [16 are not yet tested because i don't know valid input for them], Geom_Viewer_Tests which test adding an instance of the class to the viewer AND IndexedGeom_BaseTests which tests setting the keywords specific to the indexed geom class...[this should be called IndexedGeom_Set_Tests...]...
+
+DejaVu/Tests/test_GridBox.py:
+-added lines: self.vi.update() and self.vi.currentCamera.DoPick(0.,0.) to setUp
+to force drawing geometry
+-restructured tests into 3 classes: GridBox_init_Tests, GridBox_Set_Tests and GridBox_Viewer_Tests. removed tests already covered by Geom class..
+
+DejaVu/Tests/test_IndexedPolygons.py:
+-added lines: self.vi.update() and self.vi.currentCamera.DoPick(0.,0.) to setUp
+to force drawing geometry
+PLUS renamed duplicate class to IndexedPolygon_Viewer_Tests2, added it to list of classes to test, removed its duplicate tearDown method.
+-modified IndexedPolygons_Viewer_Tests setup to draw a polygon with 5 faces
+
+DejaVu/Tests/test_IndexedPolylines.py:
+-added lines: self.vi.update() and self.vi.currentCamera.DoPick(0.,0.) to setUp
+to force drawing geometry
+-restructured tests into 3 classes: IndexedPolylines_init_Tests, IndexedPolylines_Set_Tests and IndexedPolylines_Viewer_Tests. removed tests already covered by Geom class.
+
+DejaVu/Tests/test_Labels.py:
+-added lines: self.vi.update() and self.vi.currentCamera.DoPick(0.,0.) to setUp
+to force drawing geometry
+-modified position of labels to cope with subtle change in camera dimension.
+-size of camera has changed slightly so adjusted location of pixel to check so that it is in the Label geometry....
+-added "camera.DoPick" to tests for Label image: this was necessary otherwise the geometry was not drawn when the tests were run [it was drawn when the tests were tested interactively].
+-restructured tests into 3 classes: Labels_init_Tests, Labels_Set_Tests and Labels_Viewer_Tests. removed tests already covered by Geom class.
+
+DejaVu/Tests/test_Points.py:
+-added lines: self.vi.update() and self.vi.currentCamera.DoPick(0.,0.) to setUp
+to force drawing geometry
+-restructured tests into 3 classes: Points_init_Tests, Points_Set_Tests and Points_Viewer_Tests. removed tests already covered by Geom class.. NOTE: CrossSet class has no tests at all, currently.
+-OneRedraw is now raising an exception when viewer in autoRedraw mode ,fixed by calling stopautoRedraw before OneRedraw
+
+DejaVu/Tests/test_Spheres.py:
+-added lines: self.vi.update() and self.vi.currentCamera.DoPick(0.,0.) to setUp
+to force drawing geometry
+-restructured tests into 3 classes: Spheres_init_Tests, Spheres_Set_Tests and Spheres_Viewer_Tests. removed tests already covered by Geom class.. NOTE: TriangulateIcos andTriangulateIcoByFaceCenterPoint classes have no tests
+
+DejaVu/Tests/test_Viewer.py:
+- replaced unique=0 by repalce=True in Viewer.AddObject
+
+DejaVu/Tests/test_basics.py:
+-restored multiple viewer tests;fixed apparent bug in "create a viewer with a frame to pack the GUI and destroy it"
+-updated these tests to inherit from unittest....
+
+DejaVu/Tests/test_memory.py:
+-restored commented-out test which created and destroyed a bunch of viewers...
+NOTE: I commented out these tests because they crash the xserver on my computer EVERY TIME! so the nightly tests can't finish...
+- replaced while loop to find toplevel by winfo_toplevel()
+-changed tests to inherit from unittest; commented out vi1.Exit in test_creating Viewers100TimeWIthViewer because this line [apparently] crashed the xserver on my linux box.
+
+DejaVu/Tests/test_triangleStrip.py:
+-added: self.vi.update() and self.vi.currentCamera.DoPick(0,0) to force a redraw in tests...
+-restructured tests into 3 classes: Triangle_strip_init_Tests, Triangle_strip_Set_Tests and Triangle_strip_Viewer_Tests.
+
+DejaVu/VisionInterface/DejaVuNodes.py:
+-added ConnectedComponents node
+-replaced PyQslim by QSlimLib,  and 'class Qslim' by 'class QSlim' .
+- moved the type InstanceMatricesType from NetworkEditor to DejaVuNodes
+-added removeDuplicatedVerticesC class that uses C++ function from opengltk.extent.utillib.
+- added Distance<atrix and DDM nodes
+- in ComputeRMSD, calc rmsd only when refCoords is set
+- in Viewer -> handlePick, output lastpick only when self.vi is set
+- added RemoveDuplicatedVerticesNE node.  This nodes removed vertices that
+  appear multiple times in the vertexSet of a geometry and re-indexed the
+  faceSet accordingly.  This is useful for geoemtries comming from the
+  isocontours or readSTL nodes.  Shoudl be used before decimating a surface.
+- removed comment
+- added a node called ScaleLegend to display a size scale in a DejaVu Camera
+-bugfix: ColorsRGBType was moved to NetworkEditor/datatypes.py -> which means we now need to import it from there. Added this to the import statements. Before this fix, DejaVuNodes could not be loaded.
+-moved colorRGB and colorsRGB types to NetworkEditor.datatypes
+- added code Qslim node to output only used vertices for decimated geometry
+- added Axis node to create 3D arrows geometry
+- modified Viewer node's handlePick method to only schedule node children of
+  lastPick port
+- modified mapPotOnGeom macro to use mean value insteead of absmax
+- a character had been deleted in the stereoSeparation node causing the node
+  not to call the Set method anymore
+- modifed vViewer node (can stil be simplified now that the parent is set
+  after adding to the viewer)
+- added output port to Viewer node to output the added geoemtries
+- modified IndexedPolygons to create new geoms when name changes, added replace
+  check button and removed parent input port
+- added ReparentGeom
+- added SelectMultipleGeometry node to select geometry object using regex on
+  name
+- added new check button to IndexedPolygons node to create new geometry when
+  name changes
+- fixed bug in Viewer node that created endless recursion when adding a
+  geom container to the viewer when the parent already belonged to the viewer
+-modified Qslim node. Added ability to rebuild the model and a choice to either output a new geometry or to modify the input geometry.
+-added an Entry widget to ParamPanel of Qslim node to display/set
+ current number of faces.
+-added Qslim node exposing the functionality of the Qslim Surface
+ Simplification library by Michael Garland (University of Illinois).
+- added node0.macroNetwork.runOnConnect = False before restoring connections
+  in rotatScene macro and restor it's state after to avoid running the macro
+  upon instanciation.  FIXME this code shoudl be generated automatically.
+- added by hand node.autoRun=False and resore it for the flattenRotation node.
+  This node is a Generic node and and its input and output ports can only be
+  added after the node is added to the network.  This was causing the
+  execution of this node when the macro is instanciated.
+- removed stop and start auto redraw nodes from rotateScene macro
+ 	
+
+Release October 2004
+--------------------
+#cvs log -d ">2003-12-17" DejaVu
+What's New (compared to release  December 17, 2003):
+
+High level modifications:
+    - We switched to a new version of the OpenGL wrapper called opengltk.
+	As a consequence the following functions in opengltk are replace by:
+ 	    glIndexedGeomDSPL -> glDrawIndexedGeom
+	    glSphereSetDSPL ->  glDrawSphereSet
+
+    - for each geometry a new method has been added self.Draw()
+    we took the call to the opengl function of self.RedoDisplayList and move 
+    them in self.Draw(). The code in Draw() is what should be between:
+    GL.glNewList
+    GL.glEndList
+    that allows use to draw a geometry in another opengl context without 
+    having to share the display list. The geometry display list need to be 
+    recreated in the new context.
+    - we added support for saving the viewer's and geometry objects' state
+        - the _modified attribute was introduced to monitor state changes
+    - fixed Camera destruction code to not destroy OpenGL context when it is 
+      shared
+    - added gneric mechanism for callbacks on button up and down
+    - added experimental Non Photo Realistic (NPR) rendering mode called 
+     silhouette.  Requires Numarray to be present. Currently only works on
+     square cameras.
+    - added method to camera to automatically adjust depth cueing
+    - added support for tile rendering.
+    - fixed cliping planes
+    - added stopAutoRedraw and startAutoRedraw methods to the Viewer
+    - added oneRedraw method to Viewer to get a guaranteed redraw programmatically
+    - allow to turn lighting on and off on each geometry
+    - added new nodes to the Vision interface
+    - fixed many bugs
+    - added many tests
+
+
+Detailed lof entries per file:
+
+DejaVu/Arcs3D.py
+- turned lighting on for Arc3D objects by defaults else they appear VERY dim
+- replaced calls to GL.glColor3fv by GL.glColor4fv
+- change made to use new opengltk (build with distutil)
+- added _modifed = False at the end of the constructor
+
+DejaVu/Arrows.py
+- added _modifed = False at the end of the constructor
+- change made to use new opengltk (build with distutil)
+- following function in opengltk are replace by:
+
+DejaVu/Box.py
+- changed GridBox keywords nxpts, nypts and nzpts to xnpts, ynpts, znpts...
+- made the box geometry render as a default IndexedPolygons when mode is 
+not GL_LINES
+- change made to use new opengltk (build with distutil)
+- following function in opengltk are replace by:
+
+DejaVu/Camera.py
+- replaced glPushName(-1) by glPushName(0) becaues under MacOSX this is not
+  allowed (correctly so)
+- added self.ownMaster to Camera to decide if camera.frame.master has to be
+  destroyed or not when camera is deleted
+- fixed typos in comments about shared context
+- fixed Camera.addButtonDown method to check if function not already in list
+- fixed Camera.addButtonUpCB to only add the function if it is not already
+  in the list else we added the z-sorting functions for every opacity slider
+  motion event
+- added imCanvastop attribute to prevent exception when docking camera
+- If a camera share context then the camera which owns the OpenGL context has
+an attribute shareCTXWith which contains the list of camera sharing its context.This is used when deleting a camera
+- added anode about sharecontext and sharelist
+- replaced print message by warning if numarray is not found
+- added support for numarray-based 2D convolution for silhouette rendering mode
+- added contours key word to Camera.Set, can be True or False
+- commented out flipping of image under windows
+- made GrabZBuffer return an array of floats rather than bytes
+- added d1cut, d1scale, d1off and d2cut, d2scale, d2off attributes to camera
+  for controlling silhoueete rendering
+- added firstDerivative and secondDerivative methods to conpute this for images
+- added code in RedrawAASwitch for drawing contours.  The contoured image
+  is stored in camera.contouredImage
+- return on new lines in Camera.Redraw
+- removed glFlush and swapbuffer from Redraw because it was already done in
+  .RedrawAASwitch
+- added check for GL_CONVOLUTION_2D in set(contours)
+- fixed capitalization of depthImage
+- modified GrabZBuffer to return more meaningful; values when zmin==zmax
+  when nothing is draw zmin==zmax = 1.0 and it will return 255
+  when a single polygon, orthogonal to the viewing direction is draw it would
+  return a constant values corresponding to zmax*255 where zmax is between 0.0
+  and 1.0
+- modifed handling of contour keyword in Set in order to destroy iamgeviewer
+  if present, regardless of value of to be set
+- added contour capability in on AntiAliased mode
+- speed up constour calculation by moving normalization out of the loop
+- made AA accumulation hapen in back buffer
+- Grab Z and Front buffer no longer swap buffers
+- GrabFrontBuffer now has a buffer argument allowing to also grab back buffer
+- added attributes for drawing contours
+        # attributes used to draw black outlines
+        self.contouredImage = None # will hole the final PIL image
+        self.outlineim = None # will hole the final contour
+        self.outline = None  # accumulation buffer used for AA contour
+	self.contours = False # set to True to enalbe contouring
+        self.d1cut = 0
+        self.d1scale = 3.0
+        self.d1off = 60
+        self.d2cut = 1
+        self.d2scale = 8.0
+        self.d2off = 10
+- added code to antialias contours
+- split GrabFront and ZBuffer method into on to get a Numeric array and one to
+  get a PIL image
+- fixed set(end, start) for bad input
+- enabled unit tests
+- Changes GrabZbuffer to make an 'L' image instaed of 'P'
+- added pushAttrib=True argument to Camera's Draw method. This is used by tests
+  to retain the OpenGL state after drawing an object
+- indentation change in  Enter_c
+- added _modifed=True to Setxxxx and Concatxxxx method
+- save rootObject's state only if _modofed is True
+- switch to new opengltk (build with distutil)
+- change import of module name
+- remove reference to bufarray, opengltk us Numeric now.
+- added _modifed flag to camera.  It can be set using the Set method.
+  if not specified as False, calling Set will set it to True
+- added getState method to Camera and Fog
+- removed viewerConst.FPRECISION argument from colorTool.OneColor calls
+- fixed bug that caused expose events to freeze camera
+- added silent optional attribute to delButtonDownCB and delButtonUpCB methods
+- recompute camera.direction qhen lookfrom or lookat is modified
+- added 2 functions to remove button up and down callbacks
+- generalized mechanism to specify call back on button down and up
+  Camera has 2 new lists onButtonUpCBlist and onButtonDownCBlist and 2
+  methods to add callback to these list addButtonDownCB, addButtonUpCB.
+  I also added 2 methods for manging anti aliasing suspendAA and restoreAA
+- added AutoDepthCue(self, nearOffset=0.0, farOffset=0.0) method to camera
+  It sets fog start and end automatically using the bounding box of the scene.
+  if delta is the depth of the bounding box,
+     start will be set to near+(nearOffset*delta)
+     end will be set to farn+(farOffset*delta)
+- added backBuffer option to enableTileRendering
+- made image buffer 3byte per pixel
+- known problems:
+	text might fail, need to implement trRasterPos3f
+	stereo does not work
+	for some sizes of windows, top tile is distorted
+- added support for tile rendering.
+  to use it call vi.enableTileRendering() with an outputFile, a desired width
+  or a height and an optional border
+  vi.enableTileRendering(width=2000, outputFile='testpmv.jpg')
+- changed signature of Expose function from def Expose(self, *dummy):
+  to def Expose(self, event=None):
+
+
+DejaVu/Clip.py
+- removed side attribute as this is defined by each clipped object
+- fixed calculation of eqn[3] when rotating the clipping plane, has to add -
+   self.eqn[3] = -Numeric.matrixmultiply(self.eqn[:3], self.translation)
+- added checks for valid input to setting lineWidth... now raises ValueError if new value can't be converted to a float OR if new value is not greater than 0.
+- inverted order of treating translation and rotation in Set method
+- added _modifed=True to Setxxxx and Concatxxxx method
+- save rootObject's state only if _modofed is True
+- made clipping plane color a list rather than an array
+- visible is now True or False rather than 0/1
+- fixed a bug in Set method for keyword 'side'
+- reshape rotation to (16,) because that is what ConcatRotation wants
+- switch to new opengltk (build with distutil)
+- change import of module name
+- remove reference to bufarray, opengltk us Numeric now.
+- added _modified flag
+- change Set method for translation, rotation scale and pivot
+- added a comment about clipping planes
+- added getSate method to clipping plane object
+- modified Set method for rotation, translation, scale and pivot
+
+
+DejaVu/ColorChooser.py
+- Using copy.deepcopy() instead of the __copy__() in swap.
+
+
+DejaVu/Cylinders.py
+- Fixed a bug in asIndexedPolygons method when radii specified for each vertex.
+- added a checkMat attribute that is set to True for MacOSX to force sending
+the color of each cylinder regarless of the color sent previously
+- fixed the bug that the radii of cylindar was not assigned in the
+  proper order.
+- added lighting=True in constructor
+- added _modifed = False at the end of the constructor
+- change made to use new opengltk (build with distutil)
+
+
+DejaVu/DataInput.py
+- added this file
+- added class ReadASCIISTL that allows to parse ASCII STL files and convert
+  them to DejaVu IndexedPolygons
+
+
+DejaVu/DataOutput.py
+- added various function for supporting the SMF format
+	http://www.csit.fsu.edu/~burkardt/data/smf/smf.html
+	listOfStrings <-- IndexedPolgonsAsSMFString(geometry)
+	writePolygonsAsSMF(geometry, filename)
+	v,f,n,c,r <-- ParseSMFString(stringList)
+	readSMF(filename)
+- Fixed a bug in output STL: IndexedPolygons with more than 4 faces would fail,
+  also fixed case when face is -1 (padding to make array uniform): this happens
+  for example in BSP Tree objects
+
+
+DejaVu/Displayable.py
+- added colorAsMaterial attribute to Outline to have the outline colored
+  same as the surface
+- changes lighting from 0,1 to False, True
+- replaced test self.frontPolyMode=='outline' by
+  self.frontPolyMode==viewerConst.OUTLINED
+- moved self.immediateRendering and self.hasChildWithImmediateRendering from
+  Displayable constructor to Transformable because immediateRendering is used
+  in Transformable but not in Displayble
+- removed viewerConst.FPRECISION argument from colorTool.OneColor calls
+- fixed bugs in setting materials. Opacity would be ignored and required
+  calling Set(opacity=vals). Now it is used to set the opacity is it is
+  specified as the 4th column of the diffuse property
+
+
+DejaVu/Ellipsoids.py
+- made Draw return true, else the dpyList is always deleted
+- added _modifed = False at the end of the constructor
+- change made to use new opengltk (build with distutil)
+- Added initial Ellipsoid object
+- added setMatrixComponents method to set the rotation, translation and/or
+  scale of object.matrix
+
+
+DejaVu/Geom.py
+- added deprecation warning for RenderMode
+- fixed Geom.Set(instanceMatrices=...)
+- fixed Set(instanceMtrices=...)
+- added 'lighting' parameter to Set method
+- modifed Draw method to not use normals is lighting is False
+- added tests to only call GetNormals if lighting is True
+- GetNormals sets lighting to True
+- fixed a typo bug in getState method
+- commented out extraneous viewer.objectsNeedingRedo.append(o) in setViewer
+- added test of object existence in code generated by getGeomMaterialCode and
+  getGeomClipPlanesCode
+- fixed Set(instanceMatrices=). It was appending matrices instead of
+  setting them
+- added _modifed = False at the end of constructor
+- added support for drawing outline with asme colors as material
+- added all argumenst to glDrawIndexedGeom for outline else it segfaults
+- added tagModified to calls to mat.SetMaterial in Geom .Set method to avoid
+  taggind material _modified if tagModified is False
+- change made to use new opengltk (build with distutil)
+- added _modified attribute and tagModified keyword for Set method
+- added 'frontPolyMode', 'backPolyMode', 'shading', 'rotation', 'translation',
+  'scale', 'pivot', 'protected' and 'listed' keywords to Set method
+- added getState method (ahndles everything except for textures now)
+- added getGeomMaterialCode method
+- added getGeomClipPlanesCode method
+- replaced viewerConst.YES and NO by True and False
+- allow using strings for GL constants such a "front", "back", "front_and_back"
+- added a comment about side of clippign plane which shoudl be sored in
+  clipping plane
+- removed viewerConst.FPRECISION argument from colorTool.OneColor calls
+- removed code to build display list for outline in DisplayFunction. THis was
+  causing color legend to freeze viewer when outline was turned on since
+  we tried to build a display list while building the viewer's display list
+- fixed bug in RedoDisplay list. repalced GL.glPolygonOffsetEXT by
+  self.viewer.polyOffset
+- fixed several typo bugs in updateParentsForImmediateRendering
+- added support for automatically sorting polygons on button release for
+  transparent objects
+- fixed bug that required Set(opacity=val) to be called twice
+- fixed bugs in setting materials. Opacity would be ignored and required
+  calling Set(opacity=vals). Now it is used to set the opacity is it is
+  specified as the 4th column of the diffuse property
+- fixed the IndexedGeom.Set method to reset the faces if faces are specified.
+  This avoid the exception about faces indexing bad vertices when normals are
+  recomputed
+
+
+DejaVu/GleObjects.py
+- In extrude() of GleExtrude class replaced:
+gle.gleExtrusion(contourPoints, contourNormals, self.contourUp, self.trace3D,		      self.materials[1028].prop[0] )
+by:
+gle.gleExtrusion(contourPoints, contourNormals, self.contourUp, self.trace3D,
+                 self.materials[1028].prop[0][:,:3] )
+
+
+DejaVu/IndexedPolygons.py
+- added lighting=True in constructor
+- added _modifed = False at the end of the constructor
+- fixed some bugs in saving/restoring the state
+- removed RenderMode from IndexedPolygons
+- set self.dpyList to None rather than 0 when it gets deleted
+
+
+DejaVu/Labels.py
+- added _modifed = False at the end of the constructor
+- change made to use new opengltk (build with distutil)
+
+
+DejaVu/Light.py
+- fixed Light.Set to check for positive values for attenuation factors
+- fixed unit test to check for ValueError when trying to set to negative values
+- changes which raise ValueError when new colorvalue for call to OneColor is not 3 or 4 long.
+- added _modifed=True to Setxxxx and Concatxxxx method
+- save rootObject's state only if _modofed is True
+- made all 4-tuples in Light object lists rather than 4-tuples else light's
+ color cannot be edited
+- made LightModel be not modified when first constructed
+- switch to new opengltk (build with distutil)
+- change import of module name
+- remove reference to bufarray, opengltk us Numeric now.
+- added _modifed to Light and LightModel
+- renamed enable option for light to enabled
+- replaced viewerConst.YES and NO by True and False
+- added getState() methods to LightModel and Light objects
+- set hasBeenCurrent flag for lights to True in Set method and False in Reset
+- use lists for direction, position and spotDirection
+
+
+DejaVu/MaterialEditor.py
+- renamed self.master self.root in MaterialEditor
+- added master for colorWheel PhotoImage
+- made the MaterialEditor use viewer.master as a master for its Toplevel
+  to make sure it is in the right Tk
+- modifed configure method of OGLWidget to resize OGL widget
+- tests for default height and width had been comment out in OGLWidget's
+  constructor had been commented out, put them back.
+- Also added test in MaterialEditor's contructor to set height and width
+  to 200 by default
+
+
+DejaVu/Materials.py
+- added tagModified to SetMaterial
+- added getState method and Set method
+- added _modified attribute
+- fixed bugs in setting materials. Opacity would be ignored and required
+  calling Set(opacity=vals). Now it is used to set the opacity is it is
+  specified as the 4th column of the diffuse property
+
+
+DejaVu/Texture.py
+- fixed 1DTexture to work with latest changes in opengltk: we now call
+  glTexImage1D directly from _gllib rather than the Python wrapper
+- fixed the DejaVu Vision node 1DTexture to work with the latest changes
+- switch to new opengltk (build with distutil)
+- change import of module name
+- remove reference to bufarray, opengltk us Numeric now.
+
+
+DejaVu/Trackball.py
+- generalized mechanism to specify call back on button down and up
+  Camera has 2 new lists onButtonUpCBlist and onButtonDownCBlist and 2
+  methods to add callback to these list addButtonDownCB, addButtonUpCB.
+  I also added 2 methods for manging anti aliasing suspendAA and restoreAA
+
+
+DejaVu/Transformable.py
+- added scale=False to GetMatrix(),
+  returns the matrix with rotation and translation. no scaling info included
+  Used to save the transformed geom --> coords --> new pdb file
+- added _modifed=True to Setxxxx and Concatxxxx method
+- save rootObject's state only if _modofed is True
+- switch to new opengltk (build with distutil)
+- change import of module name
+- remove reference to bufarray, opengltk us Numeric now.
+- moved self.immediateRendering and self.hasChildWithImmediateRendering from
+  Displayable constructor to Transformable because immediateRendering is used
+  in Transformable but not in Displayble
+- added cleanup argument to Decompose4x4 method
+- worked some on ConcatTranslation
+- change scaling factor ato allow to get very small rther than limiting to 0.001
+- Added initial Ellipsoid object
+- added setMatrixComponents method to set the rotation, translation and/or
+  scale of object.matrix
+
+
+DejaVu/Viewer.py
+- replaced all after_idle() by after(10) for autoRedraw
+- added self.pendingAutoRedrawID attribute to Viewer to same the ID of the
+  after() call used by autoRedraw
+- modified viewer.stopAutoRedraw() to kill the last after() call and
+  made sure ReallyRedraw will not be called for the pending after call
+- modified OneRedraw() to check is autoRedraw is on and in this case switch
+  it off for the duration of this redraw and restore its previous value.
+  This way it is OK to call OneRedraw when autoRedraw is on.
+  Also the rotateScene macro no longer has to stop and start autoRedraw at
+  the beginning and the end of the iteration.  The nice thing about this is
+  that interrupting the rotateScene macro no longer leaves the viewer in
+  autoRedraw off mode, and it is possible to interact with the rotating scene
+  with the mouse.
+- fixed Viewer's ReparentObject method which was completely broken
+- OneRedraw now raises an exception if it is called while the Viewer is in
+  autoRedraw mode, since this can lead to blocking the application
+- commented out the old body of the ReparentGeom method and created new one
+- replaced all cameras[0].update and .after by viewer.master.update or after
+- AddCamera now sets the camera's ownMaster flag and _DeleteCamera uses it
+  to destroy the toplevel ofthe camera is needed
+- fixed logic of deleting cameras sharing context
+- changed polycy for amster to only generate Toplevels (never Tk) because
+  Pmw is unable to handle multiple TCL interpreters
+- renamed ownTk ownMaster
+- removed self.master = master in AddCAmera as it was overwritting the
+  Viewer's master with th emaster for the Camera
+- added test to make sure guiMaster and Master are in the same TCL interpreter
+- fixed creation of Viewer's master for windows
+- added Viewer.ownTk attribute to know if we created a new Tk instance
+- destroy Viewer.master only if it ownTk is true
+- fixed bug in __DeleteCamera(), the camera was removed twice from the viewer's
+  list of cameras
+- ficxed guiMaster to be a Toplevel(master) in the case that a new Tk is
+  created, else when 2 viewers are created the root of their GUI is the same
+  and deleting a viewer desctroys it
+- replaced except by finally in AddObject and RemoveObject so that exceptions
+  are still thrown and seen by the tester but the lock is always released
+- modified deleteCamera to destroy camera after deleteing all dpyLists
+- called activate befor applying each light in InitLighting to avoid
+  loosing lights
+- Delete the dpyList in DeleteCamera before setting it to None.
+- Modified Exit to:
+  - destroy the GUI
+  - destroy the Camera.master.master
+- Implemented a _DeleteCamera and a DeleteCamera methods.
+- Modified the Exit method to call _DeleteCamera.
+- FIXME: If cameras share context Exit will segmentation fault.
+- added a check for no camera in ReallyRedraw
+- commented out creation of toplevel if screen is provided
+- destroy explicitly camera its frame and the frame's master
+- added test about existence of justGotRedone attribute before deleting
+- added self.redrawLock.acquire(0) before relasing it in final:
+  because if an exception has occured I can get there while the lock is
+  unlocked
+- removed white space
+- added a verbose option to Viewer's constructor to suppress printing OpenGL
+  version
+- Added an Exit methof to the Viewer object that properly stops the viewer
+  avoiding "after callit" error message
+- updated test_Fog.py to use verbose=False and exit properly
+- set parent of removed object to None (else causes enless recursive loop
+  when addign geom back to viewer)
+- commented out loading of togl in AddCamera
+- added _modifed=True to Setxxxx and Concatxxxx method
+- save rootObject's state only if _modofed is True
+- fixed a typo bug in saving inherited clipping planes
+- moved state saving methods from ViewerGUI to Viewer
+- check id LightModel is modified before saving
+- initLighting uses tagModfied=False to avoid saving 2 default lights
+- rootObject is now not _modified after Viewer is built
+- fixed some bugs in saving/restoring the state
+- removed RenderMode from IndexedPolygons
+- added getViewerStateDefinitionCode method
+- added getObjectsStateDefinitionCode method
+- renamed "enable" option for Set method of lights and camera "enabled"
+- added a comment about clipping planes
+- fixed bug in Viewer._RemoveObjectRec
+- print out OpenGL variables
+- determine availability of glPolygonOffset
+- added silent=True when removinf transparent geom to avoid warning message
+  when removing utvolgeom
+- removed _RemoveObject which was obsolete
+- added parts of _RemoveObject to _RemoveObjectRec
+- removed transparent objects from c.onButtonUpCBlist list of callbacks when
+  object is removed from viewer
+- add transparent objects to c.onButtonUpCBlist list of callbacks when object
+  is added to viewer
+- added startAutoRedraw and stopAutoRedraw method to Viewer
+- added autoRedraw attribute to Viewer and constructor
+- viewer.currentScissor was not set when the current object was changed in
+  the tree widget or when scissors were enabled/disabled
+- added method OneRedraw to guarantee a single redraw.  ReallyRedraw now
+  return true if it actually does redraw
+- RemoveObject method also removes object from list objectsNeedingRedo
+- added traceback.print_exc after traceback.print_stack
+- added checkered background capability to tile renderer
+- added backBuffer option to enableTileRendering
+- made image buffer 3byte per pixel
+- known problems:
+	text might fail, need to implement trRasterPos3f
+	stereo does not work
+	for some sizes of windows, top tile is distorted
+- added support for tile rendering.
+  to use it call vi.enableTileRendering() with an outputFile, a desired width
+  or a height and an optional border
+  vi.enableTileRendering(width=2000, outputFile='testpmv.jpg')
+- add the possibility to specify a different Camera instance to be created
+by the viewer. The new camerainstance to be add is specify using classCamera.
+By default we use the DejaVu Camera.
+
+
+DejaVu/ViewerGUI.py
+- added "Display Object Value in the Tree" checkbutton to "Preference" menu
+- added checkbutton for silhouette drawing
+- added a checkbutton to camera panel for enabling/disabling contouring
+- added a verbose option to Viewer's constructor to suppress printing OpenGL
+  version
+- Added an Exit methof to the Viewer object that properly stops the viewer
+  avoiding "after callit" error message
+- updated test_Fog.py to use verbose=False and exit properly
+- added lighting to check button list for objects properties and
+  property inheritence
+- made buttons for clipping plane visibility use Set method so that the
+  state will be saved
+- fixed SetPolyMode to maked back face mode = front face mode work again
+- moved state saving methods from ViewerGUI to Viewer
+- separated state saving methods into _cb and actual method
+- fixed some bugs in saving/restoring the state
+- removed RenderMode from IndexedPolygons
+- added restoreState, saveObjectsStates, saveViewerState and
+  saveViewerAndObjectsStates methods
+- added entries under File menu to call these methods
+- replaced calling RenderMode by calling Set
+- modified menu construction to use POLYGON_MODES and SHADINGS
+- rplaced enable by enabled
+- made clipping plane buttons cause redraw
+- removed code of glPolygonOffset checking
+- viewer.currentScissor was not set when the current object was changed in
+  the tree widget or when scissors were enabled/disabled
+- added auto depth cue button to Camera panel
+
+
+DejaVu/VolumeGeom.py
+- added _modifed = False at the end of the constructor
+- add draw method to volume geometry
+
+
+DejaVu/__init__.py
+- added New Release version
+- set __MGLTOOLSVersion__
+- Replace RELEASE-VERSION by __MGLTOOLSVersion__
+- set RELEASE_VERSION
+- switch to new opengltk (build with distutil)
+- change import of module name
+- remove reference to bufarray, opengltk us Numeric now.
+
+
+DejaVu/colorMap.py
+- made ColorMapGUI use the same amster as the viewer
+- changed code in if __main__ section at the end to import a updated file from 
+Tests...breaks when trying to create ColorMapGUI because of assert isinstance 
+on line 392.
+- fix bug,so the oglwidget on the colorMapGUI is resize correctly.
+- the oglColorMapGuiwidget should be set to doube buffer.
+- switch to new opengltk (build with distutil)
+- change import of module name
+- remove reference to bufarray, opengltk us Numeric now.
+- In fill_cb calls the mouseUp method instead of update.
+- Fixed a bug in the read method of colorMap. When reading a file, the current
+colorMap is reinitialized with the new data so the history stack needs to
+be reset to an empty list.
+- Fixed the write method of the colormap.
+- replaced the self.gui.rgbMap by self.gui.guiRamp and a typo
+- Fixed problem occuring when updating the GUI with a ramp longer or shorter
+than the current one.
+- Fixed problems of popRamp stepBack_cb, reset and resetAll.
+- Add an argument to popRamp to be able to specify the index (negative) of the
+ramp to pop.
+- When a ramp is popped from the history list it is not pushed back on.
+- Fixed the reset/resetAll and stepBack mechanism in the colorMapGui.
+- Fixed problems in  ColorMap and ColorMapGUI.
+
+
+DejaVu/colorMapLegend.py
+- added _modifed = False at the end of the constructor
+- change made to use new opengltk (build with distutil)
+
+
+DejaVu/colorTool.py
+- added a check argument to glMaterialWithCheck to allow to force sending
+the color to GL even if it is the same as the previous one.  Under MacOSX
+not sending the color results in wrong colors for cylinders :(
+- switch to new opengltk (build with distutil)
+- change import of module name
+- remove reference to bufarray, opengltk us Numeric now.
+- removed viewerConst.FPRECISION argument from colorTool.OneColor calls
+- modifed OneColor function to return lists or tupels instead of Numeric array
+
+
+DejaVu/tileRenderer.py
+- change to use new opengltk (build with distutil)
+- added backBuffer option to enableTileRendering
+- made image buffer 3byte per pixel
+- known problems:
+	text might fail, need to implement trRasterPos3f
+	stereo does not work
+	for some sizes of windows, top tile is distorted
+- added support for tile rendering.
+  to use it call vi.enableTileRendering() with an outputFile, a desired width
+  or a height and an optional border
+  vi.enableTileRendering(width=2000, outputFile='testpmv.jpg')
+
+
+DejaVu/viewerConst.py
+- added inherit and outlined to POLYGON_MODES
+- added inherit to SHADINGS
+- NO is now False and YES is true
+
+
+DejaVu/Tests/__init__.py
+- replaced all vi.GUI.Exit() by vi.Exit()
+- replaced all del vi bi vi.exit
+
+
+DejaVu/VisionInterface/DejaVuNodes.py
+- added node0.macroNetwork.runOnConnect = False before restoring connections
+  in rotatScene macro and restor it's state after to avoid running the macro
+  upon instanciation.  FIXME this code shoudl be generated automatically.
+- added by hand node.autoRun=False and resore it for the flattenRotation node.
+  This node is a Generic node and and its input and output ports can only be
+  added after the node is added to the network.  This was causing the
+  execution of this node when the macro is instanciated.
+- removed stop and start auto redraw nodes from rotateScene macro
+- created a small class "SelectAxis", which is used in the RotateScene macro.
+    - the user now selects the axis of rotation by 3 checkbox widgets
+    - if no boxes are checked, then the scene is rotated around the y axis.
+- modified RotateScene macro to use custome node to flatten rotation matrix.
+  The previous macro used getattr('flat') wich could not be restored from file
+- removed some spurious lines accidentally left in while testing
+NEBox class:
+- converted the origin and length of side inputs into individual thumbwheel widgits
+- added a "constrain scale" option, which maintains the proportions of the sides of the box as you increase or decrease the length of any of the sides
+- added some documentation for the class NE
+- fixed rotate scene macro:
+  the inputPort trigger of the StopAutoRedraw node in the macro had been
+changed from type None to List.  The output port begin of the iterate sent a
+boolean which caused the StopAutoRedraw node to fail to execute, then the
+loop was carried out while we were in AutoRedraw=True thus leading to the
+problem of slwoing down and blocking.
+- added SMFtoGeom, GeomtoSMF and QslimExt nodes
+- updated the portsDescr in all nodes:
+  our new append method now understands passing values as keywords,
+  i.e. instead of append({'name':'foo'}) we can now say append(name='foo')
+- removed all keys labelSide='left' from widgetDescr, since this is the default
+  value. Moved all other labelSide keys into widgetGridCfg
+- in some of the macros that output data we needed to set singleConnection=True
+  in the dynamically created ports of the MacroOutputNode
+- deleted the line kw['originalClass'] = MacroNode in all macro nodes since
+  this is wrong.
+- fix bug: Geom instance was not known in the compute function of the node.
+- updated validate method of Geom type to accept list containing either
+  geometry objects or lists of geoemtry objects (or any combination thereof)
+- Replaced the 3 DejaVu macros with the new macro code
+- renamed keyword autoSave to autoList in node Choose Geom NEComboBox widget
+  descriptor
+- moved instanciation of ImageViewer in node NPR to beforeAddingToNetwork()
+- deleting node NPR now deletes the ImageViewer window
+- moved instanciation of TableMaker in node TransferFuncEditor to
+  beforeAddingToNetwork()
+- replaced pyefit by geomutils package
+- added a new keyword autoSave, this allows to save just the current selection
+  in "choices"
+- running the choose geom node now again sets the _modified flag in the
+  NEComboBox widget which allows for proper saving/restoring
+- fixed 1DTexture to work with latest changes in opengltk: we now call
+  glTexImage1D directly from _gllib rather than the Python wrapper
+- fixed the DejaVu Vision node 1DTexture to work with the latest changes
+- added stacklevel=2 to warnings.warn
+- import of stdlib and symlib is now done inside the macro code
+- removes setting DejaVu camera to ORTHOGRAPHIC mode when instantiating
+  PmvVIewer
+- moved all the import library statements in beforeAddingToNetwork() methods
+  to new helper functions importSymLib(), importImageLib(), and
+  importVolLib()
+- added StopAutoRedraw, StartAutoRedraw, OneRedraw nodes
+- added RotateScene macro
+- replaced in all geometry nodes the test if name is not None by
+  if name is not None and name!=self.geom.name[:len(name)]: to avoid
+  renaming the geometry over and over which was causing huge slow down
+- made Viewer node destroy the Viewer instance in beforeRemovingFromNetwork
+  and protected BeforeDisconnect against node' viewer being None
+- use ImageChops.multiply
+- fixed indentation bug in computational method of new ImageViewerNode
+- added ImageViewerNode
+- added NPR node to compute outlnes and composite with orginal image
+- Using the Browse Libraries GUI, the module DejaVuNodes displayed not
+  only the vizlib but also stdlib and vollib. Fixed the import of these 2
+  libraries in the two newly added macro nodes.
+Final stage of renaming the ViPEr package:
+- replaced "ViPEr" with "Vision"
+- repaced <package>/ViPEr with <package>/VisionInterface
+- replaced "viper" with "vision"
+- removed double decalration of same output port. This causes an endless loop
+- worked on the documentation of colorMap node
+- fixed bug in Viewer
+- added node GeomContainer to create parent node to group geometries
+- added name and parent input ports to geometry nodes:
+   	GeomContainer
+	IndexedPolylinesNE
+	IndexedPolygonsNE
+	Cylinders
+	Spheres
+	QConvexHull
+	Ellipsoids
+	GyrationSphere
+- added standard documentation to all these nodes
+- modified viewer to add the chain of parents of a node if they are not already
+  in the viewer
+- added quality dial to cylinder node
+- changed the way the Viewer nodes adds the geoemtries
+- added self.resetModifiedTag() at the end of afterAddingToNetwork of all
+  macro nodes to prevent macro from being save explicitely
+- added MapPotOnGeom macro node
+- fixed stereo translation setting macro
+- added macro node to set stereo separation
+- added import types in codeBeforeDisconnectof Viewer
+- Fixed a bug in TransferFuncEditor node: loading LUT from a file
+before running a network(meaning - loading a volume) would cause an error.
+- fixed nodes that used a method 'afterDisconnect', replaced that with the
+  new mechanism (pass code to the respective port)
+- update the NEBox class. drawing docking box
+- added DistFromSphereToGeom node
+- shifted node source code to the left where appropriate, to make code
+  editing in GUI more comfortable
+- fixed signature of all nodes with inputports that are not required
+  (setting <keyword>=None or <keyword>=defaultvalue where applicable)
+  this was changed in the following nodes: Viewer, SelectGeometry,
+  IndexedPolylinesNE, IndexedPolygonsNE, GroupGeomsNE, ColorMap,
+  ColorByRamp, NEBox, Cylinders, Spheres, QConvexHull, Ellipsoids,
+  GyrationSphere, ComputeRMSD
+- made ports required in: SetInstances (port matrices),TTexture1D (port prop)
+- added decimate3DPoints node
+- made the radii port of sphere type None since it can handle list or float
+- updated datatypes to use width, height
+- small bugfix in RMSD node compute function
+- added node Compute RMSD to vizlib
+- fixed beforeDisconnect in Viewer node: in very rare cases, a geometry
+  does yet not belong to a viewer so disconnecting would fail. Added test
+  if g.viewer is not None
+- added new widget ColorEditor which is a rather sophisticated color editor
+- added a new node ColorEditor that exposes this widget in its param panel
+- QConvex nodes uses new method QH.getGeom() to get geom
+- added new node GyrationSphere
+- added color and instanceMatrices input ports for QConvex, Ellipsoid,
+  GyrationSphere nodes
+- cleaned up code of all nodes (inputPortDescr and outputPortDescr in
+  particular)
+- QConvexHull node is now only added to library if the module qconvex
+  can be imported for a given platform
+- added support to input lists of lists of coords or just a single list of
+  coords into the EllipsoidFit node
+- added entry to QConvexHull node to specify a directory to save the
+  temp. files
+- fixed ConvexHull & both Ellipsoid nodes to use proper keywords in _init_
+- added a test from None in list of geoemtries of viewer node
+- added cov_scale and ell_scale ports to fitEllipsoids node
+- added new nodes EllipsoidFit and Ellipsoids
+- fixed bug in GetVRML node that prevented it from running
+- changed Viewer node to open viewer GUI by double-clicking on node (and hide
+  if double-clicked again)
+- added new node QConvexHull that computes convex hulls calling the external
+  module QHULL.
+- added new node "Read STL" that allows to read a ASCII STL file and convert
+  it into DejaVu IndexedPolygon(s)
+- removed UTVolRen node from this package and moved this to the new Volume
+  package
+
+
+DejaVu/VisionInterface/DejaVuWidgets.py
+- widget set() method now also sets widget._modified=True
+- removed the key "ramp" from ColorMap getDescr() method. This is the
+  actual widget value which should be accessed using the get() method
+- added new widget ColorEditor which is a rather sophisticated color editor
+- added a new node ColorEditor that exposes this widget in its param panel
+
+
+
+Release December 17, 2003
+------------------------
+
+What's New (compared to release Sep 18 2003):
+
+- added self.inheritMaterial=0 in constructor sor box shows color by default
+- added quality kw word to Cylinders geometry constructor and Set metod
+- Geom's maxBB and minBB are set to None by default now. These can be used to
+  specify a bounding box for objects that do not have vertices such as the
+  volume renderer
+- ObjSubTreeBB was fixed to take into account  maxBB and minBB values of None
+- added sortPoly method to Geom to recursively sort polygons in children
+- added self.redoDspLst = 1 for cull option, to force rebuilding dispaly list
+- added writeToFile method to IndexedPolygons object and function
+  IndexedPolygonFromFile
+- added writeIndexedPolygon and readIndexedPolygon nodes to ViPEr library
+- removed import of GLUT which were not needed anymore
+- Use new TreeWidget to display object hierarchy (see mglutil/gui/BasicWidgets)
+- added a comamnd to apply transformation to a geoemtry's vertices 
+  (Edit->Apply Transformation)
+- Added support to be able to close the GUI using the [x] icon. 
+  Implemented a withdraw and deiconify method and added a new attribute 
+  shown which is set to True when the ViewerGUI is displayed and to False 
+  when not.
+- Implemented a dismiss and quit method  for the colorMap gui. One withdraw 
+  the gui the other destroys it.
+- Modified the ColorMap so it can be created with a colormap legend object 
+  which will be added to a viewer is specified  when a colormapgui is created 
+  for that colormap.
+- A colorMap is now associated with one gui which is withdrawn instead of
+  destroyed.
+- The colorMap is updated the same way than the geometry. So if the colorMap is
+  in continuous mode the colormap legend will be in continuous mode as well.
+  Fixed some problems with the ColorMapLegend.
+- added afterConnect method to UTVolumeRender node for the geometries to
+  be aware of the viewer as soon as it gets connected
+- added AddGrid3D method to UTVolRenGeom and made UtVolRen node use this method
+- also protected UTVolRenGeom against initializing VolumeRenderer if not OpenGL
+  context is available. This was causing segmentattion faults
+- added a new datatype RGBColorType (one color, versus RGBColorsType)
+- updated the ColorChooser Node: it got a param. panel with a thumbwheel for
+  color brightness, a checkbutton for alpha value yes/no and a checkbutton
+  for output the color encapsulated in another list or not
+- added quality and radii thumbwheels in Spheres node
+
+
+Backwards imcompatible modifications:
+
+- moved Isocontour node to Volume library
+- modified UTVolRen node to accept Grid3D object
+
+
+Bug Fixes
+
+- in orthographic projection mode the configure event were not handled 
+  properly fixed that
+- added self.redoDspLst for Set(radii)
+- fixed bug that caused container objects to use -1. 1. as their bounding box
+  when they had no vertices, this caused the obejcts not to center properly
+- fixed reset normalize center to be applied to root object is transform
+  root only is on
+- fixed deadlock issue in AddObject and RemoveObject methods when an exception
+  is raised
+- added support in ReallyRedraw to handle camera.exposeEvent
+- made lineWidth and PointWidth slide force inherit flag to 0
+- made the Viewer port of the Redraw multiConnections
+- Set the inheritXform argument to 0 when creating the ColorMapLegend object 
+  so that the legend is not transformed.
+- Fixed a bunch of problems in colorMapGui:
+  -1 When changing the mini and maxi value of the gui and Apply the mini and 
+     maxi value of the cmap were not updated.
+  -2 When using intervals the redraw of the ogl widget was all screwed up
+     now the fill_cb just calls the mouseDown, mouseMotion and mouseUp method
+     of the colorMapGui class with the proper event.
+- Removed the deepCopyRamp from the ColorMap class and moved it to the
+  mglutil.util.misc module under the name of deepCopySeq and used this new
+  function to deep copy the various sequence.
+- rewrote doit method of Viewer node (greatly simplified)
+- Fixed bug in Spheres node
+- made NEColorMap widget use configure and return lists rather than arrays for
+  getDataForSaving
+- fixed a bug in SetInstances node, which was not working at all because
+  singleValue was set to 1 for port geometries. Also added a beforeAdding()
+  method to load symlib for this node
+- replaced widget.setlist by configure(choices=list)
+- bugfix in Viewer node: users can no longer kill the Camera window
+- made lineWidth and PointWidth slide force inherit flag to 0
+- fixed ColorChooser widget so that it can be saved again.
+- fixed addLibrary statement (being addLibraryInstance now)
+- fixed getDpyList updated to handle transparent object.
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Release September 18, 2003
+------------------------
+
+What's New (compared to release Feb 26 2003):
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Release February 26, 2003
+-------------------------

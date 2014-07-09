@@ -1,0 +1,84 @@
+########################################################################
+#
+# Date: Jan 2006 Authors: Guillaume Vareille, Michel Sanner
+#
+#    vareille@scripps.edu
+#    sanner@scripps.edu
+#
+#       The Scripps Research Institute (TSRI)
+#       Molecular Graphics Lab
+#       La Jolla, CA 92037, USA
+#
+# Copyright: Guillaume Vareille, Michel Sanner and TSRI
+#
+#    Vision Resource File
+#
+#########################################################################
+# To customize Vision, you can modify the _visionrc file:
+# unix: ~/.mgltools/[version number]/Vision/_visionrc
+# windows: \Documents and Settings\(user name)\.mgltools\(version numer)Vision\_visionrc
+# Vision will generate this file automatically if it can't find it
+# Do not modify the original source file
+##################################################################
+
+import os
+import user
+from Vision.UserLibBuild import addDirToSysPath
+from Vision.nodeLibraries import libraries
+from mglutil.util.packageFilePath import getResourceFolderWithVersion
+
+lVisionResourceFolder = getResourceFolderWithVersion() + os.sep + 'Vision' + os.sep
+
+##################################################################
+# Modify the fonts by applying _fonts4vision
+##################################################################
+lFonts4VisionFile = lVisionResourceFolder + '_fonts4vision'
+if os.path.isfile(lFonts4VisionFile) is True:
+    execfile( lFonts4VisionFile )
+
+##################################################################
+# To toggle ports' icons in the library GUI
+##################################################################
+self.drawPortInLibraryGui = True
+
+##################################################################
+# To set the network default directory
+##################################################################
+import Vision
+Vision.networkDefaultDirectory = user.home #user.home or os.getcwd() or any path
+
+##################################################################
+# add these lines to ease runtime loading of frequently used Libraries
+# (the numbers indicate the highest tested version of the needed packages)
+##################################################################
+libraries['vizlib'] = ('DejaVu.VisionInterface.DejaVuNodes', ['DejaVu'])
+libraries['molkitlib'] = ('MolKit.VisionInterface.MolKitNodes', ['MolKit'])
+libraries['symlib'] = ('symserv.VisionInterface.SymservNodes', ['symserv'])
+libraries['vollib'] = ('Volume.VisionInterface.VolumeNodes', ['Volume'])
+libraries['flextreelib'] = ('FlexTree.VisionInterface.FlexTreeNodes', ['FlexTree'])
+libraries['wslib'] = ('WebServices.VisionInterface.WSNodes', ['WebServices'])
+libraries['imagelib'] = ('Vision.PILNodes', {'Image':'1.1.6', 'ImageTk':''})
+libraries['matplotlib'] = ('Vision.matplotlibNodes', {'matplotlib':'0.98.5.2'})
+libraries['mydefaultlib'] = ('MyDefaultLib')
+libraries['scipylib'] = ('scipylib')
+libraries['IPythonlib'] = ('Vision.IPythonNodes', {'IPython':'0.9.1'})
+libraries['ADTlib'] = ('AutoDockTools.VisionInterface.Adt')
+
+##################################################################
+# Load Libraries of Nodes
+# argument1: Name of the library module
+# argument2 (optionnal): list of names of dependent module (just for verifications)
+# Comment/Uncomment these lines to disable/enable loading of the libraries at startup
+##################################################################
+self.loadLibModule('Vision.StandardNodes')
+#self.loadLibModule('DejaVu.VisionInterface.DejaVuNodes', ['DejaVu'])
+#self.loadLibModule('FlexTree.VisionInterface.FlexTreeNodes', ['FlexTree'])
+#self.loadLibModule('symserv.VisionInterface.SymservNodes', ['symserv'])
+#self.loadLibModule('Volume.VisionInterface.VolumeNodes', ['Volume'])
+#self.loadLibModule('MolKit.VisionInterface.MolKitNodes', ['MolKit'])
+#self.loadLibModule('WebServices.VisionInterface.WSNodes', ['WebServices'])
+#self.loadLibModule('Vision.PILNodes', {'Image':'1.1.6', 'ImageTk':''})
+#self.loadLibModule('Vision.matplotlibNodes', {'matplotlib':'0.98.5.2'})
+#self.loadLibModule('MyDefaultLib')
+#self.loadLibModule('scipylib')
+#self.loadLibModule('AutoDockTools.VisionInterface.Adt')

@@ -1,0 +1,18 @@
+# 1. Environment settings for VolPro software 2.0
+
+setenv VLItile_size=256 
+setenv VLItrue_size=0 
+setenv VLIall_supervolumes=0
+setenv DEFAULT_MAX_ANGLE_BEHAVIOUR 1
+
+
+# 2. Error code 2009:
+
+The device driver under Solaris allocates kernel buffers dynamically.
+Hence, it is possible for the device driver to be unable to allocate a 
+kernel buffer with other applications consuming resources.
+When this happens, error code 2009 is returned. To solve this problem
+free up resources by closing applications and windows or increasing
+system memory.
+
+

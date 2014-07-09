@@ -1,0 +1,103 @@
+Index: source/gameengine/Ketsji/KX_KetsjiEngine.cpp
+===================================================================
+--- source/gameengine/Ketsji/KX_KetsjiEngine.cpp	(revision 50698)
++++ source/gameengine/Ketsji/KX_KetsjiEngine.cpp	(working copy)
+@@ -179,6 +179,8 @@
+ 	m_overrideFrameColorG(0.0),
+ 	m_overrideFrameColorB(0.0),
+ 
++	m_nap(false),
++
+ 	m_usedome(false)
+ {
+ 	// Initialize the time logger
+@@ -536,6 +538,9 @@
+ 
+ bool KX_KetsjiEngine::NextFrame()
+ {
++	/* Mike */
++	bool nap = m_nap;
++
+ 	double timestep = 1.0/m_ticrate;
+ 	double framestep = timestep;
+ //	static hidden::Clock sClock;
+Index: source/gameengine/Ketsji/KX_KetsjiEngine.h
+===================================================================
+--- source/gameengine/Ketsji/KX_KetsjiEngine.h	(revision 50698)
++++ source/gameengine/Ketsji/KX_KetsjiEngine.h	(working copy)
+@@ -197,6 +197,9 @@
+ 	/** Blue component of framing bar color. */
+ 	float					m_overrideFrameColorB;
+ 
++	/** */
++	bool m_nap;
++
+ 	/** Settings that doesn't go away with Game Actuator */
+ 	GlobalSettings m_globalsettings;
+ 
+@@ -418,6 +421,10 @@
+ 	GlobalSettings*	GetGlobalSettings(void);
+ 	void			SetGlobalSettings(GlobalSettings* gs);
+ 
++	/**/
++	bool GetNap(void){ return m_nap;}
++	void	SetNap(bool nap){ m_nap = nap;}
++
+ protected:
+ 	/**
+ 	 * Processes all scheduled scene activity.
+Index: source/gameengine/Ketsji/KX_PythonInit.cpp
+===================================================================
+--- source/gameengine/Ketsji/KX_PythonInit.cpp	(revision 50698)
++++ source/gameengine/Ketsji/KX_PythonInit.cpp	(working copy)
+@@ -1129,6 +1129,24 @@
+ 	Py_RETURN_NONE;
+ }
+ 
++static PyObject *gPySetNap(PyObject *, PyObject *args)
++{
++	int nap;
++	
++	if (!PyArg_ParseTuple(args, "i:setNap", &nap))
++		return NULL;
++		
++	gp_KetsjiEngine->SetNap(bool(nap));
++
++	Py_RETURN_NONE;
++}
++
++static PyObject *gPyGetNap(PyObject *)
++{
++	bool nap = gp_KetsjiEngine->GetNap();
++	return PyBool_FromLong(nap);
++}
++
+ static int getGLSLSettingFlag(const char *setting)
+ {
+ 	if (strcmp(setting, "lights") == 0)
+@@ -1338,7 +1356,9 @@
+   {"enableMotionBlur",(PyCFunction)gPyEnableMotionBlur,METH_VARARGS,"enable motion blur"},
+   {"disableMotionBlur",(PyCFunction)gPyDisableMotionBlur,METH_NOARGS,"disable motion blur"},
+ 
+-  
++  {"setNap", (PyCFunction) gPySetNap, METH_VARARGS, "set"},
++  {"getNap", (PyCFunction) gPyGetNap, METH_NOARGS, "get"},
++	
+   {"setEyeSeparation", (PyCFunction) gPySetEyeSeparation, METH_VARARGS, "set the eye separation for stereo mode"},
+   {"getEyeSeparation", (PyCFunction) gPyGetEyeSeparation, METH_NOARGS, "get the eye separation for stereo mode"},
+   {"setFocalLength", (PyCFunction) gPySetFocalLength, METH_VARARGS, "set the focal length for stereo mode"},
+@@ -2085,6 +2105,14 @@
+ 	PyDict_SetItemString(d, "error", ErrorObject);
+ 	Py_DECREF(ErrorObject);
+ 
++	/*
++	PyObject *pyNap;
++//	pyNap = PyBool_FromLong(0);
++	pyNap = PyLong_FromDouble(42.37);
++	PyDict_SetItemString(d, "nap", pyNap);
++	Py_DECREF(pyNap);
++	 */
++	
+ 	/* needed for get/setMaterialType */
+ 	KX_MACRO_addTypesToDict(d, KX_TEXFACE_MATERIAL, KX_TEXFACE_MATERIAL);
+ 	KX_MACRO_addTypesToDict(d, KX_BLENDER_MULTITEX_MATERIAL, KX_BLENDER_MULTITEX_MATERIAL);

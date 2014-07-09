@@ -1,0 +1,1562 @@
+==============================================================================
+                 Python-based Molecular Viewer Release Notes:
+==============================================================================
+
+RELESE 1.5.4 (November 2008)
+
+APBSCommands.py
+  - replaced shutil.copy with shutil.copyfile
+  - more fixes for bug #982 - "compute APBS potential"
+
+__init__.py
+  - added --noGUI command line option for Pmv
+  - solved ipython issues for pmv
+  - now the inner shell in pmv is also in the main scope
+
+
+_pmvrc
+  - added self.userpref.set('Save Perspective on Exit', 'yes')
+  - removed self.setUserPreference(('centerScene', 'firstMoleculeOnly'), topCommand=0)
+
+cmdlib.py
+  - replaced measureDistanceSL with Number of Measure Distances
+
+computeIsovalue.py
+  - replaced isocontour.clearDataset with isocontour.delDatasetReg.
+
+dashboardCommands.py, controlPanelCommands.py
+  - moved AddAtomsEvent, DeleteAtomsEvent and EditAtomsEvent from ViewerFramework.VF to Pmv.moleculerViewer
+  - fixed imports for these classes in all files
+  - added AddObjectEvent and DeleteObjectEvent to ViewerFramework.VF
+
+crystalCommands.py
+  - added crystalCommands
+
+dashboard.py
+  - added Focus Camera option
+
+displayCommands.py
+  -adjusted selection lines not to interfer with selection
+  - worked on displayCPK to fix a bug when the command is called from the Tree widget.
+  - fixed 'required'
+  - fixed a problem when checking and then unchecking By property in in DisplayCPK
+  - fixed bug #970 "Deleting an atom set does not update the displayed lines"
+fileCommands.py
+  - added doit for readSourceMolecule
+grid3DCommands.py
+  - moved grid3Commands from Pmv to ViewerFramework
+  - corrected Photoimage needs a master to find the right tk instance
+helpCommands.py
+ - updated the text on BugReportCommand
+ - replaced MGL Applications with MGLTools
+       
+labelCommands.py
+ - now default label ztranslation is 3.0
+
+measureCommands.py
+ - replaced measureDistanceSL with Number of Measure Distances
+ - Sharp Color Boundaries for MSMS
+
+ moleculeViewer.py
+ - removed "Help --> Report a Bug in PMV/ADT." text
+ - indented loading of commander properly (but it sommented out)
+ - modified to run without GUI
+ - modified warnOnEmptySelection
+ - modified expandNodeLogString
+ - modified showSelectionSpheres
+ - modified selectStringMatchMode
+ - replaced centerScene with Center Scene
+ - moved self.userpref.add( 'Save Perspective on Exit') from VF to Pmv
+ - adjusted selection crosset not to interfer with selection
+ - replaced  'firstMoleculeOnly' with 'always' in self.userpref.set('centerScene', 'firstMoleculeOnly')
+ - added Welcome message and Resource file location used to customize
+ - modified line 1064 and added line 1065 to set the color of the ADTbar completely
+
+msExposureCommands.py
+  - new command
+
+msmsCommands.py
+  - included nodes=self.vf.expandNodes(molecule) in ComputeSESAndSASArea
+  - added __call__  method for ComputeSESAndSASArea
+  - added computeSESAndSASArea command
+
+selectionCommands.py
+ - modified showSelectionSpheres
+ - modified selectStringMatchMode
+ - corrected bug float32 when saving the current session
+ - fixed bug #986
+Macros/exposureMac.py
+ - fixed exposure macro
+
+msmsMac.py
+  - fixed assignAtomicSurfaceArea macro to use 0-based indices
+VisionInterface/PmvNodes.py
+ - now for macro network we are looking for the main network name
+runPmv.py;
+ - solved more ipython issues for pmv and vision
+ - bringing modifs for ipython and non blocking loop to 1.5.2
+
+
+
+RELEASES 1.4.6 -  1.5.2 (July 2007)
+-----------------------------
+--- moved from Numeric to numpy
+APBSCommands.py
+  - now map pot takes given filename for potential
+  - now pmv works without writting permissions
+  - set runOnNewData to True while implementing, got rid of autorun
+  - repaired matpot on surf command
+  - added blocking=False to mapPotentialToMSMS and APBSRun to allow the APBS
+  - executable to run before the Vision node exposing this Pmv command in a network finishes
+  - -in APBSMap_Potential_to_MSMS doit() added a check for 'mol' parameter (if it is a sting or a molecule object).
+  - replaced mol = self.vf.getMolFromName(mol.replace('-','_'))
+    by mol = self.vf.getMolFromName(mol.name.replace('-','_'))
+  - replaced http://ws.nbcr.net:8080/axis-1.2.1/services/ApbsOpalService with http://ws.nbcr.net/opal/services/ApbsOpalService
+  - updated for the latest version of ZSI-2.1_a1
+  - repaired node mappot2msms
+  - repaired vision mappotential to msms
+  - added return on SaveResults if not os.path.exists(potential)
+  - added moleculeListSelect to APBSRun
+  - clears APBSservicesLabel3 and APBSservicesLabel4  onAddObjectToViewer
+  - fixed bug 903
+  - fixed bug 896
+  - replaced flagVolume with flagMSMS
+  - load "Map Potential to Surface" menu when mslib is present.
+  - removed '/axis-1.2.1/services/ApbsOpalService' from web services. User now need to type the full address of the service
+  - moved temprorary pqr files from /tmp to $HOME/.mgltools
+  - fixed xml bug on linux with no ssl.so
+  - added safeguard when calling APBSDisplayIsocontours
+  - fixed webservices downloading when  Permission denied
+  - moved saving input down in  APBSCmdToWebService
+  - replaced molecules paths with os.path.basename for webservices
+  - moved to webservices to mgltools.web.services
+  - enclosed from Volume.Renderers.UTVolumeLibrary import UTVolumeLibrary in try:except
+  - removed epydoc part
+  - updates Web Services to Opal-based service available at http://ws.nbcr.net:8080/axis-1.2.1/services
+  - Suppress "Could not convet pdb to pqr" message.
+  - added potential.dx to 3D Grid Widget in  SaveResults
+  - added new features from apbs-0.5.0
+    * Added a new "spl4" charge method (chgm) option to support a quintic
+       B-spline discretization (thanks to Michael Schnieders).
+    * Added a new "spl4" ion-accessibility coefficient model (srfm) option
+      that uses a 7th order polynomial. This option provides the higher
+      order continuity necessary for stable force calculations with atomic
+      multipole force fields (thanks to Michael Schnieders).
+  - added APBSSetup.potential = os.path.basename(potential_dx) in APBSMap_Potential_to_MSMS
+  - added min and max for Isocountoring thumbwheels
+  - commented out loadProfile when answer to "APBS with the same parameters has been already run  ..."  != True:
+  - changed menu state to normal when MapPot2MSMS is run.
+  - added Volume Renderer to Compute->Electrostatics
+  - added APBSDisplayOrthoSlice
+  - upgraded pdb2pqr to version 1.2.1
+
+APBSService_services.py
+  - removed
+
+APBSService_services_types.py
+  - removed
+
+Grid.py
+  - moving to numpy
+
+LICENSE
+  - -added TSRI to the copyright part.
+  - -added LICENSE file
+
+SecuritymyproxyloginImplService_services.py
+  - moved to mgltools.web.services
+
+SecurityuserimportImplService_services.py
+  - moved to mgltools.web.services
+
+__init__.py
+  - now __version__ is easy to access
+  - modified (c) year
+  - made sure adt and pmv run without vision
+  - self is PMV.mv in main scope
+  - introduced revision number
+  - now vision instance is Pmv.vision
+  - now "self" is not defined in the main scope
+  - adt and pmv can be launched form a python shell
+  - now the active scope is the main scope
+  - pmv can be launched form a python shell
+  - more vision arguments on the command line
+  - repaired sb on the command line to produce sticks and balls
+  - added GLF and PyMedia into third_party
+
+_pmvrc
+  - load mslib dependent commands only when mslib is present.
+
+aboutCommands.py
+  - modified comment
+
+amberCommands.py
+  - -replaced if not newCoords: break to if newCoords is None .
+
+coarseMolSurfaceCommands.py
+  - -added a CheckButton to the commands GUI and a Vision node to check the surface for connected components.
+  - -modified the geometry binding code of doit() due to a change in Vision IndexedPolygon node (it now outputs a new geometry object every time it runs)
+  - network don't freeze anymore, just the nodes in it
+  - -added code in onAddCmdToViewer() to check if visionCommands have been loaded.
+  - corrected blur or sharp boundaries
+  - coarseMolSurface have the correct blur or sharp boundaries
+  - introduced removeFacesWithoutHighlightedVertices
+  - corrected log in command and useless call to displayboundgeom
+  - corrected selection display bug
+  - introduced highlight for coarse surface
+
+colorCommands.py
+  - added cleanup to ColorCommand
+  - fixed bug 954 - cannot change colors with "choose color"!
+
+dashboard.py
+  - added viewSource method
+
+
+displayCommands.py
+  - fixed bug #912
+  - corrected blur or sharp boundaries
+  - now Licorice is the new default
+  - fixed bug #864
+  - introduced removeFacesWithoutHighlightedVertices
+  - restored lines 1913+1914 which accidentally got commented out
+  - in displayInteractions, changed lines 3860,3863,4475 et al in order to add support for showing interactions between entities in multiple molecules: currently has not been tested but made these changes in this cvs "trunk" to be in sync with what exists in branch 1-4-6
+  - improved solid v. wireframe display of indicator spheres used to show interactions in displayInteractions command
+  - fixed bug in displayInteractions ~line 4068 where sstruct referenced macro[0].top.geomContainer.geoms[secondarystructure] which might not exist at that point
+  - now secondary structures can be hihlighted
+  - added highlight to cylinders
+  - - added "display by property" feature to displayCPK command. This used to be a s  eparate Pmv command (displayCPKByProperty).
+  - improved solid v. wireframe display of indicator spheres used to show interactions in displayInteractions command
+  - fixed bug in displayInteractions ~line 4068 where sstruct referenced macro[0].top.geomContainer.geoms[secondarystructure] which might not exist at that point
+
+extruder.py
+  - now secondary structures can be hihlighted
+  - corrected bugs on vista
+
+fileCommands.py
+  - now pmv works without writting permissions
+  - added ext to read from web
+  - replaced readPDB wqith ReadMolecule in read from web
+  - -added 'return' to readFromWebCommand.__call__() since doit() returns a value.
+  - fixed url.content-type problem for Mac
+  - added missing __call__ to command
+  - Added URL field from Read from Web which, if not  empty, is used instead of PDB ID to retrieve molecule.
+  - added dot to py and rc
+  - created read source or molecule command
+  - adds to recent files pdb read from cach
+  - fixed PDBCachedir
+  - modified to run without GUI
+  - closed file in WebCommand which failed tests on windows
+
+grid3DCommands.py
+  - fixed bug #946
+  - replaced from AutoDockTools.histogram with numpy.histogram to impove the performance
+  - added if condistion to check if the grid file exists
+  - removed *.fld from "All supported files" in the file browser. See bug #871.
+  - added return if can't parse grid file
+  - -modified Numeric.transpose(data) statement of IsocontourCommand to be used with Numeric.ascontiguousarray() to make the output data contiguous.
+  - replaced typecodeDict with data.dtype.name
+  -replaced Numeric method array.typecode() by numpy array attribute array.dtype.
+  - now widgetsOnBackWindowsCanGrabFocus is in mglutil.gui
+  - replaced right-click with apple-click when running on mac
+  - added ColorMap to VolRenderer
+  - added Grid3DCommands.select method
+
+hbondCommands.py
+  - changed line 2750 so that the hetatm property of the new hydrogen is the same as that of the atom to which it is bonded
+  - introduced from ensureFontCase
+  - fixed hbond anchor setting: multiple set anchor dialogs and problem with setting from n to c
+
+helpCommands.py
+  - added text to Report a Bug (Descitption)
+  - replaced Submit BugReport with Submit Bug Report
+  - replaced ReportBug with Report a Bug
+
+moleculeViewer.py
+  - changed lines 1044-1067 to support a set of different menuBars for different ADT versions
+  - -trying to fix a problem when .mgltools directory (resource folder) can not be created
+  - replaced bug report message with "Please include this Traceback in your bug report"
+  - replaced try: import UTpackagesDIST with try: import grid3dCommands
+  - replaced MGLToolPckgs with Pmv
+  - if not 'MGLToolsPckgs' in tb.tb_frame.f_code.co_filename: return
+  - elif etype == AssertionError: pass
+  - if etype == ImportError in print_exception_modified print Please install...
+  - modified traceback text to "Please send us this Traceback by selecting Help --> Report a Bug in PMV/ADT."
+  - included if hasattr(self, 'GUI') before self.GUI.pyshell.top.deiconify()
+  - modified traceback.print_exception to deiconify pyshell when Traceback is printed.
+
+
+msmsCommands.py
+  - completed move to numpy
+  - repaired node mappot2msms
+  - introduced from ensureFontCase
+  - introduced highlight for coarse surface
+  - now highlight values are 0 or 1
+  - now secondary structures can be hihlighted
+
+multiresCommands.py
+  - removed
+
+mvCommand.py
+  - now centerOnNode also works on objects and not only on root
+
+pdb2pqrCommands.py
+  - removed
+
+repairCommands.py
+  - added showGUI for closecontacts
+  - added check for key is None line 1358
+  - fixed bug 950
+
+sdCommands.py
+  - removed @ character
+  - replaced ColorMapGUI('rgb256'... with ColorMapGUI(name='rgb256'...
+
+secondaryStructureCommands.py
+  - now highlight values are 0 or 1
+  - now secondary structures can be hihlighted
+  - solved small bug, plus corrections for vista
+  - corrected bugs on vista
+
+selectionCommands.py
+  - included if hasattr(mol.geomContainer,'msmsAtoms') before mol.geomContainer.msmsAtoms
+  - added parent to self.vf.warningMsg
+
+superimposeCommandsNew.py
+  - recreates GUI to avoid bugs
+
+traceCommands.py
+  - added protected=False to fix bug #951
+
+visionCommands.py
+  - corrected show() for vision
+
+Icons/
+  - repaired icons
+  - png are binaries
+
+
+VisionInterface/PmvNodes.py
+  - now erasing a geom in vision erases it in pmv also
+  - introduced "soft run" in vision
+  - now RunFunction also can use a description (like FunctionNode)
+  - now FunctionNode can be saved with importString
+  - renamed node RunFunction, now also accept a string
+  - introduced node RunCommandOrFunction
+  - now PmvRunCommand accept any callable
+  - introduced networkDefaultDirectory
+  - now networks runs in saved directory
+
+
+bin/runPmv.py
+  - pmv can be launched form a python shell
+  - now networks run into the saved network directory
+
+
+
+
+RELEASE 1.4.5 (May 2007)
+------------------------
+New features and bug fixes:
+
+APBSCommands.py
+
+ - modified shademodel into shading
+ - replaced readDX with Pmv grids (Grid3D)
+ - fixed problem with binding energy calculation
+ - fixed bug #772. Problems with pdb2pqr are now reported
+ - fixed bug #816 (jagged colors)
+ - added molName = molName.replace('-','_') in other places as well
+ - added molName = molName.replace('-','_') in moleculeListSelect
+
+Grid.py
+
+ - set sharpColorBoundaries attribute of indexedPolygons to False by default
+
+__init__.py
+
+ - moved __main__ into __init__
+
+_pmvrc
+
+ - added File->Read->PDB from RCSB.org
+ - moved measure command from Edit menu to Display menu
+ - introduced Pmv.numOfSelectedVerticesToSelectTriangle
+ - corrected key bindings
+ -added DisplayBoundGeom to the set of standard commands that are loaded at startup.
+
+coarseMolSurfaceCommands.py,v
+
+ - fixed bugs in setting 'bindGeom' and 'gridSize' options of the command's GUI.
+ - fixed displaying of the surface when a set of atoms is selected and perMol set to True
+ - added  thumbwheel widget to the GUI to specify the size of the padding around the molecule.
+ - fixed executing of the command from a log string. 
+ - fixed a problem that had to do with binding geometry to a molecule.
+
+colorCommands.py
+
+ - added if args in ColorCommand.showForm
+
+computeIsovalue.py
+
+ - added padding option to computeIsovalue() to specify the size of the padding around the molecule.
+
+dashboard.py
+
+ - changed widget used for selectorEntry from Pmw.EntryField to Pmw.ComboBox so that sets saved in the 
+   viewer can be listed here; changed local selectFromString method to fit with this
+ - corrected problem on line 101: previously self.vf.sets was assigned to 'returnMsg' instead of to 
+   'sets' in call to CompoundStringSelector.select
+
+dashboardCommands.p
+
+ - improved dashboard docking
+
+displayCommands.py
+
+ - added support for displaying pi-pi and cation-pi interactions to displayInteractions
+ - added displayCPKByProperty which allows the user to pick a property to use to set the radii 
+   of the atoms to be displayed... this command is not loaded by default!
+ - in displayInteractions-> added while loop to revert method to try and clear entries subsequent 
+   to displayInteraction's entry
+ - added displayExtrudedSS to setupUndoBefore;reorganized displayform, adding comboBox for sphere 
+   display (wireframe or solid); tried to straighten out undisplaying forms etc
+ - repaired bug in update_managed_sets so that it works better with the dashboard now
+ - added first draft of revert command to displayInteractions; added saving sets to this command so 
+   that they show up in the dashboard
+ - added resetting ligand cpk to setupUndoBefore
+ - renamed DisplayComplexCommand 'DisplayInteractionsCommand'; improved the setupUndoBefore method
+ - cleaned-up displayComplex by removing commented-out lines and improving tooltips. 
+   Also made colors-used etc conform to latest used in ADanalyze_showBindingSite
+ - fixed bug #773 losing the coloring
+ - added a list chooser to the GUI of DisplayBoundGeom command for selecting an object to display/undisplay. 
+   Previously it worked on all bound geometries selected in the viewer.
+ - adjusted highlight
+ - added Tkinter.Label to showBindingSite to provide a tooltip for the print residue contact Pmw.comboBox
+ - added support for displaying pi-pi and cation-pi interactions to displayInteractions
+
+editCommands.py
+
+ - added shoinfo in the guiCallback for EditAtomTypeGUICommand
+
+fileCommands.py
+
+ - added File->Read->PDB from RCSB.org
+ - added Recent Files command
+
+grid3DCommands.py
+
+ - modified width of the root.geometry
+ - fixed plot_histogram (changed rect to line)
+ - fixed bug in IsoConontour (rearranged plot_historgam, plot_signature)
+ - added splitting of Transfer Function
+ - changed OrthoSlice; special-cased autogrid maps and added modifyMinMax=True in the colomapGUI
+ - added entry in Isocontour widget for min and max
+ - replaced readDX with Pmv grids (Grid3D)
+ - added test for VolumeRenderer
+ - added self.grid.geomContainer['OrthoSlice'].pop('[X,Y,Z]')
+ - removed pdb.set_trace
+ - changed colormap for the OrthoSlice to use mean +/- std for the max and min.
+ - fixed plot_signature and changed the color for the histogram
+ - added option for choosing map type in readAnyGrid
+ - added  if UTVolumeLibrary.QueryExtension("GL_EXT_texture3D"):
+ - added Transparency option to isocontour menu
+ -  added Show/Hide option to isocontour menu
+ - introduced widgetsOnBackWindowsCanGrabFocus;
+   now, on windows, the widget grab the focus only if the window is already activated.
+
+hbondCommands.py
+
+ - added **kw to signature of dismiss_cb methods so they can be called by setupUndoBefore
+ - added lines ~1142 to try and maintain the hbond widget in the same position on the screen
+ - added code to fix bug which occurs when selecting a hbond from a listbox to toggle its visibility 
+   and there are two atoms with the same name in the viewer; added code to allow the color chooser 
+   to be opened and closed more than once for choosing a new color for an hbond geometry; 
+   added code to try and make widget appear in the same place for successive calls to display hbonds
+
+helpCommands.py
+
+ - made changes to attach more than one file when submitting a bug report to Bugzilla
+ - now email address entered in widget is sent in to option cc of bugentry page, so that the user recieves 
+  inforamtion regarding the status of the bug.
+
+measureCommands.py
+
+ - added MeasureDistanceCtrlGUICommand
+ - moved measure command from Edit menu to Display menu
+
+moleculeViewer.py
+
+ - added self.GUI.pickLabel.bind("<Button-1>",self.setSelectionLevel.guiCallback)
+ - replaced adt.gif with the new adt.png
+ - changed Add_ADT method so that it adds autoflexCommands before autogpfCommands
+ - added code to load  videoCommands.
+ - added menuLabel to readRecent
+ - added Recent Files command
+ - added reload(mglutil)
+ - commented self.GUI.vwrCanvasFloating.deiconify() line since it is opening window while running tests
+
+msmsCommands.py 
+
+ - fixed bug  #815 and added force=1 in savemsms
+ - repaired msms per molecule on selected atoms
+ - introduced highlight for msms surfaces
+
+mvCommand.py
+
+ - added self.GUI.pickLabel.bind("<Button-1>",self.setSelectionLevel.guiCallback)
+
+secondaryStructureCommands.py
+
+ - fixed drawResidues for DNA
+ - adjusted inheritFrontPolyMode
+
+selectionCommands.py
+
+ - added addToDashboard to documentation string of SaveSet
+ - added addToDashboard to signature of SaveSet
+ - corrected selection with partial display
+
+videoCommands.py
+ 
+ - added videoCommands to make movies in Pmv. The GUI of this command can be accessed through Pmv '3D Graphics'
+   menu or DejaVu Viewer GUI.  
+
+Icons/128x128/adt.png
+
+ - added new AutoDock icon
+
+bin/runPmv.py
+
+ - moved runPmv to Pmv.__main__
+ - added __file__ argument to main function
+ - moved __main__ into __init__
+ - added if __file__ in locals() for execfile
+
+
+
+RELEASE 1.4.4 (December 2006)
+-----------------------------
+
+New features and bug fixes:
+
+colorCommands.py
+ - special cased getNodes to speed up the case where nothing is selected
+ - subclasses show form for colorCommands to force the creation of the list
+   of geometries.  This was needed so tat th form shows up with an updated
+   list when called from the dashboard
+ - renames geomsGUI form default
+ - renames geoms widget geomsToColor to match the argument name
+ - fixed runPmv --cmode option, which was failing because of the OnAddObjectCmd
+ - fixed color by properties to work with new getSelection method
+
+controlPanelCommands.py
+- added dashboard icons
+- moved Pmv icons from ViewerFramework
+
+dashboard.py
+ - added right click button on tree labels for loading molecule and deleteing
+  them 
+ - added tree.updateTreeHeight() to moveTreeToWidget to have scroll bar appear
+  when tree is docked back into PMV GUI 
+ - modified moveTreeToWidget to assign new tree to column descriptors
+ - made to option menu panel for the Ribbon column display extrusion options
+ - fixed bugs in moveTreeToWidget. Copied tree.selectedNodes and
+  tree.objectToNode from old to new tree
+ - added floatDashboard and dock Dashboard commands
+ - added loadAllColunms(mv) function
+ - added posx and posy to calls to showForm to post option menu near button
+ - made right button click execute command after displaying the form
+ - handle cancel button in option forms
+ - made showhide button fill color grey
+ - added bbmode GUI for columns (right click on label)
+ - added a column for show hide molecule to dashboard
+ - fixed problems in onPmvCmd for selectionColumn 
+ - added string selector to select lines in dashboard
+ - added mechanism to expand tree when selected nodes are not created yet
+ - added bbmode overall switch to dashboard
+ - added bbmode set to ALL by default on all columns
+ - created MVSelectColumnDescriptor class to get the check buttons to work
+  with select commands in Pmv
+ - moved loading of dashboard widget to _pmvrc and listed them explicitely
+  to allow first level of customization
+ - moved loading of cammands and rgistration of interest into
+  MolFragTreeWithButtons.addColumnDescriptor
+ - added MVDisplayColumnDescriptor to add onPmvCmd method used to configure
+  the dashboard when Pmv commands are run
+ - added MSMSColumnDescriptor
+ - properly subclassesd MVDisplayColumnDescriptor for LabelColumnDescriptor
+ - deleted class MVColumnDescriptor
+ - added column descriptors to dashboard.py
+ - made ColumnDescriptor independent of vf
+ - modified getNodes to check for setClass
+
+dashboardCommands.py
+ - added tree.updateTreeHeight() to onAddObjectToViewer to make scroll bar
+  appear if needed
+ - made to option menu panel for the Ribbon column display extrusion options
+ - added floatDashboard and dock Dashboard commands
+ - embedded dashboard into Pmv GUI, fixed showHide command
+ - added dashboardSuspendRedraw command
+ - added vf to MolFragTreeWithButtons
+ - pass command as an argument to col.onPmvCmd
+ - moved loading of dashboard widget to _pmvrc and listed them explicitely
+  to allow first level of customization
+ - moved loading of cammands and rgistration of interest into
+  MolFragTreeWithButtons.addColumnDescriptor
+ - added MSMS column
+ - removed dependency on 6 first columns being display commands
+ - rewrote onCmdRun to have each column handle this
+ - added AddDashboardCmd command
+ - added mv.showDashboard(0/1) command so that we can show it by default
+  from _pmvrc
+ - changed Label column right click to display ownGui for glfLabel
+ - fixed handleAddEvent to only redraw tree once after handling all objects
+ - fixed handleDeleteEvent to make it update the tree.  The tree now colapses
+  because when this function is called the deleted node are still present.
+ - fixed handleAddEvents and handleDeleteEvents
+
+displayCommands.py
+ - introduced licorice button
+ -replaced licorice and noballs with sticksBallsLicorice
+ -better licorice and noballs buttons
+ - now lineWidth and pointWidth are correctly inherited
+ - moved IndexedGeom to a separate module
+ - added missing Set(inheritMaterial=False)
+ - relaxed bindGeomToMolFrag to work on Geom rather than IndexedPolygons only
+ - now BackBone trace inherit sticksAndBalls
+
+editCommands.py
+ - added code to check for hydrogens with no bonds before invoking the mergeNPHS command: 
+   previously an error occurred in referencing h.bonds[0] for hydrogens with no bonds
+ - changed line 1000 to set hetatm field of new hydrogen to be added to match that of the heavyAtom 
+   to which the hydrogen is being added in response to Bug 756
+ - fixed bug #752 alternate atoms position
+ - made fixNterminus and fixCterminus methods of addKollman charges safer by testing whether the CA, 
+   O etc atoms actually exist before trying to modify their charges
+ - fixed out-of-date syntax on line 1171... to select all atoms which start with H and then anything 
+   else, including nothing else, use "H*" not "H.*"... the latter only selects atoms with at least two characters in their names... this caused hydrogens named "H" bonded to nitrogen atoms to not be renamed "HN"... which was wrong
+ - fixed bug in re expression syntax line 1154 replacing 'H.*' with 'H*' ;made fixNterminus and fixCterminus methods of addKollman charges safer by testing whether the CA, O etc atoms actually exist before trying to modify their charges
+
+fileCommands.py
+ - replaced read molecule with read python or session script
+ - moved Pmv icons from ViewerFramework
+ -fixed list self.fileTypes of MolecularReader by adding '*.gro' to the string containing other file extensions
+
+grid3DCommands.py
+ - added OrthoSlice commands
+ - now orthoslice are without lighting
+ - added parent to isosurf and orthoslice and fixed memory leak in the isosurf
+ - fixed lograrithmic checkbox
+ - fixed problems when using different python on Linux
+ - added the following to isocontouring
+            if grid_name.endswith('.map'):
+                bound = [-10, 10]
+ - removed isocontour spin-box and added shift-click
+ - added try/except for from UTpackages.UTisocontour import isocontour
+ - added ColorMap to OrhtoSlice and menu to Isocontour widget
+
+helpCommands.py
+ - added senders email address to description
+ - added Bugreport Command
+
+interactiveCommands.py
+ - added licorice button
+ - replaced PCOM OptionMenu with non editable ComboBox to allow scrolling
+ - modified default selection level and pcom command
+ - added dashboard icons
+
+labelCommands.py
+ - introduced owngui in labels form
+ - added support for Atoms.charge when chargeSet is available
+ - now labels size depends on atoms, residue ...
+ - added force=False to update_cb to allow forcing the construction of the
+  selection and the updating of self.properties
+ - fixed some cosmetic indentations
+
+
+/moleculeViewer.py,v
+ - moved self.browseCommands("grid3DCommands") after self.customize
+ - added updateCommands
+ - special cased nodes==self.vf.Mols in getNodesByMolecules for speed
+ - removed unused noSplash=noSplash from moleculeViewer
+ - added floatDashboard and dock Dashboard commands
+ - added code to load all columns if non found after customizer
+ - modified getSelection() to no longer use the current selection level to
+  expand the current selection.
+ - at startup, the selectionLevel is set to Molecule
+ - modified default selection level and pcom command
+ - moved loading of dashboard widget to _pmvrc and listed them explicitely
+  to allow first level of customization
+ - moved call to customizer to the end of the constructor
+ - made sure we go through dockCamera at starttup
+ - made the viewer load the dashboard by default
+ - moved initial camera initlighting and docking inside molecularViewer, before sourcing _pmvrc. 
+   it was after it in runpmv.py
+ - moved splash screen to the bin/runPmv.py script
+
+msmsCommands.py
+ - we do not set frontPolyMode for the MSMS geom anymore
+ - increased indentation of line 1789 so that "area" is not referenced if it doesnot exist
+date: 2006/11/04 02:54:31;  author: sanner;  state: Exp;  lines: +3 -3;  kopt: kv;  commitid: 1093454c00d15a25;
+- added tring conversion to select hdset to ahndle case where it is None
+- added fixValues to computeMSMS to be able to fix hdset when calling from
+  dashboard in the same way it is done in guicallback
+
+selectionCommands.py
+ - made self.vf.setSelectionLevel not a topCommand when called from
+  select.__call__. Also added callListener=0
+
+trajectoryCommands.py
+ - added a module to read and play Gromacs trajectory files.
+ - added code to setMode_cb() so the player reflects the changes made to the play mode while playing 
+   the frames; set 'immediate' option of the slider to 1.
+ - added a slider widget showing the frame number to the trajectory player.
+ - split GetTrajectoryCommand into two classes: OpenTrajectoryCommand (to read a trajectory) 
+   and PlayTrajectoryCommand (to use player GUI to play the trajectory). 
+   Added TrajPlayerCached class to speed up playing of the trajectories by caching the display lists.
+ - added onAddObjectToViewer() to update the list of molecules displayed in the command's GUI 
+   when a new molecule is loaded.
+
+updateCommands.py
+ - modified restart message
+ - fixed windows restart bug
+ - fixed a typo in the 'Restart' dialog.
+ - renamed MGLToolsSupport to Support
+ - added updateCommands
+
+bin/runPmv.py
+ - modified setSysPath to accept path argument
+ - fixed runPmv --cmode option, which was failing because of the OnAddObjectCmd
+ - added support setting up sys.path and updating MGLTools.
+ - added command line option for licorice mode
+ - removed sys.exit()
+
+
+RELEASE 1.4.3 (September 2006)
+------------------------------
+ New features
+  -added support for rendering secondary structures in DNAs/RNAs
+  -helpCommands.py is added to provide About-->Help widget.
+  -added progressBar to APBS Web Services.
+  -added Open DX reader to Grid commands.
+  - now the colormap can handle labels and the colorpalette is modifiable;
+  -added a command to compute coarse molecular surface. This command is based 
+   on VisionInterface/CoarseMolSurface_net.py network.
+
+ Bug fixes
+ -fixed problems in APBS concerning the grid size, logging, and biding energy.
+ -fixed bug in colormap when no selection is provided.
+
+
+
+RELEASE 1.4.2 (May 2006)
+------------------------
+Bug fixes:
+- fixed bondCommands and traceCommand for events;
+- fixed several bugs when adding new color map to Pmv;
+- fixed tooltips in command option panel editor;
+- fixed all calls to addGeom in Pmv by removing second argument (cmd);
+- fixed some labels in control panel;
+- fixed bug in control pick;
+- fixed bug in keyboard events;
+- fixed chaining commands when clicking on an unselected node;
+- fixed a bug DisplayBackboneTrace for display only;
+
+More modifications and bug fixes:
+
+ bondsCommands.py
+- repalced all ModificationEvents by VFEvents and calls to vf.dispatchEvent
+
+ colorPalette.py
+-introduced editable color palette via colorPaletteCommands,
+made it resizable
+
+ controlPanelCommands.py
+- added some icons to column header
+- added chained commands
+- added backbone and side chain support
+- added a selector (although not yet slecting in tree)
+- added icons for all commands
+- added support for selecting rows in control panel by typing on keyboard
+  what is types is matched against the lower case version of the full names
+  of all nodes shown in the tree wht the '|' seprators removed
+- made selector select nodes in the tree widget
+- enables multi level selections
+- added call to node.tree.radioAndChain to all callbacks
+- removed notion of group as this is not handled by chains
+- added modifiers handling to KeySelectable allowing to handle Ctrl-z for
+  undoing selections in controlPanel
+- added argument option menu to command editor for creating radio in chains
+- replaced command names by icons in editor
+- change call in callback functions to initCallback
+- allow only 1 level of chains to avoid enless loops and prevent multiple
+  calls
+- removed makeRadio
+- renamed radioAndChain() chainCommands(
+- add mechanism for not having buttons at all levels and used it for show/hide
+  molecule command
+- added a level above all molecules
+- added sidechain+CA group
+- added tool tips
+- replaced most callbacks by a standard one
+- added pmvcmd attribute to TreeView
+- modified setCallback to pass all that is needed to describe a column
+- added browseCommand to load all commadns needed by control panel
+- added command to synchronize molecule visibility checkbuttons
+- added command Icon to command option editor panel to make them look
+different for each command
+- added a when and protein check button for each chained command
+- made chain commands an advanced panel
+- repalced all ModificationEvents by VFEvents and calls to vf.dispatchEvent
+- added TreeViewWithCheckbuttons.addNodeTree(self, obj) to add subtree
+- added ControlPanel.handleDeleteEvents and handleAddEvents and registered
+  them as listeners for add and delete events
+- added geometries in Pmv to self.managedGeometries
+- ignore nodes not foudnin tree for now in onCmdRun
+- added synchronization of selection column
+- added secondary structure representation
+- change displayValues to keep the Tk variables so that the state is kept
+  when nodes are collapsed and expanded.  This also enables the synchronization
+  with Pmv even if nodes are collapsed
+- added auto expand up to penultimate level when the selector is used
+- modified Node.displayValue to not recreate the Tk variables so the state of
+  buttons is preserved when expanding/collapsing
+- registered the controlPanel as a listerner for all commands in panel
+- added callListener=False argument when calling Pmv commadn to avoid endless
+  loops
+- implemented onCmdRun to handle button states when Pmv commands are called
+
+ displayCommands.py
+- moved BindGeomToMolecularFragmentBase commands from mvCommands to
+  displayCommands to avoid circular import
+- added geometries in Pmv to self.managedGeometries
+- added handleDisplayValue to getLastUsedValues() to remove display key
+-renamed 'Un/Display' to 'Display'
+- added setLastUsedValues to DisplayCommand to handle display widget based
+  on values of negate and only
+
+ interactiveCommands.py
+-replaced PCOM buttons with Pmw.OptionMenu
+-added addToolBar method
+-changed kbComboBox into Pmw.OptionMenu
+-Moved PCOM button next to the "PCOM level" buttons
+
+labelCommands.py
+-moved Label commands from Edit menu into Display menu
+
+ moleculeViewer.py
+-replaced addToolBar with configureToolBar
+- fixed expandNodes to return only result and ignore message
+-added addToolBar method
+-added addtoolbarGUI
+
+ msmsCommands.py
+- aligned widgets in computeMSMS gui
+- fixed bug caused by hdset=None
+- modified computeMSMS to support 2 densities surface
+- added handleEditEvent to DisplayMSMS to allow recontrsucting the surface
+  partially when atoms change position or radii
+- updated ComputeMSMS buildFormDescr to use default values
+
+ mvCommand.py
+-fixed a bug in MVSetIcomLevel
+- fixed import of DisplayBoundGeom commands
+- moved DisplayBoundGeom to displayCommands
+
+selectionCommands.py
+-replaced setting vf.selectionLevel as nodes.__class__ with nodes.elementType. Now the selectionLevel is Molecule, Chain, Residue or Atom instead of MoleculeSet, ChainSet, ResidueSet or AtomSet
+-replaced  self.vf.select.clear() with self.doitWrapper()
+
+setangleCommands.py
+- put set torsion command under Edit->Torsion angles
+- repalced all ModificationEvents by VFEvents and calls to vf.dispatchEvent
+
+visionCommands.py
+-cascade menu for FastLibs in vision toobar, smaller icon for diamond ports,
+-added addToolBar method
+
+ Icons
+- removed 32 form icon names and added more icons for control panel
+- made icons antialiased against white background
+- added 128x128 icons
+
+VisionInterface/APBSIsoContour_net.py
+-fixed the problem with autorun
+-fixed normals in the left isocontour
+-fixed macro network to suppress doit that shouldn't be saved
+
+VisionInterface/PmvTypes.py
+-introduced Types files per library. All the libraries are using UserLibBuild.addTypes() to load types
+
+bin/runPmv.py
+- modified the appearance of the  splash screen.
+- added 3rd party list to splash and button to avoid splash destruction
+- moved code for Splash Screen to mgltutils
+
+
+Release 1.4.1 (March 2006)
+_____________________________________________________________________________
+
+What's new since rel1.3alpha2: 
+------------------------------
+
+-In moloculeViewer,a warning message is shown when the molecule is empty (no atoms),
+ added VisionAPI for Grid3D objects. Added BindGeomToMolecularFragment, DisplayBoundGeom,
+ and UndisplayBoundGeom to the commands loaded automatically into Pmv,
+ modified findPickedAtoms method to work with instances
+-In fileCommands added an option to save a VRML2 file with colors per vertex or color per face. 
+ Added a checkbutton to the VRML2 save panel to toggle. If colors are currently per vertex and the 
+ user chooses per face, the colors are interpolated to give a reasonable result. Vice versa was 
+ already implemented and applied by default.
+-In msmsCommands ,added a button to allow the user to save the current selection as a set.
+-In repairCommands,added another distance selector option to checkForCloseContacts.Added a button so 
+ that atoms used as keys for last calculation and the atoms found to be close to the keys can be 
+ saved as two separate sets.
+-In VisionInterface.PmvNodes,added PmvVolume class for representing volume loaded or computed in Pmv 
+ can  be exposed in Vision.
+-APBS commands:
+   - added the run APBS parallel button to the panel;
+   - added support for calculation of forces;
+   - Updated APBS Web Services and added Display_Isocontours;	
+   - added Isocontours Control Panel Widget;
+   - added support for win32;
+   - added self.autocenterCoarseGrid(), self.autosizeCoarseGrid(), self.autocenterFineGrid(), self.autosizeFineGrid() and self.refreshGridPage() for APBSSetup.onAddObjectToViewer;
+   -added autcenter and autosize in APBSRun;
+
+
+Bug Fixes since rel1.3alpha2:
+-----------------------------
+-APBSCommands:
+*Fixed calling web service in a separate thread to avoid blocking PMV
+*incorporated the differences with Hovig's last version 10/27/2004
+*Fixed by adding try: except around calling the web service to catch exceptions and stopped checking the queue
+*fixed APBSCommand to work if web services files are not found
+*Fixed all keyword values to be compatible with APBS 0.3.*
+*replaced asking the user to cut and paste by SysCmdInThread
+
+-Grid:
+*added "entry_widgets" attr to SurfaceGUI and SliceGUI classes: it's a list of widgets put into the cmd forms of getSurface and getSlice which can be used to remove the entries for a grid which is being deleted.
+*added "delete_all_widgets" method to same 2 classes to remove the widgets described above...
+
+-SLCommands:
+*fixed problems created when BindGeomsToMolecule was renamed
+  bindGeomToMolecularFragment and was moved to mvCommands
+*removed BindGeomToGeom and placed it into mvCommands and renamed it
+  BindGeomToMolecularFragment
+*moved DisplayBoundGeom and UndisplayBoundGeom to mvCommands
+*made bindGeomToMolecule not reparent if already in the parent's subtree
+
+-amberCommands:
+*Replaced callback by callbacks in the decription of thumbwheel objects.
+*Removed global variables in the C code of prmlib.so.
+*Former global variables 'wcons' and 'ntwx' are members of SFFoptions structure now. amb_ins.sff_opts is a pointer to the structure.
+*fixed to check for the keys "callback" and "callback_freq" before trying to remove them...
+
+-bondsCommands:
+*Merged add and delete bond Commands from repairCommands into the similar commands in this module.
+*added initialization of self.labelStrs and augmented stopICOM code
+*fixed several bugs in addBondsGC.
+*fixed for bug where 'top' is not initialized in special cases...
+*fixed a bug in undo
+
+-colorCommands:
+*Added traceback.print_exc() when the function in colorByExpression cannot
+be evaluated.
+*added a call to for the whole subtree of the geometry colored by instance to
+  inherit material
+*modified getAvailableGeoms such that if a geomname in parentgeoms set  and childgeomnames set ,previously it is set continue now  added to check if geomname has children.
+
+-deleteCommands:
+*Fixed this problem with the inputform.
+*modified deleteMolecule command to only use keys of lastPick.hits
+
+-displayCommands
+*replace all unique=0 by replace=True in Viewer.AddObject
+*added geomC.geomPickToBonds['cpk']=None and the same thing for 'balls'
+*update commands creating geometry to use new updateGeom version
+*removed geomC.atoms['balls']=AtomSet(),geomC.atoms['sticks']=AtomSet()
+*removed setting  .mol 
+*made lines geometry to added to viewer through addGeom such that now geomC.atoms has key lines
+*moved updateGeom from mvCommand into the displayCommand base class.
+*modified onRemoveObjectFromViewer method :enclosed most of it in a try/except loop, removed line "del levelNodes"... this was breaking deleteMol- prevented redoying cylinders display list when visible is set to False
+
+-editCommands:
+*Fixed reassign the Atom radii even if mol.unitedRadii has not
+changed.
+*added code to mergeNPHs command which sets a message if there are non-polar hydrogens with more than one bond...
+
+-extrusionCommands:
+*replace all unique=0 by replace=True in Viewer.AddObject
+*update commands creating geometry to use new updateGeom version
+*replaced 'geomC.geoms[geomName]=g' with call to geomC.createGeom.
+ 
+-fileCommands:
+*fixed the bug in setNewCoords()(followed the code in DejaVu/ViewerGUI , see saveTransformation() )
+*modified onRemoveObjectFromViewer,enclosed most of it in try/except loop, removed line 'del atms'... this was breaking deleteMol
+
+-gridCommands:
+*added check that the grid has already been displayed to setIsovalue: if it has not been displayed, self.vf.getIsosurface is called to display it...[it has to have a surfaceGUI before the extendedSlider in the surfaceGUI can be set]...
+
+-guiTools:
+*fixed MoleculeChooser class.  If more than one molecule was present,
+  the first one was always returned, regardless of which one was selected
+
+-hbondCommands:
+*changed reset message to "reset: deleted hbonds from ", ct, " atoms" which make s more sense...
+*removed annoying print statement
+*previously imported addBondGC etc from repairCommands.  Updated these imports and the names of the baseclasses to reflect merge of this functionality into the similar commands in bondsCommands module.
+*repaired addhbondGC [and removehbondGC]... they used to inherit from repairCommands.addBondsGC and removeBondsGC, i changed them to inherit from the equivalent commands in bondsCommands but these were broken... i have fixed them, i think.
+*removed unnecessary import of AddBonds... which broke hbondCommands 
+*updated buildHBonds command to use MolKit/hydrogenBondBuilder object.
+*added "self.form.autoSize()" after each grid_forget so that forms are repacked... this used to happen automatically but something changed in mglutil/.../gui
+
+-labelCommands:
+*update commands creating geometry to use new updateGeom version
+commented out line 128 so that only geomC.createGeom is called... all 252 tests pass...
+*renamed createGeom method of GeomContainer addGeom and changed it signature
+to remove the first argument (geomName).  Updated the files in Pmv and
+AutoDockTools to call addGeom(geom, cmd)
+
+-measureCommands:
+*fixed measure commands to work with instance matrices
+*added check for attribute 'pickedInstances' to getTransformedCoords.. if it exists, "self.vf.transformedCoordinatesWithInstances" is used... otherwise the old code is used which returns the result of applyTransformation....
+*removed applyMatric method from MeasureCommand and moved handling of
+non-picking case into vf.transformedCoordinatesWithInstances method
+
+-moleculeViewer:
+*renamed DejaVu menu entry 3D Graphics
+*fixed findPickedAtoms to add pickedInstances attributes to picked atoms
+*added transformedCoordinatesWithInstances(self, nodes) method to get
+a list of coordinates for a nodeset with pickedInstances attributes
+*fixed a bug in findPickedBonds
+*fixed a bug in findPickedAtoms. Loop over picked atoms to write the instance
+list into the atoms was outside the loop over the geometries, creating a
+problem for geoemtry not bound to molecules
+*fixed MolGeomContainer.createGeom() with more general approach for updating
+*fixed a bug in transformedCoordinatesWithInstances which caused an exception
+*when logs of picking commands where executed
+*fixed transformedCoordinatesWithInstances to handle the case when the nodes
+where not specified by picking
+*fixed problems created when BindGeomsToMolecule was renamed
+bindGeomToMolecularFragment and was moved to mvCommands
+*renamed createGeom method of GeomContainer addGeom and changed it signature
+to remove the first argument (geomName).  Updated the files in Pmv and
+AutoDockTools to call addGeom(geom, cmd)
+*added AutoDockTools to libraries
+*modified ListSet to manage stringRepr for more operations
+*added self.sets = Sets() which will be used to keep track of user defined sets.
+*added code to addMolecule to add stringRepr to mol.allAtoms, mv.Mols and
+mv.allAtoms
+*modfied expandNodes to use the new selection string with operators and to set teh stringRepr of ther returned set
+*modified getNodesByMolecule to add string repr to node sets obtained after splitting by molecule 
+
+
+-msmsCommands:
+*removed dependecy on SLCommands by moving the bindGeomToMolecularFragment to
+  mvCommands
+*fixed problems created when BindGeomsToMolecule was renamed
+*fixed bug line 1874 in __call__ method of ComputeMSMSApprox: kw['surfName'] needed to be assigned "surfName" instead of "name"....
+*replaced "geomC.geoms[surfName]=g" by "geomC.createGeom(surfName, g, self)
+*previously computeMSMSApprox did nothing with input parameter 'display'...added code to call displayMSMS with current nodes if display flag is on.
+*removed line that set geomC.atoms[surfname] = atms from the computeMSMSAPPROX
+ command since this set of atoms is managed by the dislayMsms command
+*removed the geomC.VIEWER.AddObject( g, parent=geomC.masterGeom, redo=0)
+ line from that same command since the geometry is added in geomC.addGeom()
+*removed VIEWER.AddObject in computeMSMS command 
+
+-mvCommand:
+*Added some documentation
+*modified MVInteractiveCmdCaller.execCmd to propagate pickedInstances attribut
+  when changing level before calling picking command
+*fixed MVPrintNodeNames to work with instances
+*fixed MVCenterOnNodes to work with instances
+*moved generic updatfixed problems created when BindGeomsToMolecule was renamed
+bindGeomToMolecularFragment and was moved to mvCommands
+*modified strArg to call full_name() method on sets of molecular fragments
+per molecule, beacuse this method is clever about not expanding complete
+lists of fragments within a molecule.
+*changed updateGeom method which did not previously treat atomSet deletions correctly. Now the deleted atoms' intersection with the displayed atoms is undisplayed using negate flag.
+
+
+-repairCommands:
+*added support for using different distanceSelectors in checkForCloseContacts[GC]... at the moment either CloserThanVDW or Distance classes are available...
+*improvements to checkForCloseContactsGC:
+1. clear previous results when a new NULL result is found
+2. show all the contacts by default
+3. corrected display of CrossSet(s) so the atoms specified in the stringSelectorGUI are not automatically marked..
+*removed width and height arguments from creation of form in
+*CheckForCloseContactsGUICommand to get automatic default size
+*fixed calls to self.setupDisplay to pass colors
+*added color coding for close contacts, red if distance < sum of radii,
+green else
+*added 'hasattr' conditional which checks for checkForCloseContactsGC.key_ss and check_ss before trying to undisplay their crossSets.
+*fixed bug so that both stringSelectors' CrossSets display; changed logic so that the command conserves its form from call to call so that old settings are remembered; made call to checkForCloseContacts log itself.... warning: this can create a long string of atom names.....
+*removed addBond, addBondGC, removeBond, removeBondGC which are obsolete. They have been moved into bondsCommands (and merged with the similar commands which existed in that module).
+in continuing effort to reconcile addBond(GC) with addBonds(GC) extended addBondGC so that it labels the picked atoms.
+*corrected bugs in addBondGC, addBond, removeBondGC and removeBond: onAddCmdToViewer now loads the appropriate other commands for the undo, addBondGC no longer inherits from measureCommands. Instead it has its own getTransformedCoords..
+*added a commented out version of onAddCmdToViewer to removeBondCG
+*fixed getObjects in RemoveBondCommandGUICommand
+*changed to be careful that AtomSet is extended by another AtomSet [not a list] and that an empty TreeNodeSet is NOT added to an AtomSet.  Previously these were harmless operations.
+*fixed bug in gui for checkForCloseContacts
+
+-sdCommands:
+*replaced "geomC.geoms[name]=g" by "geomC.createGeom(name, g, self)
+*Modified readmolindexedpolygons so it no longer requires a specific format for
+the filename
+*Modified readMolIndexedPolygons. There is now an optional argument which
+allows the vertex-to-atom correspondences to be read from a file (generated by
+Bruce Duncan's cluster program). In the absence of this file, the command will
+continue to calculate the assignments (which is a little slow...)
+*replaced use of Pmv.selectionCommands.sets__ with self.vf.sets; also updated to
+use savedSets[name] instead of savedSets[name][0] because the comment is not sto
+red separately... (instead it is added as an attribute of the saved TreeNodeSet)
+
+-secondarystructureCommands:
+*update commands creating geometry to use new updateGeom version
+*Added a cmdString to the colorBySecondaryStructureType.
+*modified to validity checking on input parameters: nbchords, gapEn d and gapBeg; modified signature of call to vf.displayExtrudedSS  to support passing 'only' and 'negate' parameters; modified doit signature to use kw dictionary in order to be able to set the values of 'only' and 'negate' to be passed onto call to extrudeSecondaryStructure.  All these changes were necessary in order to get a test in test_SSCommands, which used to  pass, to pass again.
+*moved set of mol.geomc.atoms=ResidueSet() after the addGeom() call else addGeom overwrites it with an AtomSet when we need a ResidueSet
+*fixed a bug that failed to remove sets for chains with AA lacing CA or O
+*fixed a bug in clean method to allow forcing re-calculation of SS
+
+-selectionCommands:
+*Fixed, loading  "backbone, sidechain etc" into directSelect's Sets menu... so overwrote buildSetsMenus method in this class to fix this bug.
+*fixed bug in StringSelector for special character '$'; added support for 'sidechain', 'backbone' and 'backbone+h' sets.
+*Use buildFormDescr and showForm in the saveSet command.
+The saveset command also returns  the name of the set.
+*SaveSet doit, guicallback and call now return the name of the set.
+*In SelectFromSet the name of the sets in the listchooser are now sorted
+*added "HH11" and "HH12" to 'sidechain' list of atom names.
+*added CE3 to sidechain set.  [for TRP].
+*replaced use of sets__ with use of self.vf.sets
+*replaced use of old MVStringSelector with use of the new StringSelector...
+*removed setting selitem.stringRepr because this is handled in MolKit/stringSelector.py
+*added stringRepr generation to selectFromString()
+*fixed select() to use | (i.e. or) instead of + for adding tothe selection
+
+
+-setangleCommands:
+*first pass at adding support for logging setangle commands....
+
+-splineCommands:
+*amended line 81 to check stringAtms[0] is None or len(stringAtms) is 0...
+*added two new command custom Spline and computeExtrudeSpline. customTrace:computes and extrudes trace depending on values in the widget(which is a combination of computRace and Extrude Trace widgets).computeExtrudeTrace spline generated with default arguements
+*updated to import MolKit/stringSelector/StringSelector instead of Pmv/selectionCommands/MVStringSelector; changed format of selection string to fit with new cla ss
+
+-stringSelectorGUI:
+*added code to ensure each strSelCrossSet in the viewer has a unique name: previously the second one added clobbered the first...
+
+-superimposeCommandsNew:
+*added two flags to superimposeAtoms command
+  updateGeom: update geoms after superimposition
+  showRMSD  : print and return the RMSD after superimposition
+*added SuperimposeCommand, TransformAtomsCommand, FreezeAtomsCommand
+
+-traceCommands:
+*added parent = geomC.masterGeom in addGeom  call. Modified createGeometries function not add addGeom if already same trace is present in the viewer but to set vertices ,faces etc.
+modified createGeomtries function such that when new Geom added or not ,made color and opacities set to (1,1,1) and 1.0
+*added two new commands custom trace and computeExtrudeTrace.custom Trace:This command computes and extrudes trace by taking values from single widget.computeExtrudeTrace:This command computes and extrudes trace with default arguements.
+
+-vectfieldCommands:
+*Updated 'ListChooser' description to use the ListChooser object from
+mglutil/gui/BasicWidgets/Tk/customizedWidgets
+*Fixed a bug in ComboBox where entry_validate was used instead of
+entryfield_validate
+
+TESTS:
+-test_bondsCommands:
+*changed line 204 because addBonds now returns "ERROR" instead of None if two atoms are already bonded.
+*added test that intermolecular bond is not formed with addBondsGC.
+*removed 'withShell=False' to simplify use of tester
+*added a new test to check undo
+
+-test_deleteCommands:
+*added test for bug: when an atomset is deleted, the bonded and nobond geometries are NOT updated....[they used to be!]
+
+-test_displayCommands:
+*modified setup to start viewer once and run tests such it wont freeze
+*added trapExceptions=False to mv initialization; removed similar userPref
+*added some tests for displayBackboneTrace command
+*updated use of cylinders.radius to cylinders.vertexSet.radii.array[0] to keep up with changes in DejaVu/Cylinders.
+
+-test_editCommands:
+*Modified the organization of the tests and implemented a new method to test
+the assignAtomRadii overwrite
+*removed trapExceptions prference and added it to MoleculeViewer constructor
+*totalCt is made equal to number of tests since it is raising an application error on windows if it is more
+
+test_hbondCommands:
+*totalCt is made equal to number of tests since it is raising an application error on windows if it is more
+
+test_measureCommands:
+*toalCt is made equal to number of tests since it is raising an application error on windows if it is more
+
+test_repairCommands:
+*added code to checks on listbox: order entries are put into list box for residues missing atoms appears to be platform dependent
+*added trapExceptions=False to mv initialization; removed similar userPref
+*added tests for changes in display of CrossSets in checkForCloseContactsGC and for creation of sets in the same command.
+*totalCt is made equal to number of tests since on windows platform aplication error is raised if it is more
+
+test_selectionCommands:
+*added tests for named sets based on standard amino acids: previously HG, HH11 and HH12 were missing.
+*totalCt is made equal t number of tests since on windows platform application error is raised if its more
+
+-test_setangleCommands:
+*totalCt is made equal to number of tests since on windows platform application error is raised if its more
+*added trapExceptions=False to mv initialization; removed similar userPref
+*added update geom tests
+
+-test_splineCommands:
+*new tests added
+
+-test_traceCommands:
+*removed 'withShell=False' to simplify use of tester
+*added trapExceptions=False to mv initialization; removed similar userPref
+*removed references to testplus
+
+VisionInterface:
+-PmvNodes:
+*removed the import of msmsc since it is not used in this file and was renamed _msms
+*fixed importing vollib when volume proxy node is instanciated  
+*made instancematrices port of Set Instances optional with [identity] as default
+
+changes since rel.1.3alpha2:
+---------------------------
+
+-renamed createGeom method of GeomContainer addGeom and changed it signature
+  to remove the first argument (geomName).  Updated the files in Pmv and
+  AutoDockTools to call addGeom(geom, cmd)
+-removed geomC.VIEWER.AddObject
+-removed vi.AddObject calls from ComputeTraceCommand as it is done by geomcontainer.addgeom()  
+-added parent,redo as arguemnets for addGeom
+-added trapExceptions=False to mv initialization; removed similar userPref in
+all tests
+-Added Commands:
+pdb2pqrCommands,for implementing 'setup_Pdb2Pqr' a command to process molecules using pdb2pqr according to a specified forcefield: 'amber', 'charm' or 'parse'
+-AddedTests for
+  gridCommands,labelCommands,pmvscript.amberCommands(Amber94MD,Amber94Minimize,ConstrainAtomsAmber94,
+  FixAmberNames,FreezeAtoms_Amber94,PlayMDTrjAmber94,amberSetUp)
+-Changed regression tests to unit tests for following
+  commands:msmsCommands,fileCommands.
+-APBSCommands:
+ * renamed APBSCommand APBSCommands to be consitent with other modules
+   made the command use prqRadius
+-DisplayCommands:
+  * added DisplayBackboneTrace command which  displays backbone trace using FindGap Command in MolKit.
+  * added displaySSSB command to display proteins as ribbons and other chains
+  which have bonds as stick and balls
+  * modified updateGeom method: now it checks for len(allAts) before adding atoms to it: 
+    if len(allAts) was 0, set allAts to atoms... previous version just added atoms to 
+    zero-len allAts which caused a problem for the stringRepr
+-gridCommands:
+  * added "deleteAUTOGRID" command which can be used to remove an AutoGrid and its gui components...<adding tests is left-to-be-done>
+  * added command setIsovalue so the isovalue is log when the slider is
+    moved, the log happen only when the button is released
+-mvCommand:
+   *added command for binding geoms to molecular fragments, displaying them and  undispaying them (moved from SLCommands)
+   *modified bindGeomToMolecularFragment command to use instance matrices.
+
+-colorCommands:	
+  * added setSelectionLevel call (line886) in colorByProperty's callback which is bound to changing 
+   the 'IcomLevel'.... this was necessary because changing the IcomLevel no longer automatically 
+   changes the selection level... which must be changed in order to introspect and get the appropriate
+   list of properties by which to color.
+  * made setting 'level' in colorByProperty and colorByExpression independent of changing 
+    self.vf.selectionLevel AND self.vf.ICmdCaller.level.value.... Currently this level is initialized 
+    to nameDict[self.vf.selectionLevel] but this could be changed....
+  * changed the label on the widget in colorByProperty and colorByExpression from "Change the PCOM 
+    level:" to "Change the property level:".  Previously the buttons in these widgets set both the 
+    selectionLevel and the IComCaller level... Now they don't do either of these things.... they 
+    only change the list of properties displayed....
+-deleteCommands:
+  * added new command "DeleteAllMolecules" which deletes each molecule present in the viewer.
+-fileCommands:
+  * Replaced MMCIF parser and writer, that used to depend on mmLib, with our own implementation
+  * added pdbqt to known list of fileExts
+-labelCommands:
+  * made setting 'level' in labelByProperty and labelByExpression independent of changing 
+  self.vf.selectionLevel AND self.vf.ICmdCaller.level.value.... Currently this level is initialized 
+  to nameDict[self.vf.selectionLevel] but this could be changed....
+-selectionCommands:
+  *modified selectFromString gui to support new operations: xor and intersect;
+  *removed MVStringSelector class; added sets from mv.sets to various menus....;
+  *added setupUndoBefore method to basic select command
+  *modified selectFromString gui to support selecting new named ChainSets 'dna' and 'proteic'
+  *added nodes key word to selectFromString to specify what we are selecting
+  from.  Nodes is turned into a list of molecules.  This was added to enable
+  using selectFromString in Vision
+  *activated caseInsensitive and escapeCharacter options for selectFromString; modified the GUI so that   the entries (apparently) resize.
+
+______________________________________________________________________________
+Release rel 1-3alpha2 (10/15/2004)
+_____________________________________________________________________________
+
+What's new since rel 1.2beta1 
+------------------------------------
+- ViPEr has been renamed Vision and PmvViPEr has been renamed VisionInterface
+- Deleting a molecule in Pmv now deletes the corresponding nodes in Vision if VisionAPI is available.
+- In displaySticksAndBalls and displayCPK the radii of the balls and cylinder is only applied to the 
+current selection
+- Modified the displayCPK and displaySticksAndBalls parameter panel to now have
+  a new parameter cpkRad for displayCPK and ballRad for sticks and balls.
+  The radii of the sphere representing the atom is now calculated the following way:
+  sphRad = cpkRad + atmRad * scaleFactor
+  or
+  sphRad = ballRad + atmRad * scaleFactor
+- The ShowHide molecule panel now has a Show/Hide All checkbutton.
+- The GUI of Write PDB, PDBQ, PDBQS now have a saveTransformed button which will save the current coordinates
+  as a new conformation.
+- In moleculeViewer implemented a new method loadMoleculeIfNeeded() which loads a molecule only if it
+  is not already present. This method is used for example by the Pmv-Vision
+  PmvMoleculeNode for saving/restoring networks.
+  If the file is not found it will return None if either the file is not found, 
+  the molecule cannot be loaded or the molecule is already present.
+- In SelectionCommands added visionAPI code to export Sets to Vision
+- In SelectionCommands added new class MVCreateSetIfNeeded: the command createSetIfNeeded()
+  creates a new set only if no set with the same name exists
+- In SLCommands GUI added a checkbutton to allow the user to recompute Bspt of selected object with every set operation.
+
+Bug Fixes since rel 1.2beta1:
+------------------------------------
+
+ - amberCommands: 
+   * Fixed the __call__ method
+   * Modified the signature of the setup_Amber94 so that the filename is stored in the lastUsedValue
+   dictionary of the command.
+ - bondsCommands:
+   * Reimplemented the AddBondsCommands and RemoveBondsCommands.
+   * When the AddBondsCommands is used to create a bond the origin is "UserDefined".
+- colorCommands:
+   * Fixed a bug in colorByProperties so that when the current selection is modified the properties are reevaluated.
+   * In all the __call__ method self.vf.expandNodes is called instead of getNodes
+   * The colorCommands can now be called with a TreeNode.
+   
+- displayCommands:
+   * All the updateGeoms method now are calling doit with the lastUsedValues instead of the default values.
+   * Fixed the displayCommands so that they can now be called with a TreeNode instead of a TreeNodeSet.
+   * Fixed the undo of the displaySticksAndBalls and displayCPK
+- editCommands:
+   * Modified ComputeGasteiger to type atoms only once and computeGasteigerGC to return sum of added charges.
+- fileCommands:
+   * the __call__ of writeSTL should not open any GUI
+   * the saveImage doesn't wait 1 second any longer.
+   * Updated the writePDB, PDBQ, PDBQS command  to reflect the changes made to PDBWriter.
+- hbondCommands:
+   * Fixed bug where atomset.get could return an empty TreeNodeSet by enclosing all those 
+     gets in AtomSet(previous_code)... before this caused some very odd behavior....
+   * Modified writeAssembly to be up to date with the changes made to pdbWriter
+
+- added code in Pmv/moleculeViewer to establish connection to this new
+  attribute: in the init() we add Pmv Vision nodes to the lookup table and to
+  the list of objects of nodes to be added to ViPEr when it is started
+  Also, added code in addMolecule() method to put molecules into the list
+  of objects so they can be exposed as ViPEr nodes
+
+- updated Pmv/visionCommands.py to reflect these recent changes, removed some
+  methods such as onAddToViewer(), changed the doit() method
+- updated Pmv/VisionInterface/PmvNodes.py to reflect these recent changes,
+  changed the PmvViewer node: added method beforeAddingToNetwork() to load
+  the vizlib when this node is added to a network (this was a hack done in
+  viperCommands previously
+
+- msmsCommands:
+  * Check the validity of the input in all the msms commands
+  * Fixed the msmsApprox command.
+  * ReadMSMS Command:
+    Fix the __call__
+    Fixed the setEntry_cb so that when a .vert file is selected the corresponding .face is selected as well and vice versa.
+  * Fixed some bugs in buried surface calculation commands
+  * Moved Assigned burried surfaces area command from Edit to Compute->MSMS.
+
+- msmsParser
+  * Fixed the parser to deal with the headers properly:
+    If a msms surface was saved with header then the first line of both .vert and .face 
+    files start with a # sign and the three following lines are comments.
+    If no header were saved then the file doesn't contain any comments.
+- repairCommands
+  * Fixed the guiCallback of checkForCloseContactsGC to remove zombie widgets
+
+- secondaryStructure:
+  * Fixed clean method of computeSecondaryStructure
+  * Fixed the displaySecondaryStructure instead of looping over the chains in the
+    molecule, loops over the chains in the selection.
+    Added a check to make sure that the chain has the attribute sheet2D.
+- selectionCommands:
+  * Fixed the log of selectFromString so that silent is set to True.
+  * Fixed the fact that when "clearSelection" is called from the SelectFromString GUI it was not logged.
+  * bugfix in visionAPI defining the PmvSetNode: the selection string was not
+  put into quotes, and was saved as a full string 3 times instead of just
+  defining it once and reusing it where appropriate.
+- SLCommands:
+  * BindGeomToMolecules now accepts TreeNodeSets as strings or objects and geometries as strings or objects
+  added a check for the name of new object resulting from an SL operation.
+  * If an object (that had been created by SL) with the same name already
+  exists in the viewer we set its vertices and faces to those of the new
+  object.
+
+- visionCommands:
+  * replaced call to hideVision by hide
+  * renamed hideVision() method to hide()
+  * added new method show()
+  * added new method exit_cb() which is called when Pmv is quit
+  * killing the Vision window using the windows decoration (or ALT-F4, etc)
+  now withdraws() the window and unchecks the Vision checkbutton. Vision
+  can then be re-opened using the checkbutton. Before, we would get
+  Tkinter errors because Vision was destroyed
+  * bugfix: starting Vision did not source the _visionrc file, because we forgot
+  to update this here (was still _vprc).
+  * added withdrawing viper when existing
+  * save only network if _modified is True else restore from file
+  * added support for PyARTYK: if this command is loaded into Pmv BEFORE
+  viperCommand is started, we needed a mechanism to add nodes to the ViPEr
+  library.
+
+Changes since rel 1.2beta1:
+ - Removed all the references to ehm and replaced them by self.vf.GUI.addCameraCallback and removeCameraCallback
+ - Updated the calls to self.vf.warningMsg by call to self.warningMsg as the Command base class now implements its
+own warningMsg method.
+ - Update all the call to RenderMode by calls to Set method of the DejaVu geometry.
+ - The buttons are no longer resized vertically.
+ - If a command creates a geom which doesn't belong to the molecule, it should be created as the child of 
+the "misc" geometry created by VF. 
+
+
+
+
+
+
+Release rel 1.2beta1 (12/15/2003)
+_____________________________________________________________________________
+
+What's new since rel 1.2alpha (09/18/2003)
+
+- Implemented a new command to load modules and commands dynamically in PMV.
+  browseCommands. (cf ViewerFramework RELNOTES).
+- Updated in all the commands the way the node log string is expanded or not.
+- Added a mechanism to store the values used when executing a command. These
+  values will be used instead of the default values when executing a picking
+  commands.  
+- MoleculeViewer: Implemented a new method getMolFromName which returns the 
+  MolKit.Molecule which has the given name. If no molecule is found then None
+  is returned.
+- MoleculeViewer: Added 'Volume' to the list of default Pmv libraries.
+- APBS Commands: Implemented a new command to setup an APBS calculation.
+- ColorCommands: Modified the ColorByProperty and ColorByExpression GUI.
+- ColorCommands: Added a DISMISS button to the choose color inputform.
+- DisplayCommands: Exposed the cylinder quality argument in the 
+  displaySticksAndBalls command.
+- hbondCommands: Added support for changing length of cylinders displaying 
+  hbonds.
+- msmsCommands: Moved Assigned burried surface areas command from Edit to 
+  Compute->MSMS
+- msmsCommands: Added an entryValidate function to prevent the user from 
+  using '_' in the MSMS name in the computeMSMS command GUI.
+- mvCommand : In strArg if the argument is a TreeNode or TreeNodeSet, 
+  the user pref expandNodeLogString is set to False and the cmd is an 
+  interactive command (takes nodes as 1st arg and its objArgOnly flag set to 
+  True) use 'self.getSelection()' in the logString instead of the full_name of
+  each of the nodes.
+- qkollua: Added other possible histidine residue names: HIE,HIP, HID from 
+  amber and HSE,HSP,HSD from LPDB set.(charmm(?))
+- traceCommands: Added a warning message when the computeTrace fails.
+- viperCommands: added onAddNewCmd hook to viper command to run all Pmv nodes 
+  in networks
+
+Bug Fixes since rel 1.2alpha (09/18/2003):
+
+- Updated in all the commands the way the node log string is created. 
+- Replaced eval by getattr when possible.
+- AmberCommands: fixAmberHAtomNamesGUICommand and the fixAmberHAtomNamesCommand
+  now implement an __init__ where the self.objArgOnly flag is turned on.
+- AmberCommands: Modify the creation of the empty Label geometry in the 
+  AddCmdToViewer from Mimize_Amber94 command to not create a problem when a 
+  Redraw is triggered
+- BondsCommands: set the display argument of the __call__ of the 
+  buildBondsByDistance commands to False to be consistent with the doit 
+  signature.
+- ColorCommands: Fixed a number of bugs in the colorByProperties command.
+1- the last entry selected in the ListChooser was not remembered properly
+2- the colorscheme was not always applied properly.
+
+- DisplayCommands: Fixed the undo in all the commands.
+- msmsCommands: fixed some bugs in buried surface calculation commands
+- msmsCommands: Fixed the logstring of the saveMSMS command.
+- Macros/msmsMac: Fixed the surface area macros.
+- mvCommands: Fixed the SetICOM to deal properly with Molecule and Protein.
+- mvCommands: Fixed the undo in MVSetIcomLevel command.
+- splineCommands: Fixed the undo by taling into account the lineWidth argument 
+  in displaySplineAsLine.
+- splineCommands: Fixed the __call__ and the undo of the displayExtrudedSpline
+- superImposeCommands: Fixed bugs in the superimposeAtoms command where the
+  mobile molecule was not transformed properly.
+- traceCommands: Fixed the undo mechanism in the displayTraceCommands.
+- viperCommands: fixed validation function of PmvCommand to check for
+  ViewerFramework.VFCommand.Command rather than MVCommand 
+
+Known Issues:
+
+- DeleteCommands: 
+  When the user wants to delete a molecule and an undo stack exists
+  second form pops up allowing the user to chose between different scenarios. 
+  The user HAS to proceed with the second pop up otherwise it creates 
+  a problem. 
+  Ultimately we want this second pop up to be blocking which prevents the user
+  to try and Dismiss the form underneath.
+
+- superImposeCommands: The superimposeAtoms GUI command doesn't work properly.
+  For the moment we recommand that the user defines its two sets of atoms 
+  (reference atoms and mobile atoms) and use copy and paste the following line 
+  in the PyShell. The two sets of atoms have to be of the same size.
+  self.superimposeAtoms(refAtoms, mobAtoms) (for questions please contact 
+  Sophie Coon sophiec@scripps.edu).
+
+- writePDB: When the user choses in the GUI to write the secondary structure
+  information the PDB file will not contain this information.
+  This will be added in the future release.
+
+- writePDB: When the user creates bonds using the addBond command and writes a 
+  PDB file he should be able to save this information in a CONECT record.
+
+Backwards INCOMPATIBLE Changes:
+
+- IT IS NOW REQUIRED TO USE self. to refere to the molecule viewer's 
+  attributes in PMV scripts.
+
+- Use True/False boolean flags rather than 1/0 int values.
+
+____________________________________________________________________________
+
+Release November 27, 2002:
+____________________________________________________________________________
+
+What's new:
+-
+- TraceCommands : This module implements a set of commands replacing the 
+CATraceCommands and allowing the user to chose the control and torsion point 
+used to define the path3D. Now a trace can be computed for DNA molecule.
+
+- viperCommands : This set of commands allows the integration of ViPEr into pmv
+
+- displayLines  : The displayLines now allows the user to modify the line width
+and to display the bond order if the bond order have been assigned.
+
+- InteractiveCommands have been renamed PickingCommands and ICOM level is now
+PCOM level.
+
+- tests         : Start implementing regression test in all packages
+
+- Tutorial      : Pmv tutorial for new user has been added to Pmv (first draft)
+(Pmv/doc/PMVHandsout.pdf)
+
+- amberCommands: New module to do some molecular dynamics. It is still under 
+development therefore not really stable.
+
+
+Bug Fixes:
+
+- Fixed multiple bugs 
+
+Known Issues:
+
+- problems with bondorder.

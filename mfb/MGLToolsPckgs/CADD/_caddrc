@@ -1,0 +1,49 @@
+##################################################################
+import os
+import user
+from Vision.UserLibBuild import addDirToSysPath
+from CADD.nodeLibrariesCADD import libraries
+from mglutil.util.packageFilePath import getResourceFolderWithVersion
+
+lCADDResourceFolder = os.path.join(getResourceFolderWithVersion(), 'CADD')
+
+##################################################################
+# Modify the fonts by applying _fonts4vision
+##################################################################
+lFonts4CADDFile = os.path.join(lCADDResourceFolder, '_fonts4cadd')
+if os.path.isfile(lFonts4CADDFile) is True:
+    execfile( lFonts4CADDFile )
+
+##################################################################
+# To toggle ports' icons in the library GUI
+##################################################################
+self.drawPortInLibraryGui = True
+
+##################################################################
+# To set the network default directory
+##################################################################
+import CADD
+import Vision
+CADD.networkDefaultDirectory = user.home 
+Vision.networkDefaultDirectory = user.home 
+
+##################################################################
+# add these lines to ease runtime loading of frequently used Libraries
+# (the numbers indicate the highest tested version of the needed packages)
+##################################################################
+libraries['vizlib'] = ('DejaVu.VisionInterface.DejaVuNodes', ['DejaVu'])
+libraries['molkitlib'] = ('MolKit.VisionInterface.MolKitNodes', ['MolKit'])
+libraries['symlib'] = ('symserv.VisionInterface.SymservNodes', ['symserv'])
+libraries['vollib'] = ('Volume.VisionInterface.VolumeNodes', ['Volume'])
+libraries['flextreelib'] = ('FlexTree.VisionInterface.FlexTreeNodes', ['FlexTree'])
+libraries['wslib'] = ('WebServices.VisionInterface.WSNodes', ['WebServices'])
+libraries['imagelib'] = ('Vision.PILNodes', {'Image':'1.1.6', 'ImageTk':''})
+libraries['matplotlib'] = ('Vision.matplotlibNodes', {'matplotlib':'0.98.5.2'})
+libraries['mydefaultlib'] = ('MyDefaultLib')
+libraries['scipylib'] = ('scipylib')
+libraries['IPythonlib'] = ('Vision.IPythonNodes', {'IPython':'0.9.1'})
+libraries['ADTlib'] = ('AutoDockTools.VisionInterface.Adt')
+
+self.loadLibModule('Vision.StandardNodes')
+
+workflowDir = os.path.join(user.home, "CADDworkflows")

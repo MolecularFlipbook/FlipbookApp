@@ -1,0 +1,6 @@
+- GridInfo node for ViPEr
+- make isocontour and volume renderer register
+- add UHBD volume loader
+- Fix log mapping
+- Fix mapping in MapData class
+- UTVolRen node does not delete geometry when node is deleted

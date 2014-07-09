@@ -1,0 +1,9 @@
+ga_pop_size 200 
+ga_run 10                          
+ga_num_evals 50000 
+rmstol 2.0
+
+
+
+
+

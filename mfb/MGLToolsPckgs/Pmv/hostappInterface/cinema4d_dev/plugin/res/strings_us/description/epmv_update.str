@@ -1,0 +1,4 @@
+STRINGTABLE epmv_update
+{
+epmv_update "epmv synchronizer";
+}

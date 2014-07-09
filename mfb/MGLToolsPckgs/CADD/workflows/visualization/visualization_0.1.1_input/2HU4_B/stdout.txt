@@ -1,0 +1,35 @@
+running virutal screening with 
+       receptor=
+       URL=http://kryptonite.nbcr.net/appautogrid1305746939126-1473382007/
+       AUTOGRID_TARBALL=
+       LIBRARYNAME=sample
+Receptor file name is: 2HU4_B.pdbqt
+numligands is 6
+Submitting to prepare_dpf job to the scheduler
+Your job 65370.1-6:1 ("prepare_dpf.sh") has been submitted.
+Job 65370.4 exited with exit code 0.
+Job 65370.2 exited with exit code 0.
+Job 65370.3 exited with exit code 0.
+Job 65370.6 exited with exit code 0.
+Job 65370.1 exited with exit code 0.
+Job 65370.5 exited with exit code 0.
+Prepare_dpf finished
+Preparing autodock virtual screening submission script
+Submitting to the scheduler
+Your job 65371.1-6:1 ("vs_sgesubmit.sh") has been submitted.
+Job 65371.2 exited with exit code 0.
+Job 65371.5 exited with exit code 0.
+Job 65371.3 exited with exit code 0.
+Job 65371.4 exited with exit code 0.
+Job 65371.1 exited with exit code 0.
+Job 65371.6 exited with exit code 0.
+Screening finished
+Running summarize
+Submitting Sort script
+Your job 65372 ("sort.sh") has been submitted.
+Job 65372 exited with exit code 0.
+Sorting Done
+Summarize finished
+************************
+diversity0005 diversity0004 diversity0003 diversity0001 diversity0006 diversity0002
+************************DONE

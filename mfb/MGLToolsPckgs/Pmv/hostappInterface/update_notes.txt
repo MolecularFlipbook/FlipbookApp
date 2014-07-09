@@ -1,0 +1,8 @@
+current_version=0.0.2a
+
+bug-fixes:
+-various gui bug fixed
+
+new-feature:
+-add,rename and delete selection set
+

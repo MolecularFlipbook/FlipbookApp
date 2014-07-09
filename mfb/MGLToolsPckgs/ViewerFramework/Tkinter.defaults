@@ -1,0 +1,10 @@
+#*font:	Arial 14
+#*background: #FF0000
+#*foreground: #FF0000
+#*highlightForeground: #00FF00
+#*highlightBackground: #0000FF
+#*activeForeground: #00FFFF
+#*activeBackground: #FF00FF
+#*selectColor: #FF00FF
+*font: LKLUG 10
+#*font:		"Letter Gothic" 14 bold
