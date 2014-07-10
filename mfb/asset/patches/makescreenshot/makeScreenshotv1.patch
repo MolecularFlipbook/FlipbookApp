@@ -1,0 +1,140 @@
+Index: source/gameengine/BlenderRoutines/KX_BlenderCanvas.cpp
+===================================================================
+--- source/gameengine/BlenderRoutines/KX_BlenderCanvas.cpp	(revision 60597)
++++ source/gameengine/BlenderRoutines/KX_BlenderCanvas.cpp	(working copy)
+@@ -280,7 +280,7 @@
+ 
+ 
+ 
+-void KX_BlenderCanvas::MakeScreenShot(const char *filename)
++void KX_BlenderCanvas::MakeScreenShot(const char *filename, const int x, const int y, const int width, const int height)
+ {/Users/dfelinto/Dropbox/_Share/Mike/makeScreenshot/readme.md
+ 	ScrArea area_dummy= {0};
+ 	area_dummy.totrct.xmin = m_frame_rect.GetLeft();
+Index: source/gameengine/BlenderRoutines/KX_BlenderCanvas.h
+===================================================================
+--- source/gameengine/BlenderRoutines/KX_BlenderCanvas.h	(revision 60597)
++++ source/gameengine/BlenderRoutines/KX_BlenderCanvas.h	(working copy)
+@@ -194,7 +194,11 @@
+ 
+ 		void 
+ 	MakeScreenShot(
+-		const char* filename
++		const char* filename,
++        int x,
++        int y,
++        int width,
++        int height
+ 	);
+ 	
+ 		bool 
+Index: source/gameengine/GamePlayer/common/GPC_Canvas.cpp
+===================================================================
+--- source/gameengine/GamePlayer/common/GPC_Canvas.cpp	(revision 60597)
++++ source/gameengine/GamePlayer/common/GPC_Canvas.cpp	(working copy)
+@@ -157,20 +157,17 @@
+ 	::glClear(ogltype);
+ }
+ 
+-	void
+-GPC_Canvas::
+-MakeScreenShot(
+-	const char* filename
+-) {
++void GPC_Canvas::MakeScreenShot(const char* filename, int x, int y, int width, int height)
++{
+ 	// copy image data
+-	unsigned char *pixels = new unsigned char[GetWidth() * GetHeight() * 4];
++	unsigned char *pixels = new unsigned char[width * height * 4];
+ 
+ 	if (!pixels) {
+ 		std::cout << "Cannot allocate pixels array" << std::endl;
+ 		return;
+ 	}
+ 
+-	glReadPixels(0, 0, GetWidth(), GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, pixels);
++	glReadPixels(x, y, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+ 
+ 	// initialize image file format data
+ 	ImageFormatData im_format;
+@@ -183,7 +180,7 @@
+ 	BKE_add_image_extension_from_type(path, im_format.imtype);
+ 
+ 	// create and save imbuf 
+-	ImBuf *ibuf = IMB_allocImBuf(GetWidth(), GetHeight(), 24, 0);
++	ImBuf *ibuf = IMB_allocImBuf(width, height, 24, 0);
+ 	ibuf->rect = (unsigned int*)pixels;
+ 
+ 	BKE_imbuf_write_as(ibuf, path, &im_format, false);
+Index: source/gameengine/GamePlayer/common/GPC_Canvas.h
+===================================================================
+--- source/gameengine/GamePlayer/common/GPC_Canvas.h	(revision 60597)
++++ source/gameengine/GamePlayer/common/GPC_Canvas.h	(working copy)
+@@ -137,7 +137,7 @@
+ 		// not yet
+ 	}
+ 
+-	virtual void MakeScreenShot(const char* filename);
++	virtual void MakeScreenShot(const char* filename, int x, int y, int width, int height);
+ 
+ 	void ClearBuffer(int type);
+ };
+Index: source/gameengine/Ketsji/KX_PythonInit.cpp
+===================================================================
+--- source/gameengine/Ketsji/KX_PythonInit.cpp	(revision 60597)
++++ source/gameengine/Ketsji/KX_PythonInit.cpp	(working copy)
+@@ -1094,18 +1094,16 @@
+ 	Py_RETURN_NONE;
+ }
+ 
+-
+-
+-
+ static PyObject *gPyMakeScreenshot(PyObject *, PyObject *args)
+ {
+ 	char* filename;
+-	if (!PyArg_ParseTuple(args,"s:makeScreenshot",&filename))
++	int x = 0, y=0, width=gp_Canvas->GetWidth(), height=gp_Canvas->GetHeight();
++	if (!PyArg_ParseTuple(args,"s|iiii:makeScreenshot",&filename,&x,&y,&width,&height))
+ 		return NULL;
+ 	
+ 	if (gp_Canvas)
+ 	{
+-		gp_Canvas->MakeScreenShot(filename);
++		gp_Canvas->MakeScreenShot(filename, x, y, width, height);
+ 	}
+ 	
+ 	Py_RETURN_NONE;
+Index: source/gameengine/Rasterizer/RAS_ICanvas.h
+===================================================================
+--- source/gameengine/Rasterizer/RAS_ICanvas.h	(revision 60597)
++++ source/gameengine/Rasterizer/RAS_ICanvas.h	(working copy)
+@@ -233,7 +233,11 @@
+ 	virtual 
+ 		void 
+ 	MakeScreenShot(
+-		const char* filename
++		const char* filename,
++		int x,
++		int y,
++		int widht,
++		int height
+ 	)=0;
+ 
+ 	virtual
+Index: doc/python_api/rst/bge.render.rst
+===================================================================
+--- doc/python_api/rst/bge.render.rst	(revision 60597)
++++ doc/python_api/rst/bge.render.rst	(working copy)
+@@ -110,9 +110,9 @@
+    
+    :rtype: bool
+ 
+-.. function:: makeScreenshot(filename)
++.. function:: makeScreenshot(filename, x, y, width, height)
+ 
+-   Writes a screenshot to the given filename.
++   Writes a screenshot of the given coordinate and size to the given filename.
+    
+    If filename starts with // the image will be saved relative to the current directory.
+    If the filename contains # it will be replaced with the frame number.
